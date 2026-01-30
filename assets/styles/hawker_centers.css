@@ -1,10 +1,15 @@
+/* 
+Both hawker_centers and food_stalls have similar 
+layouts and thus use same CSS (hawker_centers.css) 
+*/
+
 #nav-links li:nth-child(2) {
     background-color: #DBDFD0;
 }
 
 .container {
     margin: 0 auto;
-    max-width: fit-content;
+    max-width: 1352px;
 
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -30,7 +35,7 @@ input[type="search"] {
 }
 
 .item {
-    width: 326px;
+    width: 100%;
     height: 286px;
     padding: 1.5rem;
     border-radius: 15px;
@@ -53,6 +58,7 @@ input[type="search"] {
 .item p {
     margin: 0.2rem 0;
     font-weight: 600;
+    text-align: left;
 }
 
 .highlight {
@@ -62,6 +68,7 @@ input[type="search"] {
 /*style="background: url('bg1.jpg') center/cover;*/
 @media (max-width: 1420px) {
     .container {
+        max-width: 1010px;
         grid-template-columns: repeat(3, 1fr);
     }
 
@@ -72,6 +79,7 @@ input[type="search"] {
 
 @media (max-width: 1074px) {
     .container {
+        max-width: 668px;
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -82,8 +90,20 @@ input[type="search"] {
 
 @media (max-width: 732px) {
     .container {
+        max-width: 326px;
         grid-template-columns: repeat(1, 1fr);
 
         text-align: center;
     }   
+}
+
+@media (max-width: 390px) {
+    .container {
+        width: calc(100% - 4rem);
+        margin: 0 2rem;
+    }
+
+    /* .item {
+        height: 128px;
+    } */
 }

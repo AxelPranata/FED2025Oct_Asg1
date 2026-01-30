@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="template/template.css">
+    <link rel="stylesheet" href="assets/styles/hawker_centers.css">
+    <link rel="stylesheet" href="assets/styles/food_stalls.css">
+    <title>Food Stalls</title>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-brand">
+            <button id="hamburger">
+                <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+            </button>
+            <div class="logo">
+                <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+                <h1>Hawkers</h1>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <ul id="nav-links">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="hawker_centers.html">Order</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="promotions.html">Promotions</a></li>
+                <li><div class="divider"></div></li>
+                <li><a href="cart.html">Cart</a></li>
+                <li><a href="user.html">User</a></li>
+            </ul>
+        </nav>
+        <div class="header-actions">
+            <a href="cart.html" id="cart">
+                Cart <img src="assets/icons/template/shopping_cart.svg" alt="Shopping Cart Icon">
+            </a>
+            <div id="user">
+                <img src="assets/icons/template/user.svg" alt="User Icon">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumbs -->
+        <nav id="breadcrumbs">
+            <ul>
+                <li><a href="hawker_centers.html">Hawker Centers</a> / </li>
+                <li><a href="food_stalls.html">Merchants</a></li>
+            </ul>
+        </nav>
+
+        <!-- Content Here -->
+        <section id="hawker-center-info">
+            <div id="hawker-center-description">
+                <h2>Maxwell Food Centre</h2>
+                <p>
+                    Maxwell Food Centre is one of Singapore's most famous hawker centres 
+                    — a lively, open-air food hall in the Chinatown/Tanjong Pagar area known for its authentic, 
+                    affordable local dishes. It's packed with over 100 food stalls serving Singapore classics 
+                    like Hainanese chicken rice, laksa, porridge, fish soup, and more, making it a favourite 
+                    with both locals and visitors alike.
+                    
+                    <br><br>Maxwell started as a market in the early 20th century 
+                    and evolved into the hawker centre you see today, blending heritage and vibrant street-food culture.
+                </p>
+            </div>
+            
+            <img src="assets/images/food_stall/maxwell_food_centre.svg" alt="Hawker Center Image">
+        </section>
+        
+
+        <section class="container">
+            <h3>Merchants</h3>
+            <form role="search" action="/search" method="get">
+                <input type="search" id="search" placeholder="Search" />
+            </form>
+
+            <div class="item">
+                <p class="highlight">#01-40</p>
+                <p>Western</p>
+            </div>
+            <div class="item">
+                <p class="highlight">#01-40</p>
+                <p>Western</p>
+            </div>
+            <div class="item">
+                <p class="highlight">#01-40</p>
+                <p>Western</p>
+            </div>
+            <div class="item">
+                <p class="highlight">#01-40</p>
+                <p>Western</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="sub_footer">
+            <div class="footer-branding">
+                <div class="logo">
+                    <img src="assets/icons/template/hawkers_white.svg" alt="Hawkers Logo">
+                    <h1>Hawkers</h1>
+                </div>
+                <h3>Connect with us</h3>
+                <ul>
+                    <li><a href="http://"><img src="assets/icons/template/twitter.svg" alt="Twitter Icon"></a></li>
+                    <li><a href="http://"><img src="assets/icons/template/facebook.svg" alt="Facebook Icon"></a></li>
+                    <li><a href="http://"><img src="assets/icons/template/instagram.svg" alt="Twitter Icon"></a></li>
+                    <li><a href="http://"><img src="assets/icons/template//github.svg" alt="GitHub Icon"></a></li>
+                </ul>
+            </div>
+
+            <div class="footer-nav">
+                <nav>
+                    <h3>Pages</h3>
+                    <ul>
+                        <li><a href="homepage.html">Home</a></li>
+                        <li><a href="hawker_centers.html">Order</a></li>
+                        <li><a href="history.html">History</a></li>
+                        <li><a href="promotions.html">Promotions</a></li>
+                    </ul>
+                </nav>
+                <nav>
+                    <h3>Order</h3>
+                    <ul>
+                        <li><a href="hawker_centers.html">Hawker Centers</a></li>
+                        <li><a href="stalls.html">Stalls</a></li>
+                        <li><a href="cart.html">Cart</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="footer-info">
+                <h3>Contact Us</h3>
+                <p>21 Revolution Street, Paris, France</p>
+                <p>+65 5752 6239</p>
+                <p>support@company.com</p>    
+            </div>
+        </div>
+        
+        <p>&copy; 2026 Hawkers. All rights reserved.</p>
+    </footer>
+
+    <!-- Hamburger Menu Script -->
+    <script src="template/template.js"></script>
+</body>
+</html>
