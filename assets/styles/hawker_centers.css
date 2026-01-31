@@ -7,6 +7,15 @@ layouts and thus use same CSS (hawker_centers.css)
     background-color: #DBDFD0;
 }
 
+#banner {
+    width: auto;
+    height: 400px;
+    margin: 0 0 1rem 0;
+
+    /* Need to search for better clearer image */
+    background: url("../images/hawker_center/hawker_center_large.jpg") no-repeat center center / cover;
+}
+
 .container {
     margin: 0 auto;
     max-width: 1352px;
@@ -102,8 +111,4 @@ input[type="search"] {
         width: calc(100% - 4rem);
         margin: 0 2rem;
     }
-
-    /* .item {
-        height: 128px;
-    } */
 }
