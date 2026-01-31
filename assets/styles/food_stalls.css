@@ -1,3 +1,4 @@
+/* Hawker center brief description */
 #hawker-center-info {
     max-width: 1352px;
     height: 500px;
@@ -49,11 +50,9 @@
 
 @media (max-width: 732px) {
     #hawker-center-description {
-        text-align: center;
-    }
-
-    #hawker-center-description {
         margin: 0rem 2rem 2rem 2rem;
+        
+        text-align: center;
     }
 
     #hawker-center-description h2 {
