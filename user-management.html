@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <title>User Management</title>
+  <link rel="stylesheet" href="FED2025Oct_Asg1\assets\styles\user-management.css">
+</head>
+
+<body class="text">
+
+  <header class="header">
+    <div class="header-left">
+      <h1>User Management</h1>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Summary stats -->
+    <section class="stats">
+      <div class="stat-card">
+        <h3>Vendors</h3>
+        <div class="stat-value">
+          <p>2,308</p>
+          <img src="FED2025Oct_Asg1\assets\icons\Dashboard\food-stand.png" alt="food stand">
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Customers</h3>
+        <div class="stat-value">
+          <p>92,308</p>
+          <img src="FED2025Oct_Asg1\assets\icons\Dashboard\user.png" alt="user">
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Admins</h3>
+        <div class="stat-value">
+          <p>6</p>
+          <img src="FED2025Oct_Asg1\assets\icons\Dashboard\admin.png" alt="admin">
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <h3>Total Users</h3>
+        <div class="stat-value">
+          <p>94,308</p>
+          <img src="FED2025Oct_Asg1\assets\icons\Dashboard\group.png" alt="all user">
+        </div>
+      </div>
+    </section>
+
+    <!-- Search and filter -->
+    <section class="filters">
+      <input type="text" placeholder="Search by name" class="search-bar">
+
+      <select class="dropdown">
+        <option>All Roles</option>
+        <option>Vendors</option>
+        <option>Customers</option>
+        <option>Admins</option>
+      </select>
+
+      <button class="button">Add Vendor +</button>
+    </section>
+
+    <!-- Users table -->
+    <section class="table-section">
+      <h3>All Users</h3>
+
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Stall</th>
+          <th>Delete</th>
+        </tr>
+
+        <tr>
+          <td>Balasubramanian Aswin kumar</td>
+          <td>aswin@gmail.com</td>
+          <td><span class="badge vendor">Vendor</span></td>
+          <td>Prata Boi</td>
+          <td><img src="FED2025Oct_Asg1\assets\icons\Dashboard\delete.png" alt="Delete"></td>
+        </tr>
+
+        <tr>
+          <td>Axel</td>
+          <td>axel@gmail.com</td>
+          <td><span class="badge customer">Customer</span></td>
+          <td>-</td>
+          <td><img src="FED2025Oct_Asg1\assets\icons\Dashboard\delete.png" alt="Delete"></td>
+        </tr>
+
+        <tr>
+          <td>Ignatius</td>
+          <td>ignatius@gmail.com</td>
+          <td><span class="badge vendor">Vendor</span></td>
+          <td>Laksa Paradise</td>
+          <td><img src="FED2025Oct_Asg1\assets\icons\Dashboard\delete.png" alt="Delete"></td>
+        </tr>
+
+        <tr>
+          <td>Quan Jun</td>
+          <td>qj@yahoo.com</td>
+          <td><span class="badge admin">Admin</span></td>
+          <td>-</td>
+          <td><img src="FED2025Oct_Asg1\assets\icons\Dashboard\delete.png" alt="Delete"></td>
+        </tr>
+
+        <tr>
+          <td>Kishore</td>
+          <td>kishorebad@gmail.com</td>
+          <td><span class="badge vendor">Vendor</span></td>
+          <td>Super biryani</td>
+          <td><img src="FED2025Oct_Asg1\assets\icons\Dashboard\delete.png" alt="Delete"></td>
+        </tr>
+
+      </table>
+    </section>
+
+  </main>
+</body>
+</html>
