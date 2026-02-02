@@ -1,0 +1,138 @@
+.text {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 16px 24px;
+}
+
+/* ===== STATS ===== */
+.stats {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+    flex-wrap: wrap;
+}
+
+.stats-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 8px;
+    flex: 1;
+    min-width: 250px;
+}
+
+.stat-number {
+    font-size: x-large;
+}
+
+.pending {
+    background-color: #F5D9D9;
+    border: 2px solid #EA0C10;
+}
+
+.progress-card {
+    background-color: #F5E3BC;
+    border: 2px solid #EAD00C;
+}
+
+.resolved {
+    background-color: #E6FCAE;
+    border: 2px solid #70EA0C;
+}
+
+/* ===== FILTERS ===== */
+.filter {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    flex-wrap: wrap;
+    border: 2px solid #EA580C;
+    border-radius: 8px;
+}
+
+.button {
+    border: 1px solid #EA580C;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+/* ===== COMPLAINT CARD ===== */
+.complaints {
+    border: 2px solid #EA580C;
+    padding: 15px 25px;
+    margin: 16px 0;
+    border-radius: 8px;
+}
+
+/* TOP ROW */
+.complaint-top {
+    display: flex;
+    align-items: flex-start;
+}
+
+.complaint-info {
+    max-width: 70%;
+}
+
+.complaint-action {
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-start;
+}
+
+.complaint-action select {
+    border: 1px solid #EA580C;
+    padding: 6px 10px;
+    border-radius: 8px;
+}
+
+/* TAGS */
+.progress {
+    color: #EA0C10;
+    background-color: #FDB8B8;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin-left: 8px;
+    font-size: 0.85rem;
+}
+
+/* COMMENT */
+.comment {
+    background-color: #FBD9B8;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    width: 80%;
+}
+
+/* TEXT */
+h1, h3, h4 {
+    color: #8B4513;
+}
+
+/* ICONS */
+img {
+    width: 24px;
+    height: auto;
+}
+
+/* Stats text color follows card theme */
+.pending p{
+    color: #EA0C10;
+}
+
+.progress-card p {
+    color: #EAD00C;
+}
+
+.resolved p{
+    color: #70EA0C;
+}

@@ -1,0 +1,154 @@
+.text {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+}
+
+h1, h3, h4 {
+  color: #8B4513;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+}
+
+/* Top stats */
+.stats {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  flex-wrap: wrap;
+}
+
+.stat-card {
+  border: 2px solid #EA580C;
+  padding: 12px 20px;
+  border-radius: 8px;
+  flex: 1;
+  min-width: 250px;
+}
+
+.stat-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-value p {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.stat-value img {
+  width: 24px;
+  height: auto;
+}
+
+.stat-subtext {
+  font-weight: normal;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* ===== MAIN CONTENT (YOUR SECTION) ===== */
+.content {
+  display: flex;
+  gap: 12px;
+  padding: 16px 24px;
+  flex-wrap: wrap;
+}
+
+/* Cards */
+.card {
+  border: 2px solid #EA580C;
+  border-radius: 8px;
+  padding: 16px 20px;
+  flex: 1;
+  min-width: 300px;
+}
+
+/* ---- NEW: Right column layout (only thing we changed) ---- */
+.right-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Two stat boxes on top, side by side */
+.two-stats {
+  display: flex;
+  gap: 12px;
+}
+
+/* Mini cards (same as before) */
+.mini-card {
+  border: 2px solid #EA580C;
+  border-radius: 8px;
+  padding: 12px 16px;
+  flex: 1;
+}
+
+/* Chart placeholders */
+.chart-placeholder {
+  border: 1px dashed #EA580C;
+  border-radius: 8px;
+  padding: 40px;
+  margin-top: 12px;
+  text-align: center;
+}
+
+/* Table */
+.table-section {
+  margin: 16px 24px;
+  border: 2px solid #EA580C;
+  border-radius: 8px;
+  padding: 16px 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+table span{
+  color: #EA580C;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #EA580C;
+}
+
+#Revenue{
+  color: green;
+}
+
+/* ===== MOBILE ===== */
+@media (max-width: 576px) {
+
+  .stats,
+  .content {
+    flex-direction: column;
+  }
+
+  .two-stats {
+    flex-direction: column;
+  }
+
+  .stat-card,
+  .card,
+  .mini-card {
+    min-width: 100%;
+  }
+}
