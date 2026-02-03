@@ -1,0 +1,131 @@
+.product-page {
+  max-width: 480px;      /* card width */
+  margin: 0 auto;        /* ⬅ centers it */
+  padding: 1.5rem;
+}
+
+.back-link {
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.product-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+} 
+
+.product-card img {
+  width: 100%;
+  max-width: 360px;   /* ⬅ bigger image */
+  margin: 0 auto;
+  display: block;
+  border-radius: 20px;
+}
+
+
+.product-title {
+  font-size: 1.8rem;   /* ⬅ bigger title */
+  font-weight: 800;
+  text-align: center;
+}
+
+.product-desc {
+  font-size: 1.05rem;  /* ⬅ bigger text */
+  line-height: 1.5;
+  text-align: center;
+  color: #444;
+}
+
+.addon-group h4 {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.addon-item {
+  font-size: 1rem;
+}
+
+
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.qty-control button {
+  width: 30px;
+  height: 30px;
+}
+
+.price-cart {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#add-to-cart {
+  background: #b32020;
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 20px;
+}
+
+.product-card {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+
+  height: auto;
+  overflow: visible;
+
+  padding-bottom: 120px; /* space so bottom bar doesn't block */
+}
+
+body{
+  background: url("../images/order/background.png") no-repeat center top;
+  background-size: cover;
+}
+
+/* Bottom bar layout */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 100%;
+  max-width: 480px;
+
+  display: flex;
+  align-items: center;        /* ✅ vertical center */
+  justify-content: space-between; /* left / right balance */
+
+  padding: 12px 16px;
+  background: #fff;
+  border-top: 1px solid #eee;
+}
+
+/* Quantity buttons */
+.qty-control {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Price + button */
+.price-cart {
+  display: flex;
+  align-items: center;   /* ✅ centers price + button */
+  gap: 12px;
+}
+
+
