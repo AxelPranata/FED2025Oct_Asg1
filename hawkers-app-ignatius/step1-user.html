@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hawkers | Step 1 User</title>
+  
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+
+</head>
+<body>
+  <header class="pillbar" aria-label="Brand header">
+    <div class="brand-mark">
+<svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true">
+  <path d="M14 34c2 10 10 18 18 18s16-8 18-18H14z" fill="#e8e8e8" stroke="#1a1a1a" stroke-width="2"/>
+  <path d="M12 34h40" stroke="#1a1a1a" stroke-width="2" />
+  <path d="M22 18c0 5-4 5-4 10" stroke="#f08a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M34 18c0 5-4 5-4 10" stroke="#f08a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M46 18c0 5-4 5-4 10" stroke="#f08a24" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>
+</div>
+    <span class="brand-name sm">Hawkers</span>
+  </header>
+
+  <h1 class="step-title">Step One: Setting Up Your Account!</h1>
+
+  <main class="step-wrap">
+    
+<section class="step-grid">
+  <div>
+    <label class="muted">Profile Photo</label>
+    <div class="upload big" id="userPhotoBox" aria-label="Upload profile photo">
+      <div aria-hidden="true" style="font-size:26px;">🖼️➕</div>
+      <input id="userPhoto" type="file" accept="image/*">
+    </div>
+    <div class="upload-hint">Tap to add photos!</div>
+
+    <div class="step-form" style="margin-top:20px;">
+      <label for="username">Username</label>
+      <input id="username" class="input" placeholder="Enter Username" />
+
+      <label for="desc">Description</label>
+      <input id="desc" class="input" placeholder="Enter Description" />
+
+      <div class="step-actions">
+        <button id="btnCompleteUser" class="btn" type="button">Complete</button>
+      </div>
+    </div>
+  </div>
+  <div></div>
+</section>
+
+  </main>
+
+  <script type="module" src="js/navigation.js"></script>
+  <script type="module" src="js/step1-user.js"></script>
+</body>
+</html>
