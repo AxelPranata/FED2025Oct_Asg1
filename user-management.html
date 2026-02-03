@@ -9,124 +9,168 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <title>User Management</title>
-  <link rel="stylesheet" href="assets\styles\user-management.css">
+  <link rel="stylesheet" href="assets/styles/user-management.css">
 </head>
 
 <body class="text">
 
-  <header class="header">
+<header>
+  <div class="header-brand">
+    <button id="hamburger">
+      <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+    </button>
+    <div class="logo">
+      <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+      <h1>Hawkers</h1>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <ul id="nav-links">
+      <li><a href="admin.html">Admin Dashboard</a></li>
+      <li><a href="complaint-management.html">Complaint Management</a></li>
+      <li><a href="analytics.html">Analytics & Reports</a></li>
+      <li><a href="user-management.html">User Management</a></li>
+      <li><div class="right-buttons"></div></li>
+      <li><a href="">LogOut</a></li>
+      <li><a href="user.html">User</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">  
+    <a href="" id="logout-btn">
+      LogOut <img src="assets/icons/template/arrow.svg" alt="Logout Icon">
+    </a>
+    <div id="user">
+      <img src="assets/icons/template/user.svg" alt="User Icon">
+    </div>
+  </div>
+</header>
+
+<!-- EVERYTHING BELOW NAV -->
+<div class="page">
+
+  <section class="header">
     <div class="header-left">
       <h1>User Management</h1>
     </div>
-  </header>
+  </section>
 
-  <main>
-
-    <!-- Summary stats -->
-    <section class="stats">
-      <div class="stat-card">
-        <h3>Vendors</h3>
-        <div class="stat-value">
-          <p>2,308</p>
-          <img src="assets\icons\Dashboard\food-stand.png" alt="food stand">
-        </div>
+  <!-- Summary stats -->
+  <section class="stats">
+    <div class="stat-card">
+      <h3>Vendors</h3>
+      <div class="stat-value">
+        <p>2,308</p>
+        <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
       </div>
+    </div>
 
-      <div class="stat-card">
-        <h3>Customers</h3>
-        <div class="stat-value">
-          <p>92,308</p>
-          <img src="assets\icons\Dashboard\user.png" alt="user">
-        </div>
+    <div class="stat-card">
+      <h3>Customers</h3>
+      <div class="stat-value">
+        <p>92,308</p>
+        <img src="assets/icons/Dashboard/user.png" alt="user">
       </div>
+    </div>
 
-      <div class="stat-card">
-        <h3>Admins</h3>
-        <div class="stat-value">
-          <p>6</p>
-          <img src="assets\icons\Dashboard\admin.png" alt="admin">
-        </div>
+    <div class="stat-card">
+      <h3>Admins</h3>
+      <div class="stat-value">
+        <p>6</p>
+        <img src="assets/icons/Dashboard/admin.png" alt="admin">
       </div>
+    </div>
 
-      <div class="stat-card">
-        <h3>Total Users</h3>
-        <div class="stat-value">
-          <p>94,308</p>
-          <img src="assets\icons\Dashboard\group.png" alt="all user">
-        </div>
+    <div class="stat-card">
+      <h3>Total Users</h3>
+      <div class="stat-value">
+        <p>94,308</p>
+        <img src="assets/icons/Dashboard/group.png" alt="all user">
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Search and filter -->
-    <section class="filters">
-      <input type="text" placeholder="Search by name" class="search-bar">
+  <!-- Search and filter -->
+  <section class="filters">
+    <input type="text" placeholder="Search by name" class="search-bar">
 
-      <select class="dropdown">
-        <option>All Roles</option>
-        <option>Vendors</option>
-        <option>Customers</option>
-        <option>Admins</option>
-      </select>
+    <select class="dropdown">
+      <option>All Roles</option>
+      <option>Vendors</option>
+      <option>Customers</option>
+      <option>Admins</option>
+    </select>
 
-      <button class="button">Add Vendor +</button>
-    </section>
+    <button class="button">Add Vendor +</button>
+  </section>
 
-    <!-- Users table -->
-    <section class="table-section">
-      <h3>All Users</h3>
+  <!-- Users table -->
+  <section class="table-section">
+    <h3>All Users</h3>
 
-      <table>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Role</th>
-          <th>Stall</th>
-          <th>Delete</th>
-        </tr>
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Stall</th>
+        <th>Delete</th>
+      </tr>
 
-        <tr>
-          <td>Balasubramanian Aswin kumar</td>
-          <td>aswin@gmail.com</td>
-          <td><span class="badge vendor">Vendor</span></td>
-          <td>Prata Boi</td>
-          <td><img src="assets\icons\Dashboard\delete.png" alt="Delete"></td>
-        </tr>
+      <tr>
+        <td>Balasubramanian Aswin kumar</td>
+        <td>aswin@gmail.com</td>
+        <td><span class="badge vendor">Vendor</span></td>
+        <td>Prata Boi</td>
+        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
+      </tr>
 
-        <tr>
-          <td>Axel</td>
-          <td>axel@gmail.com</td>
-          <td><span class="badge customer">Customer</span></td>
-          <td>-</td>
-          <td><img src="assets\icons\Dashboard\delete.png" alt="Delete"></td>
-        </tr>
+      <tr>
+        <td>Axel</td>
+        <td>axel@gmail.com</td>
+        <td><span class="badge customer">Customer</span></td>
+        <td>-</td>
+        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
+      </tr>
 
-        <tr>
-          <td>Ignatius</td>
-          <td>ignatius@gmail.com</td>
-          <td><span class="badge vendor">Vendor</span></td>
-          <td>Laksa Paradise</td>
-          <td><img src="assets\icons\Dashboard\delete.png" alt="Delete"></td>
-        </tr>
+      <tr>
+        <td>Ignatius</td>
+        <td>ignatius@gmail.com</td>
+        <td><span class="badge vendor">Vendor</span></td>
+        <td>Laksa Paradise</td>
+        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
+      </tr>
 
-        <tr>
-          <td>Quan Jun</td>
-          <td>qj@yahoo.com</td>
-          <td><span class="badge admin">Admin</span></td>
-          <td>-</td>
-          <td><img src="assets\icons\Dashboard\delete.png" alt="Delete"></td>
-        </tr>
+      <tr>
+        <td>Quan Jun</td>
+        <td>qj@yahoo.com</td>
+        <td><span class="badge admin">Admin</span></td>
+        <td>-</td>
+        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
+      </tr>
 
-        <tr>
-          <td>Kishore</td>
-          <td>kishorebad@gmail.com</td>
-          <td><span class="badge vendor">Vendor</span></td>
-          <td>Super biryani</td>
-          <td><img src="assets\icons\Dashboard\delete.png" alt="Delete"></td>
-        </tr>
+      <tr>
+        <td>Kishore</td>
+        <td>kishorebad@gmail.com</td>
+        <td><span class="badge vendor">Vendor</span></td>
+        <td>Super biryani</td>
+        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
+      </tr>
 
-      </table>
-    </section>
+    </table>
+  </section>
 
-  </main>
+</div> <!-- END .page -->
+
+<script>
+let hamburger = document.getElementById("hamburger");
+let nav_links = document.getElementById("nav-links");
+
+hamburger.addEventListener("click", () => {
+    nav_links.classList.toggle("active");
+});
+</script>
+
 </body>
 </html>

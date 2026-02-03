@@ -9,138 +9,183 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <title>Analytics & Reports</title>
-  <link rel="stylesheet" href="assets\styles\analytics.css">
+  <link rel="stylesheet" href="assets/styles/analytics.css">
 </head>
 
 <body class="text">
 
-  <header class="header">
+<header>
+  <div class="header-brand">
+    <button id="hamburger">
+      <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+    </button>
+    <div class="logo">
+      <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+      <h1>Hawkers</h1>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <ul id="nav-links">
+      <li><a href="admin.html">Admin Dashboard</a></li>
+      <li><a href="complaint-management.html">Complaint Management</a></li>
+      <li><a href="analytics.html">Analytics & Reports</a></li>
+      <li><a href="user-management.html">User Management</a></li>
+      <li><div class="right-buttons"></div></li>
+      <li><a href="">LogOut</a></li>
+      <li><a href="user.html">User</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">  
+    <a href="" id="logout-btn">
+      LogOut <img src="assets/icons/template/arrow.svg" alt="Logout Icon">
+    </a>
+    <div id="user">
+      <img src="assets/icons/template/user.svg" alt="User Icon">
+    </div>
+  </div>
+</header>
+
+<!-- EVERYTHING BELOW NAV -->
+<div class="page">
+
+  <!-- Page Header (your original) -->
+  <section class="header">
     <div class="header-left">
       <h1>Analytics & Reports</h1>
     </div>
-  </header>
+  </section>
 
-  <main>
-
-    <!-- Top summary cards -->
-    <section class="stats">
-      <div class="stat-card">
-        <h3>Best Hawker</h3>
-        <div class="stat-value">
-          <p>Jurong West Hawker</p>
-        </div>
-      </div>
-
-      <div class="stat-card">
-        <h3>Best selling stall</h3>
-        <div class="stat-value">
-          <p>Prata Boi</p>
-          <img src="assets\icons\Dashboard\food-stand.png" alt="food stand">
-        </div>
-        <p class="stat-subtext">Maxwell Hawker center</p>
-      </div>
-
-      <div class="stat-card large">
-        <h3>Highest Rated Hawker</h3>
-        <div class="chart-placeholder">
-          <p>Bar chart placeholder (Chart.js later)</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Middle section -->
-    <section class="content">
-
-  <!-- LEFT -->
-  <article class="card">
-    <h3>Complaint by Category</h3>
-    <div class="chart-placeholder">
-      <p>Pie chart placeholder (Chart.js later)</p>
-    </div>
-  </article>
-
-  <!-- RIGHT COLUMN -->
-  <div class="right-column">
-
-    <!-- Top two separate stat boxes -->
-    <div class="two-stats">
-      <div class="mini-card">
-        <h3>Total Complaints</h3>
-        <p>23</p>
-      </div>
-
-      <div class="mini-card">
-        <h3>Average Rating</h3>
-        <div class="stat-value">
-          <p>4.7/5</p>
-          <img src="assets\icons\Dashboard\star.png" alt="star">
-        </div>
-        <p class="stat-subtext">Based on 1,834 reviews</p>
+  <!-- Top summary cards -->
+  <section class="stats">
+    <div class="stat-card">
+      <h3>Best Hawker</h3>
+      <div class="stat-value">
+        <p>Jurong West Hawker</p>
       </div>
     </div>
 
-    <!-- Monthly trend box below -->
-    <article class="card">
-      <h3>Monthly Complaint Trend</h3>
+    <div class="stat-card">
+      <h3>Best selling stall</h3>
+      <div class="stat-value">
+        <p>Prata Boi</p>
+        <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
+      </div>
+      <p class="stat-subtext">Maxwell Hawker center</p>
+    </div>
+
+    <div class="stat-card large">
+      <h3>Highest Rated Hawker</h3>
       <div class="chart-placeholder">
-        <p>Line chart placeholder (Chart.js later)</p>
+        <p>Bar chart placeholder (Chart.js later)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Middle section -->
+  <section class="content">
+
+    <!-- LEFT -->
+    <article class="card">
+      <h3>Complaint by Category</h3>
+      <div class="chart-placeholder">
+        <p>Pie chart placeholder (Chart.js later)</p>
       </div>
     </article>
 
-  </div>
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
 
-</section>
+      <!-- Top two separate stat boxes -->
+      <div class="two-stats">
+        <div class="mini-card">
+          <h3>Total Complaints</h3>
+          <p>23</p>
+        </div>
 
-    <!-- Table Section -->
-    <section class="table-section">
-      <h3>Top Performing Stalls</h3>
+        <div class="mini-card">
+          <h3>Average Rating</h3>
+          <div class="stat-value">
+            <p>4.7/5</p>
+            <img src="assets/icons/Dashboard/star.png" alt="star">
+          </div>
+          <p class="stat-subtext">Based on 1,834 reviews</p>
+        </div>
+      </div>
 
-      <table>
-        <tr>
-          <th>Rank</th>
-          <th>Stall Name</th>
-          <th>Rating</th>
-          <th>Orders</th>
-          <th>Revenue</th>
-        </tr>
-        <tr>
-          <td>1</td>
-          <td>Prata Boi by Maxwell hawker</td>
-          <td><span>5</span>/5</td>
-          <td>1,282</td>
-          <td id="Revenue">$12,282</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Laksa Paradise by Jurong hawker</td>
-          <td><span>4.7</span>/5</td>
-          <td>1,122</td>
-          <td id="Revenue">$10,082</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Ah Lim Chicken Rice by Jurong</td>
-          <td><span>4.8</span>/5</td>
-          <td>1,082</td>
-          <td id="Revenue">$9,999</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Nasi Lemak Corner by Changi</td>
-          <td><span>4.6</span>/5</td>
-          <td>992</td>
-          <td id="Revenue">$7,999</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Satay King by Jurong</td>
-          <td><span>4.3</span>/5</td>
-          <td>892</td>
-          <td id="Revenue">$9,009</td>
-        </tr>
-      </table>
-    </section>
+      <!-- Monthly trend box below -->
+      <article class="card">
+        <h3>Monthly Complaint Trend</h3>
+        <div class="chart-placeholder">
+          <p>Line chart placeholder (Chart.js later)</p>
+        </div>
+      </article>
 
-  </main>
+    </div>
+
+  </section>
+
+  <!-- Table Section -->
+  <section class="table-section">
+    <h3>Top Performing Stalls</h3>
+
+    <table>
+      <tr>
+        <th>Rank</th>
+        <th>Stall Name</th>
+        <th>Rating</th>
+        <th>Orders</th>
+        <th>Revenue</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Prata Boi by Maxwell hawker</td>
+        <td><span>5</span>/5</td>
+        <td>1,282</td>
+        <td id="Revenue">$12,282</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Laksa Paradise by Jurong hawker</td>
+        <td><span>4.7</span>/5</td>
+        <td>1,122</td>
+        <td id="Revenue">$10,082</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Ah Lim Chicken Rice by Jurong</td>
+        <td><span>4.8</span>/5</td>
+        <td>1,082</td>
+        <td id="Revenue">$9,999</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Nasi Lemak Corner by Changi</td>
+        <td><span>4.6</span>/5</td>
+        <td>992</td>
+        <td id="Revenue">$7,999</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Satay King by Jurong</td>
+        <td><span>4.3</span>/5</td>
+        <td>892</td>
+        <td id="Revenue">$9,009</td>
+      </tr>
+    </table>
+  </section>
+
+</div> <!-- END .page -->
+
+<script>
+let hamburger = document.getElementById("hamburger");
+let nav_links = document.getElementById("nav-links");
+
+hamburger.addEventListener("click", () => {
+    nav_links.classList.toggle("active");
+});
+</script>
+
 </body>
 </html>

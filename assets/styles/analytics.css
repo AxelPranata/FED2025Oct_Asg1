@@ -1,10 +1,149 @@
-.text {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
+/* ===== CORE TEMPLATE STUFF (FROM YOUR REFERENCE) ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
 }
 
+body {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #FFFFFF;
+}
+
+/* TEXT */
 h1, h3, h4 {
   color: #8B4513;
+}
+
+/* ===== FIXED HEADER (REFERENCE NAV) ===== */
+header {
+  width: 100%;
+  height: 80px;
+  padding: 1rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+}
+
+/* ===== LOGO ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'playfair display';
+  font-style: italic;
+}
+
+.logo h1 {
+  margin: 0;
+  color: #474747;
+}
+
+.logo img {
+  width: 40px;
+  height: auto;
+}
+
+/* ===== NAVIGATION ===== */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#hamburger {
+  height: 100%;
+  padding: 8px;
+  border: none;
+  display: none;
+}
+
+#nav-links {
+  padding: 0;
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+}
+
+#nav-links li {
+  padding: 0.2rem 0.8rem;
+  border-radius: 15px;
+}
+
+#nav-links li a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Hide divider + extra links on desktop */
+#nav-links :nth-child(5),
+#nav-links :nth-child(6),
+#nav-links :nth-child(7) {
+  display: none;
+}
+
+/* Active tab highlight (THIS PAGE) */
+#nav-links li:nth-child(3) {
+  background-color: #EA580C;
+}
+
+#nav-links li:nth-child(3) a {
+  color: white;
+}
+
+/* Divider line */
+.right-buttons {
+  width: 100%;
+  margin: 8px 0;
+  border: 1px solid rgba(71, 71, 71, 0.5)
+}
+
+/* ===== RIGHT HEADER BUTTONS ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#logout-btn {
+  width: 120px;
+  padding: 0.6rem 1.2rem;
+  border: 0.10rem solid #474747;
+  border-radius: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  text-decoration: none;
+  font-weight: bold;
+  color: #474747;
+}
+
+#user {
+  padding: 0.6em;
+  border: 0.10rem solid #474747;
+  border-radius: 25px;
+}
+
+/* ===== KEY FIX: PUSH CONTENT BELOW NAV ===== */
+.page {
+  padding: 96px 24px 16px;
+}
+
+/* ===== YOUR ORIGINAL PAGE STYLES (KEPT) ===== */
+.text {
+  font-family: 'Poppins', sans-serif;
   margin: 0;
 }
 
@@ -17,7 +156,7 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 24px;
+  padding: 16px 0;
 }
 
 /* Top stats */
@@ -25,7 +164,7 @@ p {
   display: flex;
   justify-content: space-between;
   gap: 12px;
-  padding: 16px 24px;
+  padding: 16px 0;
   flex-wrap: wrap;
 }
 
@@ -59,11 +198,11 @@ p {
   margin-top: 4px;
 }
 
-/* ===== MAIN CONTENT (YOUR SECTION) ===== */
+/* ===== MAIN CONTENT ===== */
 .content {
   display: flex;
   gap: 12px;
-  padding: 16px 24px;
+  padding: 16px 0;
   flex-wrap: wrap;
 }
 
@@ -76,7 +215,7 @@ p {
   min-width: 300px;
 }
 
-/* ---- NEW: Right column layout (only thing we changed) ---- */
+/* Right column layout */
 .right-column {
   flex: 1;
   display: flex;
@@ -84,13 +223,13 @@ p {
   gap: 12px;
 }
 
-/* Two stat boxes on top, side by side */
+/* Two stat boxes on top */
 .two-stats {
   display: flex;
   gap: 12px;
 }
 
-/* Mini cards (same as before) */
+/* Mini cards */
 .mini-card {
   border: 2px solid #EA580C;
   border-radius: 8px;
@@ -109,7 +248,7 @@ p {
 
 /* Table */
 .table-section {
-  margin: 16px 24px;
+  margin: 16px 0;
   border: 2px solid #EA580C;
   border-radius: 8px;
   padding: 16px 20px;
@@ -120,7 +259,8 @@ table {
   border-collapse: collapse;
   margin-top: 12px;
 }
-table span{
+
+table span {
   color: #EA580C;
 }
 
@@ -130,11 +270,52 @@ th, td {
   border-bottom: 1px solid #EA580C;
 }
 
-#Revenue{
+#Revenue {
   color: green;
 }
 
-/* ===== MOBILE ===== */
+/* ===== MOBILE NAV ===== */
+@media (max-width: 905px) {
+  #hamburger {
+    display: flex;
+  }
+
+  #nav-links {
+    width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: 0px 0px 15px 15px;
+
+    display: none;
+    flex-flow: column nowrap;
+    gap: 0.4rem;
+
+    position: absolute;
+    top: 78px;
+    right: 0px;
+
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  #nav-links.active {
+    display: flex;
+  }
+}
+
+@media (max-width: 460px) {
+  .header-right {
+    display: none;
+  }
+
+  #nav-links :nth-child(5),
+  #nav-links :nth-child(6),
+  #nav-links :nth-child(7) {
+    display: flex;
+  }
+}
+
+/* ===== MOBILE PAGE LAYOUT ===== */
 @media (max-width: 576px) {
 
   .stats,

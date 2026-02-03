@@ -9,13 +9,55 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <title>Complaint Management</title>
-  <link rel="stylesheet" href="assets\styles\complaint-management.css">
+  <link rel="stylesheet" href="assets/styles/complaint-management.css">
 </head>
 
 <body class="text">
 
 <header>
+  <div class="header-brand">
+    <button id="hamburger">
+      <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+    </button>
+    <div class="logo">
+      <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+      <h1>Hawkers</h1>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <ul id="nav-links">
+      <li><a href="admin.html">Admin Dashboard</a></li>
+      <li><a href="complaint-management.html">Complaint Management</a></li>
+      <li><a href="analytics.html">Analytics & Reports</a></li>
+      <li><a href="user-management.html">User Management</a></li>
+      <li><div class="right-buttons"></div></li>
+      <li><a href="">LogOut</a></li>
+      <li><a href="user.html">User</a></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">  
+    <a href="" id="logout-btn">
+      LogOut <img src="assets/icons/template/arrow.svg" alt="Logout Icon">
+    </a>
+    <div id="user">
+      <img src="assets/icons/template/user.svg" alt="User Icon">
+    </div>
+  </div>
+</header>
+
+<!-- EVERYTHING BELOW NAV GOES INSIDE .page -->
+<div class="page">
+
+ <div class="top-bar">
   <h1>Complaint Management</h1>
+
+  <div class="top-bar-date">
+    <p>Today's Date</p>
+    <p class="date">Sunday, 11 Jan, 2026</p>
+  </div>
+</div>
 
   <section class="stats">
     <div class="stats-card pending">
@@ -23,7 +65,7 @@
         <b class="stat-number">2</b>
         <p><b>Pending</b></p>
       </div>
-      <img src="assets\icons\Dashboard\pending.png" alt="Pending">
+      <img src="assets/icons/Dashboard/pending.png" alt="Pending">
     </div>
 
     <div class="stats-card progress-card">
@@ -31,7 +73,7 @@
         <b class="stat-number">5</b>
         <p><b>In Progress</b></p>
       </div>
-      <img src="assets\icons\Dashboard\edit.png" alt="Edit">
+      <img src="assets/icons/Dashboard/edit.png" alt="Edit">
     </div>
 
     <div class="stats-card resolved">
@@ -39,59 +81,63 @@
         <b class="stat-number">10</b>
         <p><b>Resolved</b></p>
       </div>
-      <img src="assets\icons\Dashboard\seen.png" alt="Done">
+      <img src="assets/icons/Dashboard/seen.png" alt="Done">
     </div>
   </section>
-</header>
 
-<main>
+  <main>
 
-  <!-- Filters -->
-  <section class="filter">
-    <div class="button">All <img src="assets\icons\Dashboard\filter.png" alt="filter"></div>
-    <div class="button">Pending</div>
-    <div class="button">Resolved</div>
-    <div class="button">Cleanliness</div>
-    <div class="button">Food Quality</div>
-    <div class="button">Service Quality</div>
-    <div class="button">Others</div>
-  </section>
+    <section class="filter">
+      <div class="button">All <img src="assets/icons/Dashboard/filter.png" alt="filter"></div>
+      <div class="button">Pending</div>
+      <div class="button">Resolved</div>
+      <div class="button">Cleanliness</div>
+      <div class="button">Food Quality</div>
+      <div class="button">Service Quality</div>
+      <div class="button">Others</div>
+    </section>
 
-  <!-- Complaint Card -->
-  <section class="complaints">
+    <section class="complaints">
 
-    <div class="complaint-top">
-      <!-- LEFT -->
-      <div class="complaint-info">
-        <h3>
-          Complaint #4
-          <span class="progress">Pending</span>
-        </h3>
-        <p>Cleanliness | Laksa Paradise | submitted by Aswin</p>
+      <div class="complaint-top">
+        <div class="complaint-info">
+          <h3>
+            Complaint #4
+            <span class="progress">Pending</span>
+          </h3>
+          <p>Cleanliness | Laksa Paradise | submitted by Aswin</p>
+        </div>
+
+        <div class="complaint-action">
+          <label for="status">Update Status</label>
+          <select id="status">
+            <option>Select option</option>
+            <option>Pending</option>
+            <option>In Progress</option>
+            <option>Resolved</option>
+          </select>
+        </div>
       </div>
 
-      <!-- RIGHT -->
-      <div class="complaint-action">
-        <label for="status">Update Status</label>
-        <select id="status">
-          <option>Select option</option>
-          <option>Pending</option>
-          <option>In Progress</option>
-          <option>Resolved</option>
-        </select>
+      <div class="comment">
+        <h4>Complaint Details</h4>
+        <p>
+          Tables were not cleaned properly. Found food debris from previous customer.
+        </p>
       </div>
-    </div>
 
-    <div class="comment">
-      <h4>Complaint Details</h4>
-      <p>
-        Tables were not cleaned properly. Found food debris from previous customer.
-      </p>
-    </div>
+    </section>
 
-  </section>
+  </main>
+</div>
+<script>
+let hamburger = document.getElementById("hamburger");
+let nav_links = document.getElementById("nav-links");
 
-</main>
+hamburger.addEventListener("click", () => {
+    nav_links.classList.toggle("active");
+});
+</script>
 
 </body>
 </html>
