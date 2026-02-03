@@ -23,13 +23,12 @@ import {
 ================================ */
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyBanWtDqAlIO22oNB2DhGY3QPj2er_1Uzg",
-    authDomain: "hawkers-b4691.firebaseapp.com",
-    databaseURL: "https://hawkers-b4691-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "hawkers-b4691",
-    storageBucket: "hawkers-b4691.firebasestorage.app",
-    messagingSenderId: "595551259410",
-    appId: "1:595551259410:web:98d614906aa354509a41cb"
+  apiKey: "AIzaSyDac46txTyLdtBlJ4gvcvl2yxTlduC_FUE",
+  authDomain: "hawkers-native.firebaseapp.com",
+  projectId: "hawkers-native",
+  storageBucket: "hawkers-native.firebasestorage.app",
+  messagingSenderId: "25256491882",
+  appId: "1:25256491882:web:99a54c487373e155278313"
 };
 
 /* ================================

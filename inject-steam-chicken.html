@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Inject Steam Chicken Rice</title>
+</head>
+<body>
+  <h2>Injecting Steam Chicken Rice…</h2>
+  <pre id="log">Starting…</pre>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc
+    } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDac46txTyLdtBlJ4gvcvl2yxTlduC_FUE",
+  authDomain: "hawkers-native.firebaseapp.com",
+  projectId: "hawkers-native",
+  storageBucket: "hawkers-native.firebasestorage.app",
+  messagingSenderId: "25256491882",
+  appId: "1:25256491882:web:99a54c487373e155278313"
+};
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const log = document.getElementById("log");
+
+    const productId = "Steam Chicken Rice";
+
+    function write(msg) {
+      log.textContent += "\n" + msg;
+    }
+
+    async function inject() {
+      /* ========= PRODUCT ========= */
+      await setDoc(doc(db, "products", productId), {
+        name: "Steam Chicken Rice",
+        basePrice: 5,
+        likes: 13,
+        imagePath: "assets/images/order/Steam Chicken Rice.jpg",
+        description:
+          "Steam chicken rice is a classic dish featuring tender, gently steamed chicken served with fragrant rice cooked in chicken broth."
+      });
+
+      write("✅ Product injected");
+
+      /* ========= RICE ========= */
+      await setDoc(doc(db, "products", productId, "addons", "rice"), {
+        title: "Rice",
+        type: "radio",
+        required: true,
+        options: [
+          { label: "Chicken Stock Rice", price: 0 },
+          { label: "White Rice", price: 0 }
+        ]
+      });
+
+      write("✅ Rice addon injected");
+
+      /* ========= MEAT ========= */
+      await setDoc(doc(db, "products", productId, "addons", "meat"), {
+        title: "Meat",
+        type: "radio",
+        required: true,
+        options: [
+          { label: "Chicken Thigh", price: 0 },
+          { label: "Chicken Breast", price: 0 },
+          { label: "Mix of both", price: 0 }
+        ]
+      });
+
+      write("✅ Meat addon injected");
+
+      /* ========= EXTRAS ========= */
+      await setDoc(doc(db, "products", productId, "addons", "extras"), {
+        title: "Add On",
+        type: "checkbox",
+        required: false,
+        options: [
+          { label: "Add Rice", price: 1.5 },
+          { label: "Add Veg", price: 2 },
+          { label: "Add Dumplings", price: 2 },
+          { label: "Add Meat", price: 3.5 },
+          { label: "Add Egg", price: 1.5 }
+        ]
+      });
+
+      write("✅ Extras addon injected");
+      write("\n🎉 DONE — Steam Chicken Rice is clean & correct");
+    }
+
+    inject().catch(err => {
+      write("❌ ERROR: " + err.message);
+      console.error(err);
+    });
+  </script>
+</body>
+</html>

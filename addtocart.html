@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Products</title>
+  <meta charset="UTF-8" />
+  <title>Add To Cart</title>
 
-    <link rel="stylesheet" href="template/template.css">
-    <link rel="stylesheet" href="assets/styles/order.css">
-
+  <link rel="stylesheet" href="template/template.css">
+  <link rel="stylesheet" href="assets/styles/addtocart.css">
 </head>
-<body>
 
+<body>
 <!-- HEADER (template) -->
 <header>
     <div class="header-brand">
@@ -45,52 +44,33 @@
 </header>
 
    
-    <main>
+<main>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="order.html">Order</a></li>
+    </ul>
+  </nav>
 
-    <!-- Breadcrumbs -->
-    <nav id="breadcrumbs">
-        <ul>
-            <li><a href="order.html">Order</a></li>
-        </ul>
-    </nav>
+  <!-- ✅ CENTERING WRAPPER -->
+  <div class="product-page">
+    <section class="product-card" id="product-card"></section>
+  </div>
 
-    <!-- Stall Header -->
-    <section class="stall-header">
-        <a href="food_stalls.html" class="back">Back</a>
+  <!-- Bottom bar -->
+  <div class="bottom-bar">
+    <div class="qty-control">
+      <button id="qty-minus">−</button>
+      <span id="qty">1</span>
+      <button id="qty-plus">+</button>
+    </div>
 
-        <h1 id="stall-name">Hainanese Chicken Rice #01-40</h1>
-        <p id="stall-location">Maxwell Centre</p>
-
-    <img
-        class="stall-banner"
-        src="assets\images\food_stall\chicken rice stall.jpg"
-    >
-
-    </section>
-
-    <!-- Products Section -->
-    <section class="products-section">
-        <h2>Products</h2>
-
-        <div class="search-bar">
-            <input type="text" placeholder="Search">
-            <span>→</span>
-        </div>
-
-        <h3>Main Dishes</h3>
-
-        <div class="product-grid" id="product-grid">
-            <!-- Cards injected by JS -->
-        </div>
-    </section>
+    <div class="price-cart">
+      <span id="total-price">$5.00</span>
+      <button id="add-to-cart">Add to Cart</button>
+    </div>
+  </div>
 </main>
 
-<!-- FOOTER (template) -->
-<footer></footer>
-
-<script type="module" src="assets/scripts/order.js"></script>
-
-
-
+<script type="module" src="assets/scripts/addtocart.js"></script>
 </body>
 </html>

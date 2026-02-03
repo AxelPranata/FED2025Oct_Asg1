@@ -1,17 +1,18 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
 import {
   getFirestore,
   collection,
   getDocs,
   doc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+  updateDoc,
+  increment
+} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-console.log("🔥 order.js loaded (v9)");
 
-// ======================
-// Firebase configuration
-// ======================
+
+/* =========================
+   Firebase config
+========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDac46txTyLdtBlJ4gvcvl2yxTlduC_FUE",
   authDomain: "hawkers-native.firebaseapp.com",
@@ -21,102 +22,65 @@ const firebaseConfig = {
   appId: "1:25256491882:web:99a54c487373e155278313"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-// ======================
-// Load products
-// ======================
-async function loadProducts() {
-  const grid = document.getElementById("product-grid");
+/* =========================
+   Render products
+========================= */
+console.log("order.js loaded");
 
-  if (!grid) {
-    console.error("❌ product-grid not found in HTML");
-    return;
-  }
+const grid = document.getElementById("product-grid");
 
-  grid.innerHTML = "";
-
-  try {
-    const snapshot = await getDocs(collection(db, "products"));
-    console.log("📦 Products found:", snapshot.size);
-
-    if (snapshot.size > 0) {
-      snapshot.forEach(docSnap => {
-        const p = docSnap.data();
-        renderProduct(grid, p, docSnap.id);
-      });
-      return;
-    }
-  } catch (err) {
-    console.warn("⚠ Firestore blocked (school WiFi)", err);
-  }
-
-  // ======================
-  // FALLBACK DATA
-  // ======================
-  const fallbackProduct = {
-    name: "Steam Chicken Rice",
-    basePrice: 5,
-    description: "Steam chicken rice is a classic dish featuring tender chicken.",
-    imagePath: "assets/images/order/Steam Chicken Rice.jpg",
-    likes: 201
-  };
-
-  renderProduct(grid, fallbackProduct, null);
+if (!grid) {
+  throw new Error("❌ #product-grid not found");
 }
 
-// ======================
-// Render product card
-// ======================
-function renderProduct(grid, p, docId) {
+const snap = await getDocs(collection(db, "products"));
+
+snap.forEach(docSnap => {
+  const product = docSnap.data();
+  const productId = docSnap.id; // ✅ FIRESTORE DOC ID
+
   const card = document.createElement("div");
   card.className = "product-card";
 
-  let likes = p.likes ?? 0;
+card.innerHTML = `
+  <img src="${product.imagePath}">
+  <div class="info">
+    <h4>${product.name}</h4>
+    <p class="desc">${product.description}</p>
 
-  card.innerHTML = `
-    <img src="${p.imagePath}" alt="${p.name}">
-    <div class="info">
-      <div class="title-row">
-        <h4>${p.name}</h4>
-        <span class="price">$${Number(p.basePrice).toFixed(2)}</span>
-      </div>
+    <button class="like-btn">
+      <img src="assets/icons/order/likes.png" class="like-icon">
+      <span class="like-count">${product.likes ?? 0}</span>
+    </button>
 
-      <p class="description">${p.description ?? ""}</p>
+    <p class="price">$${product.basePrice}</p>
+  </div>
+`;
 
-      <div class="card-footer">
-        <button class="like-btn">
-          <img src="assets/icons/order/likes.png" alt="Like">
-          <span class="like-count">${likes}</span>
-        </button>
-      </div>
-    </div>
-  `;
+const likeBtn = card.querySelector(".like-btn");
+const likeCount = card.querySelector(".like-count");
 
-  const likeBtn = card.querySelector(".like-btn");
-  const likeCount = card.querySelector(".like-count");
+likeBtn.addEventListener("click", async (e) => {
+  e.stopPropagation();
 
-  likeBtn.addEventListener("click", async () => {
-    likes += 1;
-    likeCount.textContent = likes;
+  likeCount.textContent =
+    Number(likeCount.textContent) + 1;
 
-    if (!docId) return; // fallback mode, no Firestore
+  await updateDoc(
+    doc(db, "products", productId),
+    { likes: increment(1) }
+  );
+});
 
-    try {
-      await updateDoc(doc(db, "products", docId), {
-        likes: likes
-      });
-    } catch (err) {
-      console.error("❌ Failed to update likes", err);
-    }
+
+  // ✅ THIS IS THE MAGIC LINE
+  card.addEventListener("click", () => {
+    window.location.href =
+      `addtocart.html?productId=${encodeURIComponent(productId)}`;
   });
 
   grid.appendChild(card);
-}
-
-// ======================
-// Run on page load
-// ======================
-loadProducts();
+});
