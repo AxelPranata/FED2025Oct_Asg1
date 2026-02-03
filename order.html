@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+
+    <link rel="stylesheet" href="template/template.css">
+    <link rel="stylesheet" href="assets/styles/order.css">
+
+</head>
+<body>
+
+<!-- HEADER (template) -->
+<header>
+    <div class="header-brand">
+        <button id="hamburger">
+            <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+        </button>
+        <div class="logo">
+            <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+            <h1>Hawkers</h1>
+        </div>
+    </div>
+
+    <nav class="header-nav">
+        <ul id="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="hawker_centers.html">Order</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><div class="divider"></div></li>
+            <li><a href="cart.html">Cart</a></li>
+            <li><a href="user.html">User</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-actions">
+        <a href="cart.html" id="cart">
+            Cart <img src="assets/icons/template/shopping_cart.svg" alt="Shopping Cart Icon">
+        </a>
+        <div id="user">
+            <img src="assets/icons/template/user.svg" alt="User Icon">
+        </div>
+    </div>
+</header>
+
+   
+    <main>
+    <!-- Stall Header -->
+    <section class="stall-header">
+        <a href="food_stalls.html" class="back">Back</a>
+
+        <h1 id="stall-name">Hainanese Chicken Rice #01-40</h1>
+        <p id="stall-location">Maxwell Centre</p>
+
+    <img
+        class="stall-banner"
+        src="assets\images\order\chicken rice stall.jpg"
+    >
+
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <h2>Products</h2>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search">
+            <span>→</span>
+        </div>
+
+        <h3>Main Dishes</h3>
+
+        <div class="product-grid" id="product-grid">
+            <!-- Cards injected by JS -->
+        </div>
+    </section>
+</main>
+
+<!-- FOOTER (template) -->
+<footer></footer>
+
+<script type="module" src="assets/scripts/order.js"></script>
+
+
+
+</body>
+</html>
