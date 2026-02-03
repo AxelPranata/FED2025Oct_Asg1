@@ -7,7 +7,9 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #FFFFFF;
+    background-color: #F6F6F6;
+    background-image: radial-gradient(#EA580C 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
 }
 
 /* TEXT */
@@ -206,6 +208,7 @@ header {
     flex-wrap: wrap;
     border: 2px solid #EA580C;
     border-radius: 8px;
+    background: white;
 }
 
 .button {
@@ -225,6 +228,7 @@ header {
     padding: 15px 25px;
     margin: 16px 0;
     border-radius: 8px;
+    background: white;
 }
 
 .complaint-top {
@@ -341,4 +345,3 @@ img {
         display: flex;
     }
 }
-

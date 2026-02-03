@@ -7,7 +7,9 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  background-color: #FFFFFF;
+  background-color: #F6F6F6;
+  background-image: radial-gradient(#EA580C 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
 }
 
 /* TEXT */
@@ -176,6 +178,7 @@ header {
   border-radius: 8px;
   flex: 1;
   min-width: 250px;
+  background: white;
 }
 
 .stat-value {
@@ -233,6 +236,7 @@ img {
   border-radius: 8px;
   padding: 16px 20px;
   overflow-x: auto;
+  background: white;
 }
 
 table {

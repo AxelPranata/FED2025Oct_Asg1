@@ -7,7 +7,9 @@ body {
     width: 100%;
     margin: 0;
     padding: 0;
-    background-color: #FFFFFF;
+    background-color: #F6F6F6;
+    background-image: radial-gradient(#EA580C 0.5px, transparent 0.5px);
+    background-size: 20px 20px;
 }
 
 /* TEXT */
@@ -162,6 +164,8 @@ p {
 /* Make sure this is different from nav header-right */
 .page-date {
     text-align: right;
+    display: flex;
+    flex-direction: column;
 }
 
 .date {
@@ -169,6 +173,8 @@ p {
     font-size: 20px;
     font-weight: bold;
 }
+
+
 
 /* ---------- Stats Section ---------- */
 .stats {
@@ -185,6 +191,7 @@ p {
     border-radius: 8px;
     flex: 1;
     min-width: 250px;
+    background: white;
 }
 
 .stat-value {
@@ -223,6 +230,7 @@ p {
     padding: 16px 20px;
     flex: 1;
     min-width: 300px;
+    background: white;
 }
 
 /* Card headers */
@@ -256,6 +264,15 @@ p {
     border: none;
 }
 
+.button a {
+  text-decoration: none;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  display: block;
+  font-weight: bolder;
+  font-size:medium;
+}
+
 .progress {
     background-color: #FDB8B8;
     color: #AD5151;
@@ -270,6 +287,7 @@ p {
     border-radius: 8px;
     padding: 16px 24px;
     margin: 16px 0;
+    background:white;
 }
 
 .actions {
@@ -338,6 +356,7 @@ p {
     #nav-links :nth-child(7) {
         display: flex;
     }
+
 }
 
 /* ===== MOBILE PAGE LAYOUT ===== */
@@ -362,5 +381,8 @@ p {
     .card,
     .action {
         min-width: 100%;
+    }
+    .page-date{
+        display: none;
     }
 }

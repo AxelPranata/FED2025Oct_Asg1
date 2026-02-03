@@ -108,7 +108,7 @@
     <article class="card">
       <div class="card-header">
         <h3>Recent Complaints</h3>
-        <button class="button">View all</button>
+        <button class="button"><a href="complaint-management.html">View all</a></button>
       </div>
 
       <div class="complaint">
@@ -126,17 +126,17 @@
     <h3>Quick Actions</h3>
     <div class="actions">
       <div class="action">
-        <span>Manage Complaints</span>
+        <button class="button"><a href="complaint-management.html">Manage Complaints</a></button>
         <img src="assets/icons/Dashboard/report.png" alt="Complaint">
       </div>
 
       <div class="action">
-        <span>View Reports</span>
+        <button class="button"><a href="analytics.html">View Reports</a></button>
         <img src="assets/icons/Dashboard/trend.png" alt="trend">
       </div>
 
       <div class="action">
-        <span>Manage Users</span>
+        <button class="button"><a href="user-management.html">Manage Users</a></button>
         <img src="assets/icons/Dashboard/user.png" alt="user">
       </div>
     </div>
@@ -151,6 +151,20 @@ let nav_links = document.getElementById("nav-links");
 hamburger.addEventListener("click", () => {
     nav_links.classList.toggle("active");
 });
+
+const dateElement = document.querySelector(".date");
+
+const today = new Date();
+
+const options = { 
+  weekday: "long", 
+  day: "2-digit", 
+  month: "short", 
+  year: "numeric" 
+};
+
+dateElement.textContent = today.toLocaleDateString("en-GB", options);
+
 </script>
 
 </body>
