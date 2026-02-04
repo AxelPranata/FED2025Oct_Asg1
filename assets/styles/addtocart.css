@@ -128,4 +128,11 @@ body{
   gap: 12px;
 }
 
+/* ===== NAV ACTIVE STATE (ORDER PAGE) ===== */
+#nav-links li:nth-child(2) {
+    background-color: #DBDFD0;
+    border-radius: 15px;
+}
+
+
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cart</title>
+
+    <link rel="stylesheet" href="template/template.css">
+    <link rel="stylesheet" href="assets/styles/cart.css">
+
+</head>
+<body>
+
+<!-- HEADER (template) -->
+<header>
+    <div class="header-brand">
+        <button id="hamburger">
+            <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+        </button>
+        <div class="logo">
+            <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+            <h1>Hawkers</h1>
+        </div>
+    </div>
+
+    <nav class="header-nav">
+        <ul id="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="hawker_centers.html">Order</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="promotions.html">Promotions</a></li>
+            <li><div class="divider"></div></li>
+            <li class="active"><a href="cart.html">Cart</a></li>
+            <li><a href="user.html">User</a></li>
+        </ul>
+    </nav>
+
+    <div class="header-actions">
+        <a href="cart.html" id="cart">
+            Cart <img src="assets/icons/template/shopping_cart.svg" alt="Shopping Cart Icon">
+        </a>
+        <div id="user">
+            <img src="assets/icons/template/user.svg" alt="User Icon">
+        </div>
+    </div>
+</header>
+
+    <main>
+
+    <!-- Breadcrumbs -->
+    <nav id="breadcrumbs">
+        <ul>
+            <li><a href="order.html">Order</a></li>
+            <li>/</li>
+            <li><a href="cart.html">Cart</a></li>
+        </ul>
+    </nav>
+
+    <main class="cart-page">
+
+  <h2>My Cart</h2>
+
+  <div class="cart-layout">
+    <div id="cart-items"></div>
+
+    <div class="order-summary">
+      <h3>Order</h3>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span id="subtotal">$0.00</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Takeaway Charge</span>
+        <span id="takeaway">$0.30</span>
+      </div>
+
+      <div class="summary-total">
+        <span>Grand Total</span>
+        <span id="total">$0.00</span>
+      </div>
+
+      <h4>Payment Method</h4>
+
+      <div class="payments">
+        <button>Cash</button>
+        <button>PayNow</button>
+        <button>Visa</button>
+        <button>Mastercard</button>
+      </div>
+
+      <button class="pay-btn">Pay Now</button>
+    </div>
+  </div>
+
+    </main> 
+
+    <script type="module" src="assets/scripts/cart.js"></script>
+
+</body>

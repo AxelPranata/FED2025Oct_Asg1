@@ -31,27 +31,10 @@ const params = new URLSearchParams(window.location.search);
 let centerId = params.get("centerId");
 let stallId = params.get("stallId");
 
-// 🔁 AUTO-RESOLVE FROM FIREBASE IF MISSING
 if (!centerId || !stallId) {
-  console.warn("⚠️ centerId or stallId missing — auto-detecting from Firebase");
-
-  // 1️⃣ get first hawker center
-  const centersSnap = await getDocs(collection(db, "hawker-centers"));
-  if (centersSnap.empty) {
-    throw new Error("❌ No hawker centers found");
-  }
-  centerId = centersSnap.docs[0].id;
-
-  // 2️⃣ get first food stall under that center
-  const stallsSnap = await getDocs(
-    collection(db, "hawker-centers", centerId, "food-stalls")
-  );
-  if (stallsSnap.empty) {
-    throw new Error("❌ No food stalls found");
-  }
-  stallId = stallsSnap.docs[0].id;
-
-  console.log("✅ Auto-selected:", { centerId, stallId });
+  console.error("❌ Missing centerId or stallId in URL");
+  console.error("Expected: ?centerId=050335&stallId=01-01");
+  throw new Error("Missing navigation context");
 }
 
 
