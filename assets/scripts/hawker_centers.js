@@ -33,15 +33,15 @@ function createItem(id, name, img) {
     url('${img}') no-repeat center center / cover`;
 
   // Add content
-  const hawkerCenterid = document.createElement('p');
-  hawkerCenterid.classList.add('highlight');
-  hawkerCenterid.textContent = `#${id}`;
+  const hawkerCenterId = document.createElement('p');
+  hawkerCenterId.classList.add('highlight');
+  hawkerCenterId.textContent = `#${id}`;
 
   const hawkerCenterName = document.createElement('p');
   hawkerCenterName.textContent = name;
 
   // Append content
-  item.appendChild(hawkerCenterid);
+  item.appendChild(hawkerCenterId);
   item.appendChild(hawkerCenterName);
 
   // Make card clickable (navigate with URL param)
