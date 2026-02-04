@@ -19,9 +19,9 @@ function getRedirect(role){
   // Link login pages to onboarding pages as requested
   if (role === "user") return "step1-user.html";
   if (role === "vendor") return "step1-vendor.html";
-  if (role === "user_login") return "step1-user.html";   // practice: take them back into onboarding
-  if (role === "vendor_login") return "step1-vendor.html";
-  if (role === "admin_login") return "step1-vendor.html"; // placeholder; replace with your admin dashboard later
+  if (role === "user_login") return "../home.html";   
+  if (role === "vendor_login") return "../home.html";
+  if (role === "admin_login") return "../admin.html"; // placeholder; replace with your admin dashboard later
   return "index.html";
 }
 

@@ -15,5 +15,7 @@ document.getElementById("btnNextUserPrefs")?.addEventListener("click", async () 
   await saveProfile(user.uid, "user", { preferences: prefs });
 
   // TODO: redirect to your actual home/feed page later
-  window.location.href = "login-user.html";
+  window.location.href = "../home.html";
+
+
 });

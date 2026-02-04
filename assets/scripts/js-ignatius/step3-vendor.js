@@ -16,6 +16,5 @@ document.getElementById("btnPublishDish")?.addEventListener("click", async () =>
     firstMenuItem: { dishPrice, dishName, dishDesc }
   });
 
-  alert("Published (practice)! Next: route to your vendor dashboard page.");
-  window.location.href = "login-vendor.html";
+   window.location.href = "../home.html";
 });
