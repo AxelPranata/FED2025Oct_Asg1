@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin Bootstrap (ONE TIME)</title>
+  <style>
+    body { font-family: system-ui, Arial; padding: 16px; }
+    input, button, label { font-size: 14px; }
+    input { padding: 8px; width: 320px; max-width: 100%; }
+    button { padding: 10px 14px; cursor: pointer; }
+    .row { margin: 10px 0; display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .log { white-space: pre-wrap; background: #111; color: #0f0; padding: 12px; border-radius: 8px; max-height: 45vh; overflow:auto; }
+    .warn { color: #b00; font-weight: 700; }
+  </style>
+</head>
+<body>
+  <h2>ONE-TIME Admin Bootstrap (Products + Addons)</h2>
+  <div class="warn">
+    DO NOT DEPLOY THIS FILE. Run once, confirm data created, then delete.
+  </div>
+
+  <div class="row">
+    <label>centerId</label>
+    <input id="centerId" placeholder="e.g. 050335" />
+  </div>
+
+  <div class="row">
+    <label>stallId</label>
+    <input id="stallId" placeholder='e.g. #01-01' />
+  </div>
+
+  <div class="row">
+    <label><input type="checkbox" id="overwrite"> overwrite existing docs</label>
+    <button id="runBtn">RUN BOOTSTRAP</button>
+  </div>
+
+  <h3>Log</h3>
+  <div class="log" id="log"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      getDoc,
+      collection
+    } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+    (async () => {
+      /* ===============================
+         FIREBASE CONFIG (UNCHANGED)
+      ================================ */
+      const firebaseConfig = {
+        apiKey: "AIzaSyDac46txTyLdtBlJ4gvcvl2yxTlduC_FUE",
+        authDomain: "hawkers-native.firebaseapp.com",
+        projectId: "hawkers-native",
+        storageBucket: "hawkers-native.firebasestorage.app",
+        messagingSenderId: "25256491882",
+        appId: "1:25256491882:web:99a54c487373e155278313"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+
+      const $ = (id) => document.getElementById(id);
+      const logEl = $("log");
+
+      function log(msg) {
+        logEl.textContent += msg + "\n";
+        logEl.scrollTop = logEl.scrollHeight;
+      }
+
+      function slugify(s) {
+        return String(s || "")
+          .trim()
+          .toLowerCase()
+          .replace(/['"]/g, "")
+          .replace(/[^a-z0-9]+/g, "-")
+          .replace(/^-+|-+$/g, "");
+      }
+
+      // ✅ Your 5 products (edit here if needed)
+      // Doc IDs will be clean slugs (e.g. steam-chicken-rice)
+      const PRODUCTS = [
+        {
+          name: "Steam Chicken Rice",
+          basePrice: 5,
+          description: "Steam chicken rice is a classic dish featuring tender, gently steamed chicken served with fragrant rice cooked in chicken broth."
+        },
+        { name: "Roast Chicken Rice", basePrice: 5, description: "" },
+        { name: "Roast Pork Rice", basePrice: 5, description: "" },
+        { name: "Lemon Cutlet Rice", basePrice: 5, description: "" },
+        { name: "Chicken Rice (Set)", basePrice: 5, description: "" }
+      ];
+
+      // ✅ Addons templates EXACTLY like your screenshots
+      // Applies to every product (edit if a product has different addons)
+      const ADDONS = [
+        {
+          id: "extras",
+          data: {
+            title: "Add On",
+            type: "checkbox",
+            required: false,
+            options: [
+              { label: "Add Rice", price: 1.5 },
+              { label: "Add Veg", price: 2 },
+              { label: "Add Dumplings", price: 2 },
+              { label: "Add Meat", price: 3.5 },
+              { label: "Add Egg", price: 1.5 }
+            ]
+          }
+        },
+        {
+          id: "meat",
+          data: {
+            title: "Meat",
+            type: "radio",
+            required: true,
+            options: [
+              { label: "Chicken Thigh", price: 0 },
+              { label: "Chicken Breast", price: 0 },
+              { label: "Mix of both", price: 0 }
+            ]
+          }
+        },
+        {
+          id: "rice",
+          data: {
+            title: "Rice",
+            type: "radio",
+            required: true,
+            options: [
+              { label: "Chicken Stock Rice", price: 0 },
+              { label: "White Rice", price: 0 }
+            ]
+          }
+        }
+      ];
+
+      async function safeSetDoc(ref, data, overwrite) {
+        const snap = await getDoc(ref);
+        if (snap.exists() && !overwrite) {
+          return { skipped: true };
+        }
+        await setDoc(ref, data, { merge: overwrite ? false : true });
+        return { skipped: false };
+      }
+
+      $("runBtn").addEventListener("click", async () => {
+        logEl.textContent = "";
+        const centerId = $("centerId").value.trim();
+        const stallId = $("stallId").value.trim();
+        const overwrite = $("overwrite").checked;
+
+        if (!centerId || !stallId) {
+          log("❌ Missing centerId or stallId.");
+          return;
+        }
+
+        log("=== START BOOTSTRAP ===");
+        log(`centerId = ${centerId}`);
+        log(`stallId  = ${stallId}`);
+        log(`overwrite = ${overwrite}`);
+        log("");
+
+        // Path: hawker-centers/{centerId}/food-stalls/{stallId}/products/{productId}
+        for (const p of PRODUCTS) {
+          const productId = slugify(p.name);
+          const productRef = doc(
+            db,
+            "hawker-centers",
+            centerId,
+            "food-stalls",
+            stallId,
+            "products",
+            productId
+          );
+
+          const productData = {
+            name: p.name,
+            basePrice: Number(p.basePrice),
+            description: p.description || ""
+          };
+
+          try {
+            const res = await safeSetDoc(productRef, productData, overwrite);
+            log(`${res.skipped ? "⏭️ SKIP" : "✅ WRITE"} product: ${productId}`);
+
+            // addons subcollection
+            for (const a of ADDONS) {
+              const addonRef = doc(
+                db,
+                "hawker-centers",
+                centerId,
+                "food-stalls",
+                stallId,
+                "products",
+                productId,
+                "addons",
+                a.id
+              );
+
+              const addonRes = await safeSetDoc(addonRef, a.data, overwrite);
+              log(`   ${addonRes.skipped ? "⏭️ SKIP" : "✅ WRITE"} addon: ${a.id}`);
+            }
+          } catch (e) {
+            log(`❌ ERROR writing ${productId}: ${e?.message || e}`);
+          }
+        }
+
+        log("");
+        log("=== DONE ===");
+        log("Now go Firestore → hawker-centers → " + centerId + " → food-stalls → " + stallId + " → products");
+        log("After confirming, DELETE THIS FILE.");
+      });
+
+      log("Ready. Fill centerId + stallId, then click RUN.");
+      log("Example: centerId=050335, stallId=#01-01");
+    })();
+  </script>
+</body>
+</html>

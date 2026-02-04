@@ -7,7 +7,7 @@ import {
   getDocs
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-/* Firebase config (DO NOT CHANGE) */
+/* Firebase config (UNCHANGED) */
 const firebaseConfig = {
   apiKey: "AIzaSyDac46txTyLdtBlJ4gvcvl2yxTlduC_FUE",
   authDomain: "hawkers-native.firebaseapp.com",
@@ -20,118 +20,119 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-/* DOM */
-const productCard = document.getElementById("product-card");
-const qtyEl = document.getElementById("qty");
-const priceEl = document.getElementById("total-price");
-const minusBtn = document.getElementById("qty-minus");
-const plusBtn = document.getElementById("qty-plus");
-
-/* Get productId */
+/* =========================
+   URL PARAMS (NEW)
+========================= */
 const params = new URLSearchParams(window.location.search);
+const centerId = params.get("centerId");
+const stallId = params.get("stallId");
 const productId = params.get("productId");
 
-if (!productId) {
-  productCard.innerHTML = "<p>❌ No product selected</p>";
-  throw new Error("Missing productId");
+if (!centerId || !stallId || !productId) {
+  throw new Error("❌ Missing centerId / stallId / productId");
 }
 
-/* Fetch product */
-const productSnap = await getDoc(doc(db, "products", productId));
+/* =========================
+   PRODUCT DOC
+========================= */
+const productRef = doc(
+  db,
+  "hawker-centers",
+  centerId,
+  "food-stalls",
+  stallId,
+  "products",
+  productId
+);
 
-if (!productSnap.exists()) {
-  productCard.innerHTML = "<p>❌ Product not found</p>";
-  throw new Error("Product not found");
-}
+const productSnap = await getDoc(productRef);
+if (!productSnap.exists()) throw new Error("❌ Product not found");
 
 const product = productSnap.data();
 
-/* ✅ Use basePrice from Firebase (your DB field) */
-let basePrice = Number(product.basePrice ?? 0);
-let quantity = 1;
+/* =========================
+   DOM
+========================= */
+const productCard = document.getElementById("product-card");
+const qtyEl = document.getElementById("qty");
+const priceEl = document.getElementById("total-price");
 
-/* Render product */
+let quantity = 1;
+let basePrice = Number(product.basePrice ?? 0);
+
+/* =========================
+   RENDER PRODUCT
+========================= */
 productCard.innerHTML = `
-  <h2 class="product-title">${product.name ?? ""}</h2>
-  <img src="${product.imagePath ?? ""}" alt="${product.name ?? "Product"}">
-  <p class="product-desc">${product.description ?? ""}</p>
+  <h2 class="product-title">${product.name}</h2>
+  <img src="${product.imagePath}">
+  <p class="product-desc">${product.description}</p>
 `;
 
-/* Fetch addons (subcollection) */
-const addonsSnap = await getDocs(collection(db, "products", productId, "addons"));
+/* =========================
+   ADDONS (extras / meat / rice)
+========================= */
+const addonsRef = collection(productRef, "addons");
+const addonsSnap = await getDocs(addonsRef);
 
-/* Render addon groups */
-addonsSnap.forEach(docSnap => {
-  const addon = docSnap.data();
-  if (!addon || !Array.isArray(addon.options)) return;
+addonsSnap.forEach(groupSnap => {
+  const group = groupSnap.data();
+  if (!Array.isArray(group.options)) return;
 
-  const group = document.createElement("div");
-  group.className = "addon-group";
+  const wrapper = document.createElement("div");
+  wrapper.className = "addon-group";
+  wrapper.innerHTML = `<h4>${group.title}</h4>`;
 
-  group.innerHTML = `<h4>${addon.title ?? "Options"}</h4>`;
+  group.options.forEach((opt, i) => {
+    const checked =
+      group.type === "radio" && group.required && i === 0
+        ? "checked"
+        : "";
 
-  addon.options.forEach((opt, index) => {
-    const optPrice = Number(opt.price ?? 0);
-
-    // For required radio groups: make first option checked by default
-    const shouldDefaultCheck =
-      addon.type === "radio" && addon.required === true && index === 0;
-
-    group.innerHTML += `
+    wrapper.innerHTML += `
       <div class="addon-item">
         <label>
           <input
-            type="${addon.type === "radio" ? "radio" : "checkbox"}"
-            name="${addon.title ?? docSnap.id}"
-            data-price="${optPrice}"
-            ${addon.required === true && addon.type === "radio" ? "required" : ""}
-            ${shouldDefaultCheck ? "checked" : ""}
+            type="${group.type}"
+            name="${groupSnap.id}"
+            data-price="${opt.price}"
+            ${checked}
           >
-          ${opt.label ?? ""}
+          ${opt.label}
         </label>
-        <span>$${optPrice.toFixed(2)}</span>
+        <span>$${opt.price.toFixed(2)}</span>
       </div>
     `;
   });
 
-  productCard.appendChild(group);
+  productCard.appendChild(wrapper);
 });
 
-/* ✅ Price calculation */
+/* =========================
+   PRICE LOGIC (UNCHANGED)
+========================= */
 function calculateTotal() {
   let addonsTotal = 0;
 
-  document
-    .querySelectorAll(".addon-item input:checked")
-    .forEach(input => {
-      addonsTotal += Number(input.dataset.price || 0);
-    });
+  document.querySelectorAll(".addon-item input:checked")
+    .forEach(i => addonsTotal += Number(i.dataset.price || 0));
 
-  const total = (basePrice + addonsTotal) * quantity;
-  priceEl.textContent = `$${total.toFixed(2)}`;
+  priceEl.textContent =
+    `$${((basePrice + addonsTotal) * quantity).toFixed(2)}`;
 }
 
-/* ✅ Live update when options change */
-document.addEventListener("change", e => {
-  if (e.target && e.target.matches(".addon-item input")) {
-    calculateTotal();
-  }
-});
+document.addEventListener("change", calculateTotal);
 
-/* ✅ Quantity controls */
-plusBtn.addEventListener("click", () => {
+document.getElementById("qty-plus").onclick = () => {
   quantity++;
   qtyEl.textContent = quantity;
   calculateTotal();
-});
+};
 
-minusBtn.addEventListener("click", () => {
-  if (quantity > 1) {
-    quantity--;
-    qtyEl.textContent = quantity;
-    calculateTotal();
-  }
-});
+document.getElementById("qty-minus").onclick = () => {
+  if (quantity > 1) quantity--;
+  qtyEl.textContent = quantity;
+  calculateTotal();
+};
 
-/* ✅ Initial total (after we rendered default selections) */
 calculateTotal();
