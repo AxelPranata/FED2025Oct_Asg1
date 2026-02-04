@@ -46,7 +46,7 @@ function createItem(id, name, img) {
 
   // Make card clickable (navigate with URL param)
   item.addEventListener('click', () => {
-    window.location.href = `food_stalls.html?id=${id}`;
+    window.location.href = `food_stalls.html?hc=${id}`;
   });
 
   console.log(`Created ${id} ${name} ${img}`)
