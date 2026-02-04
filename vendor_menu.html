@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <div id="nav-container"></div> -->
+
+
+  <link rel="stylesheet" href="/assets/styles/vendor_menu.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Management</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+  
+</head>
+<body>
+  <div id="nav-container"></div>
+  <div id="menu"></div>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div>
+        <h2>Menu Management</h2>
+        <p>Manage your menu items, pricing, and availability</p>
+      </div>
+      <button class="btn btn-primary">
+        <i data-lucide="plus" class="icon"></i>
+        Add Menu Item
+      </button>
+    </div>
+
+    <!-- Store Info Banner -->
+    <div class="card banner-card">
+      <div class="card-content">
+        <div class="banner-content">
+          <div class="banner-icon">
+            <i data-lucide="utensils-crossed" class="icon-lg icon-white"></i>
+          </div>
+          <div>
+            <h3 class="banner-title">Maxwell Hainanese Chicken Rice</h3>
+            <p class="banner-subtitle">Maxwell Food Centre • Chinese Cuisine • Open</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Items by Category -->
+    <div id="menu-categories"></div>
+
+    <!-- Quick Stats -->
+    <div class="grid-stats" id="stats-grid"></div>
+  </div>
+
+  <script type="module" src="/assets/scripts/kishore_js/vendor_menu.js"></script>
+
+  <script src="/assets/scripts/kishore_js/vendor_nav.js"></script>
+</body>
+</html>
