@@ -16,5 +16,5 @@ document.getElementById("btnPublishDish")?.addEventListener("click", async () =>
     firstMenuItem: { dishPrice, dishName, dishDesc }
   });
 
-   window.location.href = "../home.html";
+   window.location.href = "../vendor_menu.html";
 });

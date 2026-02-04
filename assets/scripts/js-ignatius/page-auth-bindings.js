@@ -20,7 +20,7 @@ function getRedirect(role){
   if (role === "user") return "step1-user.html";
   if (role === "vendor") return "step1-vendor.html";
   if (role === "user_login") return "../home.html";   
-  if (role === "vendor_login") return "../home.html";
+  if (role === "vendor_login") return "../vendor_menu.html";
   if (role === "admin_login") return "../admin.html"; // placeholder; replace with your admin dashboard later
   return "index.html";
 }
