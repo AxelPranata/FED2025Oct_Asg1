@@ -65,8 +65,8 @@ function createCodeCard(promoCode, promoText, discount, daysRemaining, img) {
   detailsRight.appendChild(percentage);
 
   // Append content
-  card.appendChild(detailsLeft);
   card.appendChild(detailsRight);
+  card.appendChild(detailsLeft);
 
   return card;
 }

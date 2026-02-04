@@ -40,7 +40,7 @@ function createItem(id, name, img) {
     // Add content
     const foodStallId = document.createElement('p');
     foodStallId.classList.add('highlight');
-    foodStallId.textContent = id;
+    foodStallId.textContent = `#${id}`;
 
     const foodStallName = document.createElement('p');
     foodStallName.textContent = name;
