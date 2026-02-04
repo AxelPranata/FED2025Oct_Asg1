@@ -1,160 +1,194 @@
-import { db, auth } from "./firebase.js";
-import { collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { db } from "./firebase.js";
+import {
+  collection,
+  getDocs,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-
-
+// 🔒 YOUR VENDOR / AUTH UID
+const VENDOR_ID = "4I9X843cHGcdTZINaPiAY0DRwFx2";
 
 let menuItems = [];
 let categories = [];
 
+/* =========================
+   LOAD MENU FROM FIRESTORE
+========================= */
 async function loadMenu() {
-  onAuthStateChanged(auth, async (user) => {
-    if (!user) {
-      console.error("User not logged in");
-      return;
-    }
-
-    const vendorId = user.uid;
-
-    const menuRef = collection(db, "vendors", vendorId, "menu");
+  try {
+    const menuRef = collection(db, "vendors", VENDOR_ID, "menu");
     const snapshot = await getDocs(menuRef);
 
-    menuItems = snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
+    menuItems = snapshot.docs.map(d => ({
+      id: d.id,
+      ...d.data()
     }));
 
-    // derive categories dynamically
     categories = [...new Set(menuItems.map(i => i.category))];
 
     renderMenuCategories();
     renderStats();
-  });
+  } catch (err) {
+    console.error("Failed to load menu:", err);
+  }
 }
 
-
+/* =========================
+   RENDER MENU
+========================= */
 function renderMenuCategories() {
-  const container = document.getElementById('menu-categories');
+  const container = document.getElementById("menu-categories");
   container.innerHTML = "";
 
   categories.forEach(category => {
-    const categoryItems = menuItems.filter(item => item.category === category);
-    
-    if (categoryItems.length === 0) return;
+    const items = menuItems.filter(i => i.category === category);
+    if (items.length === 0) return;
 
-    const section = document.createElement('div');
-    section.className = 'category-section';
+    const section = document.createElement("div");
+    section.className = "category-section";
 
     section.innerHTML = `
       <div class="category-header">
-        <i data-lucide="tag" class="icon icon-orange"></i>
         <h3 class="category-title">${category}</h3>
-        <span class="badge badge-count">${categoryItems.length} items</span>
+        <span class="badge badge-count">${items.length} items</span>
       </div>
-      <div class="grid" id="category-${category.replace(/\s+/g, '-')}"></div>
+      <div class="grid"></div>
     `;
 
-    container.appendChild(section);
+    const grid = section.querySelector(".grid");
 
-    const grid = section.querySelector('.grid');
-    categoryItems.forEach(item => {
-      const card = document.createElement('div');
-      card.className = 'card';
+    items.forEach(item => {
+      const card = document.createElement("div");
+      card.className = "card";
+
       card.innerHTML = `
         <div class="item-image">
-          ${item.image ? 
-            `<img src="${item.image}" alt="${item.name}" />` : 
-            `<div class="no-image">
-              <i data-lucide="camera" class="icon-xl icon-gray"></i>
-              <p class="no-image-text">No image</p>
-            </div>`
+          ${
+            item.image
+              ? `<img src="${item.image}" />`
+              : `<div class="no-image">No image</div>`
           }
-          ${item.popular ? 
-            `<div class="badge-overlay badge-left">
-              <span class="badge badge-popular">🔥 Popular</span>
-            </div>` : ''
+          ${
+            item.popular
+              ? `<div class="badge-overlay badge-left">
+                   <span class="badge badge-popular">🔥 Popular</span>
+                 </div>`
+              : ""
           }
         </div>
+
         <div class="item-header">
           <h4 class="item-title">${item.name}</h4>
           <p class="item-description">${item.description}</p>
         </div>
-        <div class="card-content">
-          <div class="price-section">
-            <div class="price-display">
-              <i data-lucide="dollar-sign" class="icon icon-orange"></i>
-              <span class="price-amount">${item.price.toFixed(2)}</span>
-              <span class="price-currency">SGD</span>
-            </div>
-          </div>
-          <div class="button-group">
-            <button class="btn btn-outline btn-sm flex-1 btn-edit" data-id="${item.id}">
 
-              <i data-lucide="edit" class="icon"></i>
+        <div class="card-content">
+          <div class="price-display">
+            <span class="price-amount">${Number(item.price).toFixed(2)}</span>
+            <span class="price-currency">SGD</span>
+          </div>
+
+          <div class="button-group">
+            <button
+              class="btn btn-outline btn-sm btn-edit"
+              data-id="${item.id}"
+            >
               Edit
-            </button>
-            <button class="btn btn-outline btn-sm btn-delete">
-              <i data-lucide="trash-2" class="icon"></i>
             </button>
           </div>
         </div>
       `;
-      
+
       grid.appendChild(card);
     });
-  });
 
-  lucide.createIcons();
+    container.appendChild(section);
+  });
 }
 
+/* =========================
+   STATS
+========================= */
 function renderStats() {
-  const statsGrid = document.getElementById('stats-grid');
-  
-  const avgPrice = (menuItems.reduce((sum, i) => sum + i.price, 0) / menuItems.length).toFixed(2);
+  const statsGrid = document.getElementById("stats-grid");
+  statsGrid.innerHTML = "";
+
+  const avgPrice =
+    menuItems.length === 0
+      ? 0
+      : (
+          menuItems.reduce((sum, i) => sum + Number(i.price), 0) /
+          menuItems.length
+        ).toFixed(2);
 
   const stats = [
-    { label: 'Total Items', value: menuItems.length, color: 'default' },
-    { label: 'Categories', value: categories.length, color: 'orange' },
-    { label: 'Popular Items', value: menuItems.filter(i => i.popular).length, color: 'amber' },
-    { label: 'Avg Price', value: `$${avgPrice}`, color: 'default' }
+    { label: "Total Items", value: menuItems.length },
+    { label: "Categories", value: categories.length },
+    { label: "Popular Items", value: menuItems.filter(i => i.popular).length },
+    { label: "Avg Price", value: `$${avgPrice}` }
   ];
 
   stats.forEach(stat => {
-    const card = document.createElement('div');
-    card.className = 'card';
+    const card = document.createElement("div");
+    card.className = "card";
+
     card.innerHTML = `
       <div class="card-content stats-card">
         <p class="stat-label">${stat.label}</p>
-        <p class="stat-value stat-value-${stat.color}">${stat.value}</p>
+        <p class="stat-value">${stat.value}</p>
       </div>
     `;
+
     statsGrid.appendChild(card);
   });
 }
-document.addEventListener("click", (e) => {
-  const editBtn = e.target.closest(".btn-edit");
-  if (!editBtn) return;
 
-  const itemId = editBtn.dataset.id;
-  const item = menuItems.find(i => i.id === itemId);
+/* =========================
+   EDIT MENU ITEM
+========================= */
+async function editMenuItem(item) {
+  const newName = prompt("Edit name:", item.name);
+  if (newName === null) return;
+
+  const newPrice = prompt("Edit price:", item.price);
+  if (newPrice === null) return;
+
+  const newCategory = prompt("Edit category:", item.category);
+  if (newCategory === null) return;
+
+  const itemRef = doc(
+    db,
+    "vendors",
+    VENDOR_ID,
+    "menu",
+    item.id
+  );
+
+  await updateDoc(itemRef, {
+    name: newName,
+    price: Number(newPrice),
+    category: newCategory
+  });
+
+  alert("Menu item updated");
+  loadMenu();
+}
+
+/* =========================
+   CLICK HANDLER (EDIT)
+========================= */
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".btn-edit");
+  if (!btn) return;
+
+  const item = menuItems.find(i => i.id === btn.dataset.id);
   if (!item) return;
 
   editMenuItem(item);
 });
+
+/* =========================
+   INIT
+========================= */
 loadMenu();
-
-document.addEventListener("click", (e) => {
-  const editBtn = e.target.closest(".btn-edit");
-  if (!editBtn) return;
-
-  const itemId = editBtn.dataset.id;
-  const item = menuItems.find(i => i.id === itemId);
-
-  if (!item) return;
-
-  editMenuItem(item);
-});
-
-
-
