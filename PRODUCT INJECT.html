@@ -179,12 +179,13 @@
             productId
           );
 
-          const productData = {
-            name: p.name,
-            basePrice: Number(p.basePrice),
-            description: p.description || ""
-          };
-
+              const productData = {
+                name: p.name,
+                basePrice: Number(p.basePrice),
+                description: p.description || "",
+                imagePath: p.imagePath || "", // ← ADD
+                likes: 0                       // ← ADD
+              };
           try {
             const res = await safeSetDoc(productRef, productData, overwrite);
             log(`${res.skipped ? "⏭️ SKIP" : "✅ WRITE"} product: ${productId}`);

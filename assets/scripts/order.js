@@ -3,6 +3,7 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   doc,
   updateDoc,
   increment
@@ -19,7 +20,7 @@ const firebaseConfig = {
   messagingSenderId: "25256491882",
   appId: "1:25256491882:web:99a54c487373e155278313"
 };
-
+ 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
@@ -28,8 +29,8 @@ const db = getFirestore(app);
 ========================= */
 const params = new URLSearchParams(window.location.search);
 
-let centerId = params.get("centerId");
-let stallId = params.get("stallId");
+let centerId = params.get("centerId") || params.get("hc");
+let stallId = params.get("stallId") || params.get("fs");
 
 if (!centerId || !stallId) {
   console.error("❌ Missing centerId or stallId in URL");
@@ -37,10 +38,48 @@ if (!centerId || !stallId) {
   throw new Error("Missing navigation context");
 }
 
+/* =========================
+   Load hawker centre + stall info
+========================= */
+
+const centerRef = doc(db, "hawker-centers", centerId);
+const stallRef = doc(centerRef, "food-stalls", stallId);
+
+const [centerSnap, stallSnap] = await Promise.all([
+  getDoc(centerRef),
+  getDoc(stallRef)
+]);
+
+if (!centerSnap.exists() || !stallSnap.exists()) {
+  throw new Error("❌ Hawker centre or stall not found");
+}
+
+const center = centerSnap.data();
+const stall = stallSnap.data();
 
 /* =========================
-   Render products (SAME LOGIC)
+   Inject into HTML
 ========================= */
+
+document.getElementById("stall-name").textContent =
+  `${stall.name || "Stall"} #${stallId}`;
+
+document.getElementById("stall-location").textContent =
+  center.name;
+
+document.querySelector(".stall-banner").src =
+  stall.imagePath || center.imagePath;
+
+/* Back button */
+document.getElementById("back-btn").href =
+  `food_stalls.html?centerId=${centerId}`;
+
+
+
+/* =========================
+   Render products (REUSABLE)
+========================= */
+
 const grid = document.getElementById("product-grid");
 if (!grid) throw new Error("❌ #product-grid not found");
 
@@ -53,35 +92,33 @@ const productsRef = collection(
   "products"
 );
 
-console.log("centerId:", centerId);
-console.log("stallId:", stallId);
-console.log("Loading products...");
+const productsSnap = await getDocs(productsRef);
 
-const snap = await getDocs(productsRef);
+grid.innerHTML = "";
 
-snap.forEach(docSnap => {
-  const product = docSnap.data();
-  const productId = docSnap.id;
+if (productsSnap.empty) {
+  grid.innerHTML = "<p>No products available.</p>";
+}
+
+productsSnap.forEach(productDoc => {
+  const product = productDoc.data();
+  const productId = productDoc.id;
 
   const card = document.createElement("div");
   card.className = "product-card";
 
   card.innerHTML = `
-    <img src="${product.imagePath}">
+    <img src="${product.imagePath}" alt="${product.name}">
     <div class="info">
       <h4>${product.name}</h4>
-      <p class="desc">${product.description}</p>
+      <p class="price">$${product.basePrice ?? "--"}</p>
 
       <button class="like-btn">
-        <img src="assets/icons/order/likes.png">
-        <span class="like-count">${product.likes ?? 0}</span>
+        ❤️ <span class="like-count">${product.likes ?? 0}</span>
       </button>
-
-      <p class="price">$${product.basePrice}</p>
     </div>
   `;
 
-  /* LIKE BUTTON (UNCHANGED) */
   const likeBtn = card.querySelector(".like-btn");
   const likeCount = card.querySelector(".like-count");
 
@@ -95,7 +132,6 @@ snap.forEach(docSnap => {
     );
   });
 
-  /* NAVIGATION (UNCHANGED, just added params) */
   card.addEventListener("click", () => {
     window.location.href =
       `addtocart.html?centerId=${centerId}&stallId=${stallId}&productId=${productId}`;
@@ -103,3 +139,4 @@ snap.forEach(docSnap => {
 
   grid.appendChild(card);
 });
+

@@ -8,9 +8,12 @@
 
 /* ===== PAGE BACKGROUND ===== */
 body {
-  background: url("../images/order/background.png") no-repeat center top;
-  background-size: cover;
+  background-image: url("../../images/order/background.png");
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: repeat;
 }
+
 
 /* ===== STALL HEADER ===== */
 .stall-header {
