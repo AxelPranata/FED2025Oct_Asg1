@@ -1,5 +1,5 @@
 import { db, auth } from "./firebase.js";
-import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { collection, getDocs, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
 
@@ -89,7 +89,8 @@ function renderMenuCategories() {
             </div>
           </div>
           <div class="button-group">
-            <button class="btn btn-outline btn-sm flex-1">
+            <button class="btn btn-outline btn-sm flex-1 btn-edit" data-id="${item.id}">
+
               <i data-lucide="edit" class="icon"></i>
               Edit
             </button>
@@ -131,5 +132,29 @@ function renderStats() {
     statsGrid.appendChild(card);
   });
 }
+document.addEventListener("click", (e) => {
+  const editBtn = e.target.closest(".btn-edit");
+  if (!editBtn) return;
 
+  const itemId = editBtn.dataset.id;
+  const item = menuItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  editMenuItem(item);
+});
 loadMenu();
+
+document.addEventListener("click", (e) => {
+  const editBtn = e.target.closest(".btn-edit");
+  if (!editBtn) return;
+
+  const itemId = editBtn.dataset.id;
+  const item = menuItems.find(i => i.id === itemId);
+
+  if (!item) return;
+
+  editMenuItem(item);
+});
+
+
+
