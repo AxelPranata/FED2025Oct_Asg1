@@ -1,4 +1,12 @@
-import { db } from "./firebase.js";
+
+// import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+// import { auth } from "./firebase.js";
+
+// onAuthStateChanged(auth, user => {
+//   console.log("AUTH USER:", user);
+// });
+
+import { db } from "/template/firebase.js";
 import {
   collection,
   getDocs,
