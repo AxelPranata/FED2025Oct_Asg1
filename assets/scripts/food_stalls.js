@@ -26,7 +26,7 @@ const db = getFirestore(app);
 
 // Get URL param
 const params = new URLSearchParams(window.location.search);
-const hawkerCenterId = params.get('hc');
+const hawkerCenterId = params.get('centerId');
 
 function createItem(id, name, img) {
     // Create card div
@@ -51,7 +51,7 @@ function createItem(id, name, img) {
 
     // Make card clickable (navigate with URL param)
     item.addEventListener('click', () => {
-        window.location.href = `order.html?hc=${hawkerCenterId}&fs=${id}`;
+        window.location.href = `order.html?centerId=${hawkerCenterId}&stallId=${id}`;
     });
 
     console.log(`Created ${id} ${name} ${img}`)
