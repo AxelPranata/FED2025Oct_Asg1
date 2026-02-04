@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Cart</title>
+    <title>Payment</title>
 
     <link rel="stylesheet" href="template/template.css">
-    <link rel="stylesheet" href="assets/styles/cart.css">
+    <link rel="stylesheet" href="assets/styles/payment.css">
 
 </head>
 <body>
@@ -44,8 +44,6 @@
     </div>
 </header>
 
-    <main>
-
     <!-- Breadcrumbs -->
     <nav id="breadcrumbs">
         <ul>
@@ -55,48 +53,24 @@
         </ul>
     </nav>
 
-    <main class="cart-page">
+<main class="payment-success-page">
 
-  <h2>My Cart</h2>
-
-  <div class="cart-layout">
-    <div id="cart-items"></div>
-
-    <div class="order-summary">
-      <h3>Order</h3>
-
-      <div class="summary-row">
-        <span>Subtotal</span>
-        <span id="subtotal">$0.00</span>
-      </div>
-
-      <div class="summary-row">
-        <span>Takeaway Charge</span>
-        <span id="takeaway">$0.30</span>
-      </div>
-
-      <div class="summary-total">
-        <span>Grand Total</span>
-        <span id="total">$0.00</span>
-      </div>
-
-      <h4>Payment Method</h4>
-
-<div class="payments">
-  <button data-method="cash">Cash</button>
-  <button data-method="paynow">PayNow</button>
-  <button data-method="visa">Visa</button>
-  <button data-method="mastercard">Mastercard</button>
-</div>
-
-<button id="pay-now" class="pay-btn">Pay Now</button>
-
-
+  <div class="success-card">
+    <div class="success-icon">
+      ✓
     </div>
+
+    <h2>Thank you for your payment!</h2>
+    <p>Your order will be processed shortly</p>
+
+    <button class="home-btn" onclick="window.location.href='home.html'">
+      Return to Homepage
+    </button>
   </div>
 
-    </main> 
+</main>
 
-    <script type="module" src="assets/scripts/cart.js"></script>
+    <script type="module" src="assets/scripts/payment.js"></script>
 
 </body>
+

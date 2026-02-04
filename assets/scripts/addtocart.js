@@ -1,11 +1,21 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+import { initializeApp } from
+  "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
+
 import {
   getFirestore,
   doc,
   getDoc,
   collection,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+  getDocs,
+  setDoc
+} from
+  "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
+import {
+  getAuth,
+  onAuthStateChanged
+} from
+  "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 /* Firebase config (UNCHANGED) */
 const firebaseConfig = {
@@ -19,6 +29,20 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+let CURRENT_USER_ID = null;
+
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    console.error("❌ User not logged in");
+    window.location.href = "login.html";
+    return;
+  }
+
+  CURRENT_USER_ID = user.uid;
+  console.log("✅ Logged in as:", CURRENT_USER_ID);
+});
 
 /* =========================
    URL PARAMS (NEW)
@@ -59,6 +83,9 @@ const priceEl = document.getElementById("total-price");
 
 let quantity = 1;
 let basePrice = Number(product.basePrice ?? 0);
+let finalPrice = basePrice;
+let selectedAddons = [];
+
 
 /* =========================
    RENDER PRODUCT
@@ -113,13 +140,23 @@ addonsSnap.forEach(groupSnap => {
 ========================= */
 function calculateTotal() {
   let addonsTotal = 0;
+  selectedAddons = [];
 
-  document.querySelectorAll(".addon-item input:checked")
-    .forEach(i => addonsTotal += Number(i.dataset.price || 0));
+  document.querySelectorAll(".addon-item input:checked").forEach(input => {
+    const price = Number(input.dataset.price || 0);
+    addonsTotal += price;
 
-  priceEl.textContent =
-    `$${((basePrice + addonsTotal) * quantity).toFixed(2)}`;
+    selectedAddons.push({
+      group: input.name,
+      label: input.parentElement.textContent.trim(),
+      price
+    });
+  });
+
+  finalPrice = (basePrice + addonsTotal) * quantity;
+  priceEl.textContent = `$${finalPrice.toFixed(2)}`;
 }
+
 
 document.addEventListener("change", calculateTotal);
 
@@ -136,3 +173,23 @@ document.getElementById("qty-minus").onclick = () => {
 };
 
 calculateTotal();
+
+document.getElementById("add-to-cart").onclick = async () => {
+  await setDoc(
+    doc(db, "carts", CURRENT_USER_ID, "items", productId),
+    {
+      productId,
+      name: product.name,
+      imagePath: product.imagePath,
+      price: finalPrice,
+      quantity,
+      addons: selectedAddons,
+      centerId,
+      stallId
+    },
+    { merge: true }
+  );
+
+  alert("Added to cart!");
+};
+

@@ -106,3 +106,39 @@ body {
   cursor: pointer;
 }
 
+.payment-btn.active {
+  background: #2ecc71;
+  color: white;
+  border-color: #2ecc71;
+}
+
+#cart-items:empty::before {
+  content: "Your cart is empty 🛒";
+  display: block;
+  padding: 2rem;
+  text-align: center;
+  color: #777;
+  font-size: 1.1rem;
+}
+
+.cart-layout {
+  align-items: start;
+}
+
+.payments button {
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ✅ ACTIVE (GREEN) */
+.payments button.active {
+  background: #2ecc71;
+  color: white;
+  border-color: #2ecc71;
+}
+
+
