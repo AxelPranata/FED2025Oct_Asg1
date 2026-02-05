@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- <div id="nav-container"></div>
+  <div id="agreements"></div> -->
+  <link rel="stylesheet" href="/assets/styles/vendor_agreements.css">
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documents & Agreements</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
+  
+  
+</head>
+<body>
+    
+  <div id="nav-container"></div>
+  <div class="container">
+    <div class="header">
+  <div>
+    <h2>Documents & Agreements</h2>
+    <p>Manage your licenses, certificates, and legal documents</p>
+  </div>
+  <button class="btn btn-primary" onclick="addNewAgreement()">
+    <i data-lucide="plus" class="icon"></i>
+    Add Agreement
+  </button>
+</div>
+
+    <div class="grid" id="documents-grid"></div>
+
+    <div class="alert-card">
+      <div class="alert-content">
+        <i data-lucide="alert-circle" class="icon icon-alert"></i>
+        <div>
+          <h3 class="alert-title">Document Compliance Reminder</h3>
+          <p class="alert-description">
+            Ensure all documents are valid and up-to-date to maintain your operating license. 
+            Documents expiring within 30 days will be flagged for renewal.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="vendor_agreements.js"></script>
+  <script src="assets/scripts/kishore_js/vendor_nav.js"></script>
+  <script>
+  lucide.createIcons();
+</script>
+</body>
+</html>
