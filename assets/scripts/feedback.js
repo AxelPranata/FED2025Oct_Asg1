@@ -93,7 +93,7 @@ async function loadReviews() {
       const data = review.data();
       if (data.description != "") {
         let date = data.date.toDate();
-        create_review("", data.username, date.toLocaleDateString(), data.rating, data.description);
+        create_review("", data.userName, date.toLocaleDateString(), data.rating, data.description);
       }
 
       reviewCount += 1;
@@ -133,14 +133,13 @@ reviewOverlay.addEventListener("submit", async (e) => {
 
   try {
     await addDoc(
-      // collection(db, "stalls", foodStallId, "reviews"),
       collection(db, "reviews"),
       {
         userId: userId,
-        username: userName ?? "Anonymous",
-        hawkercenterid: hawkerCenterId,
-        foodstallid: foodStallId,
-        foodstallname: foodStallName,
+        userName: userName ?? "Anonymous",
+        hawkerCenterId: hawkerCenterId,
+        foodStallId: foodStallId,
+        foodStallName: foodStallName,
         rating: parseInt(reviewRating),
         description: reviewDesc,
         date: reviewDate
@@ -268,10 +267,10 @@ issueOverlay.addEventListener("submit", async (e) => {
       collection(db, "issues"),
       {
         userId: userId,
-        username: userName ?? "Anonymous",
-        hawkercenterid: hawkerCenterId,
-        foodstallid: foodStallId,
-        foodstallname: foodStallName,
+        userName: userName ?? "Anonymous",
+        hawkerCenterId: hawkerCenterId,
+        foodStallId: foodStallId,
+        foodStallName: foodStallName,
         category: issueSelected,
         description: issueDesc,
         status: "pending",
