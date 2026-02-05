@@ -360,3 +360,70 @@ label{
   .publish-center{padding-top:0; justify-content:flex-start}
   .upload.square{width:100%}
 }
+
+
+/* ========================= */
+/* Profile Page Styles */
+/* ========================= */
+
+.profile-section {
+    max-width: 32rem;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+}
+
+.profile-section h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #474747;
+}
+
+.profile-card {
+    padding: 1.5rem;
+    border-radius: 16px;
+
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1.2rem;
+
+    background-color: #FFFFFF;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile-row .label {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(71, 71, 71, 0.6);
+}
+
+.profile-row .value {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #474747;
+    text-align: right;
+}
+
+.primary-btn {
+    margin-top: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 25px;
+
+    font-size: 1rem;
+    font-weight: 600;
+
+    color: white;
+    background-color: #474747;
+    cursor: pointer;
+}
+
+.primary-btn:hover {
+    opacity: 0.9;
+}
