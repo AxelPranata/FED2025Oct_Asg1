@@ -49,8 +49,6 @@ function createItem(id, name, img) {
     window.location.href = `food_stalls.html?centerId=${id}`;
   });
 
-  console.log(`Created ${id} ${name} ${img}`)
-
   return item;
 }
 
@@ -67,6 +65,16 @@ async function loadCards() {
 }
 
 document.addEventListener("DOMContentLoaded", (e) => {
-    loadCards();
-})
+  loadCards();
 
+  const searchBar = document.getElementById('search');
+  searchBar.addEventListener('keyup', () => {
+    const query = searchBar.value.toLowerCase();
+    const items = document.querySelectorAll('.container .item'); // re-query here
+
+    items.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? '' : 'none';
+    });
+  });
+})

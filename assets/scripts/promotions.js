@@ -24,7 +24,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // Create promocode card
-function createCodeCard(promoCode, promoText, discount, daysRemaining, img) {
+function createCodeCard(promoCode, promoText, discount, daysRemaining, img, type) {
   // Create card div
   const card = document.createElement("div");
   card.classList.add("card");
@@ -58,11 +58,16 @@ function createCodeCard(promoCode, promoText, discount, daysRemaining, img) {
   const detailsRight = document.createElement("div");
   detailsRight.className = "details-right";
 
-  const percentage = document.createElement("p");
-  percentage.className = "percentage";
-  percentage.textContent = `-${discount}%`;
+  const discountTag = document.createElement("p");
+  discountTag.className = "discount";
+  if (type == "percent") {
+    discountTag.textContent = `-${discount}%`;
+  }
+  else {
+    discountTag.textContent = `-$${discount}`
+  }
 
-  detailsRight.appendChild(percentage);
+  detailsRight.appendChild(discountTag);
 
   // Append content
   card.appendChild(detailsRight);
@@ -91,7 +96,7 @@ async function loadPromotions() {
       if (currentDate > startDate && currentDate < endDate) {
         hasValidPromotions = true;
         let daysRemaining = Math.ceil((endDate - currentDate) / (1000 * 60 * 60 * 24)); // Gives date
-        let card = createCodeCard(data.code, data.description, data.discount, daysRemaining, data.imagePath);
+        let card = createCodeCard(data.code, data.description, data.discount, daysRemaining, data.imagePath, data.type);
         promotions_list.appendChild(card);
       }
     });
