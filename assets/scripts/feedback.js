@@ -236,12 +236,10 @@ const issueOverlay = document.getElementById("issue-overlay");
 const writeIssue = document.getElementById("write-issue");
 
 writeIssue.addEventListener("click", () => {
-  // Opens overlay
   issueOverlay.style.display = "flex";
 });
 
 issueOverlay.addEventListener("click", (e) => {
-  // Closes overlay when clicking out
   if (e.target === issueOverlay) {
     issueOverlay.style.display = "none";
   }
@@ -251,31 +249,30 @@ issueOverlay.addEventListener("click", (e) => {
 issueOverlay.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Get data
-  const issueSelected = document.querySelector('#issue-options input[name="choice"]:checked')?.value;
-  const issueDesc = document.querySelector('#issue-description textarea[name="description"]')?.value;
+  const issueSelected =
+    document.querySelector('#issue-options input[name="choice"]:checked')?.value;
 
-  // Validation of data
+  const issueDesc =
+    document.querySelector('#issue-description textarea[name="description"]')?.value?.trim();
+
+  // Validation
   if (!issueSelected || !issueDesc) {
-      alert("❌ Category and description are required.");
-      return;
+    alert("❌ Category and description are required.");
+    return;
   }
 
   try {
-    await addDoc(
-      collection(db, "issues"),
-      {
-        userId: userId,
-        userName: userName ?? "Anonymous",
-        hawkerCenterId: hawkerCenterId,
-        foodStallId: foodStallId,
-        foodStallName: foodStallName,
-        category: issueSelected,
-        description: issueDesc,
-        status: "pending",
-        date: new Date()
-      }
-    );
+    await addDoc(collection(db, "issues"), {
+      userId: userId,
+      username: userName ?? "Anonymous",       
+      hawkercenterid: hawkerCenterId,           
+      foodstallid: foodStallId,                 
+      foodstallname: foodStallName,             
+      category: issueSelected,
+      description: issueDesc,
+      status: "pending",
+      date: new Date()
+    });
 
     issueOverlay.style.display = "none";
     issueOverlay.reset();
@@ -288,8 +285,7 @@ issueOverlay.addEventListener("submit", async (e) => {
 });
 
 
-
-// Auto-resize text area
+// Auto-resize textareas
 document.querySelector("#review-description textarea").addEventListener("input", (e) => {
   e.target.style.height = "auto";
   e.target.style.height = e.target.scrollHeight + "px";
@@ -301,8 +297,7 @@ document.querySelector("#issue-description textarea").addEventListener("input", 
 });
 
 
-
-// Load reviews from database
+// Load reviews
 document.addEventListener("DOMContentLoaded", () => {
   loadReviews();
 });

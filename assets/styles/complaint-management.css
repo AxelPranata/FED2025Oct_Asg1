@@ -211,6 +211,31 @@ header {
     background: white;
 }
 
+/* ===== HAWKER DROPDOWN STYLE ===== */
+
+
+/* STATUS TAG COLORS (MATCH STATS CARDS) */
+.tag-pending {
+  color: #EA0C10;
+  background-color: #FDB8B8;
+}
+
+.tag-progress {
+  color: #C7B00A;
+  background-color: #FFF0C2;
+}
+
+.tag-resolved {
+  color: #70EA0C;
+  background-color: #E6FCAE;
+}
+
+/* Active filter highlight */
+.active-filter {
+  background-color: #EA580C;
+  color: white;
+}
+
 .button {
     border: 1px solid #EA580C;
     padding: 6px 12px;
@@ -221,6 +246,7 @@ header {
     gap: 6px;
     cursor: pointer;
 }
+
 
 /* ===== COMPLAINT CARD ===== */
 .complaints {
@@ -255,8 +281,6 @@ header {
 
 /* TAG */
 .progress {
-    color: #EA0C10;
-    background-color: #FDB8B8;
     padding: 4px 8px;
     border-radius: 8px;
     margin-left: 8px;
@@ -277,6 +301,23 @@ header {
 img {
     width: 24px;
     height: auto;
+}
+
+/* ===== DELETE BUTTON ===== */
+.delete-btn {
+  background: #fff;
+  color: #EA0C10;
+  border: 1px solid #EA0C10;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 6px;
+}
+
+.delete-btn:hover {
+  background: #EA0C10;
+  color: white;
 }
 
 /* ===== MOBILE ===== */

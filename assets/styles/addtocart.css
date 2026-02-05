@@ -1,3 +1,12 @@
+/* ===== PAGE BACKGROUND ===== */
+body {
+  background-image: url("../../images/order/background.png");
+  background-repeat: repeat-y;
+  background-position: center top;
+  background-size: repeat;
+}
+
+
 .product-page {
   max-width: 480px;      /* card width */
   margin: 0 auto;        /* ⬅ centers it */
@@ -88,11 +97,6 @@
   overflow: visible;
 
   padding-bottom: 120px; /* space so bottom bar doesn't block */
-}
-
-body{
-  background: url("../images/order/background.png") no-repeat center top;
-  background-size: cover;
 }
 
 /* Bottom bar layout */

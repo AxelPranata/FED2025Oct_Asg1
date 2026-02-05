@@ -97,7 +97,10 @@ onAuthStateChanged(auth, async (user) => {
         <div class="title">${firstItem}</div>
         <div class="meta">
             <span>🕒 ${timeText}</span>
-            <span>📍 ${order.hawker?.centreName ?? "Unknown Centre"}</span>
+            <span>📍 ${
+            order.fulfillment?.type === "delivery"
+              ? order.fulfillment?.address?.line1 ?? "No Address"
+              : order.hawker?.centreName ?? "Unknown Centre"}</span>
             <span>📍 ${order.fulfillment?.type ?? "Takeout"}</span>
         </div>
         </div>
@@ -106,16 +109,32 @@ onAuthStateChanged(auth, async (user) => {
     </div>
 
     <div class="history-details" style="display:none;">
-        ${order.items.map(i => `
-        <div class="detail-item">
-            ${i.quantity}× ${i.name} — $${i.itemTotal.toFixed(2)}
-        </div>
-        `).join("")}
-
-        <div class="detail-total">
-        Total: $${order.pricing?.total?.toFixed(2)}
-        </div>
+  ${order.items.map(i => `
+    <div class="detail-item">
+      ${i.quantity}× ${i.name} — $${i.itemTotal.toFixed(2)}
     </div>
+  `).join("")}
+
+  <div class="detail-item">
+    Subtotal: $${order.pricing?.subtotal?.toFixed(2) ?? "0.00"}
+  </div>
+
+  ${order.fulfillment?.type === "delivery"
+    ? `<div class="detail-item">Delivery Fee: $${order.pricing?.deliveryFee?.toFixed(2) ?? "0.00"}</div>`
+    : `<div class="detail-item">Takeaway Fee: $${order.pricing?.takeoutFee?.toFixed(2) ?? "0.00"}</div>`}
+
+  ${order.pricing?.minOrderFee > 0
+    ? `<div class="detail-item">Min Order Fee: $${order.pricing.minOrderFee.toFixed(2)}</div>`
+    : ""}
+
+  ${order.pricing?.promoCode
+    ? `<div class="detail-item">Promo (${order.pricing.promoCode}): -$${(order.pricing.promoDiscount ?? 0).toFixed(2)}</div>`
+    : ""}
+
+  <div class="detail-total">
+    Total: $${order.pricing?.total?.toFixed(2) ?? "0.00"}
+  </div>
+</div>
     `;
 
     card.querySelector(".main-row").onclick = () => {

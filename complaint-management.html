@@ -57,7 +57,7 @@
   <section class="stats">
     <div class="stats-card pending">
       <div>
-        <b class="stat-number">2</b>
+        <b class="stat-number" id="pending-count">0</b>
         <p><b>Pending</b></p>
       </div>
       <img src="assets/icons/Dashboard/pending.png" alt="Pending">
@@ -65,7 +65,7 @@
 
     <div class="stats-card progress-card">
       <div>
-        <b class="stat-number">5</b>
+        <b class="stat-number" id="progress-count">0</b>
         <p><b>In Progress</b></p>
       </div>
       <img src="assets/icons/Dashboard/edit.png" alt="Edit">
@@ -73,7 +73,7 @@
 
     <div class="stats-card resolved">
       <div>
-        <b class="stat-number">10</b>
+        <b class="stat-number" id="resolved-count">0</b>
         <p><b>Resolved</b></p>
       </div>
       <img src="assets/icons/Dashboard/seen.png" alt="Done">
@@ -83,44 +83,18 @@
   <main>
 
     <section class="filter">
-      <div class="button">All <img src="assets/icons/Dashboard/filter.png" alt="filter"></div>
-      <div class="button">Pending</div>
-      <div class="button">Resolved</div>
-      <div class="button">Cleanliness</div>
-      <div class="button">Food Quality</div>
-      <div class="button">Service Quality</div>
-      <div class="button">Others</div>
+      <div class="button" data-filter="all">All <img src="assets/icons/Dashboard/filter.png" alt="filter"></div>
+      <div class="button" data-filter="pending">Pending</div>
+      <div class="button" data-filter="in progress">In Progress</div>
+      <div class="button" data-filter="resolved">Resolved</div>
+      <div class="button" data-filter="cleanliness">Cleanliness</div>
+      <div class="button" data-filter="food quality">Food Quality</div>
+      <div class="button" data-filter="service quality">Service Quality</div>
+      <div class="button" data-filter="others">Others</div>
     </section>
 
     <section class="complaints" id="complaints-container">
-
-      <div class="complaint-top">
-        <div class="complaint-info">
-          <h3>
-            Complaint #4
-            <span class="progress">Pending</span>
-          </h3>
-          <p>Cleanliness | Laksa Paradise | submitted by Aswin</p>
-        </div>
-
-        <div class="complaint-action">
-          <label for="status">Update Status</label>
-          <select id="status">
-            <option>Select option</option>
-            <option>Pending</option>
-            <option>In Progress</option>
-            <option>Resolved</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="comment">
-        <h4>Complaint Details</h4>
-        <p>
-          Tables were not cleaned properly. Found food debris from previous customer.
-        </p>
-      </div>
-
+      <!-- Complaints will be inserted by JS -->
     </section>
 
   </main>

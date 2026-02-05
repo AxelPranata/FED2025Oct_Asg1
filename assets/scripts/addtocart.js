@@ -197,7 +197,7 @@ document.getElementById("add-to-cart").onclick = async () => {
       itemRef,
       {
         quantity: existing.quantity + quantity,
-        price: existing.price + finalPrice,
+        unitPrice: existing.unitPrice ?? basePrice,
         addons: selectedAddons,
       },
       { merge: true }
@@ -209,7 +209,7 @@ await setDoc(itemRef, {
   productId,
   name: product.name,
   imagePath: product.imagePath,
-  price: finalPrice,
+ unitPrice: basePrice + selectedAddons.reduce((s, a) => s + a.price, 0),
   quantity,
   addons: selectedAddons,
 

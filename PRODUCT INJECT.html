@@ -83,60 +83,60 @@
 
       // ✅ Your 5 products (edit here if needed)
       // Doc IDs will be clean slugs (e.g. steam-chicken-rice)
+// ✅ Japanese products
 const PRODUCTS = [
   {
     name: "Chicken Teriyaki Don",
     basePrice: 6.5,
-    description: "Grilled chicken glazed with sweet teriyaki sauce served over rice.",
+    description: "Grilled teriyaki chicken served over fluffy Japanese rice.",
     imagePath: ""
   },
   {
     name: "Salmon Mentai Don",
-    basePrice: 8.5,
-    description: "Seared salmon topped with creamy mentaiko sauce on warm rice.",
+    basePrice: 7.2,
+    description: "Seared salmon topped with creamy mentaiko sauce on rice.",
     imagePath: ""
   },
   {
-    name: "Chicken Katsu Curry Rice",
+    name: "Chicken Katsu Curry",
     basePrice: 7.5,
-    description: "Crispy chicken cutlet served with Japanese curry and rice.",
+    description: "Crispy chicken cutlet with rich Japanese curry and rice.",
     imagePath: ""
   },
   {
-    name: "Tamago & Ebi Bento",
-    basePrice: 9,
-    description: "Japanese bento set with tamago, fried prawn, rice, and sides.",
+    name: "Ebi Tempura Don",
+    basePrice: 7.8,
+    description: "Golden prawn tempura drizzled with sweet tendon sauce on rice.",
     imagePath: ""
   }
 ];
 
-      // ✅ Addons templates EXACTLY like your screenshots
-      // Applies to every product (edit if a product has different addons)
+// ✅ Japanese-style addons
 const ADDONS = [
   {
     id: "extras",
     data: {
-      title: "Add Ingredients",
+      title: "Add Extras",
       type: "checkbox",
       required: false,
       options: [
-        { label: "Add Egg", price: 1 },
-        { label: "Add Century Egg", price: 1.5 },
-        { label: "Add Pork Slices", price: 2 },
-        { label: "Add Fish Slices", price: 2 }
+        { label: "Onsen Egg", price: 1.2 },
+        { label: "Extra Rice", price: 1.0 },
+        { label: "Miso Soup", price: 1.5 },
+        { label: "Seaweed Salad", price: 1.8 }
       ]
     }
   },
   {
-    id: "toppings",
+    id: "sauce",
     data: {
-      title: "Toppings",
+      title: "Sauce Choice",
       type: "radio",
       required: false,
       options: [
-        { label: "Spring Onion", price: 0 },
-        { label: "Fried Shallots", price: 0.5 },
-        { label: "No Toppings", price: 0 }
+        { label: "Teriyaki Sauce", price: 0 },
+        { label: "Japanese Curry", price: 0 },
+        { label: "Mentai Mayo", price: 0 }
       ]
     }
   }
