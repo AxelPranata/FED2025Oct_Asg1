@@ -72,6 +72,17 @@ const productRef = doc(
 const productSnap = await getDoc(productRef);
 if (!productSnap.exists()) throw new Error("❌ Product not found");
 
+// 🔹 Fetch hawker centre info
+const centerRef = doc(db, "hawker-centers", centerId);
+const centerSnap = await getDoc(centerRef);
+const centerData = centerSnap.exists() ? centerSnap.data() : {};
+
+// 🔹 Fetch stall info
+const stallRef = doc(db, "hawker-centers", centerId, "food-stalls", stallId);
+const stallSnap = await getDoc(stallRef);
+const stallData = stallSnap.exists() ? stallSnap.data() : {};
+
+
 const product = productSnap.data();
 
 /* =========================
@@ -175,21 +186,45 @@ document.getElementById("qty-minus").onclick = () => {
 calculateTotal();
 
 document.getElementById("add-to-cart").onclick = async () => {
-  await setDoc(
-    doc(db, "carts", CURRENT_USER_ID, "items", productId),
-    {
-      productId,
-      name: product.name,
-      imagePath: product.imagePath,
-      price: finalPrice,
-      quantity,
-      addons: selectedAddons,
-      centerId,
-      stallId
-    },
-    { merge: true }
-  );
+  const itemRef = doc(db, "carts", CURRENT_USER_ID, "items", productId);
+  const itemSnap = await getDoc(itemRef);
+
+  if (itemSnap.exists()) {
+    // increase quantity + price
+    const existing = itemSnap.data();
+
+    await setDoc(
+      itemRef,
+      {
+        quantity: existing.quantity + quantity,
+        price: existing.price + finalPrice,
+        addons: selectedAddons,
+      },
+      { merge: true }
+    );
+
+  } else {
+    // new item
+await setDoc(itemRef, {
+  productId,
+  name: product.name,
+  imagePath: product.imagePath,
+  price: finalPrice,
+  quantity,
+  addons: selectedAddons,
+
+  centerId,
+  stallId,
+
+  centerName: centerData.name ?? "Unknown Centre",
+  centreLocation: centerData.location ?? "Unknown Location",
+  stallName: stallData.name ?? "Unknown Stall"
+
+});
+
+  }
 
   alert("Added to cart!");
 };
+
 

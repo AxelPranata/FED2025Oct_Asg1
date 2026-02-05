@@ -2,7 +2,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebas
 import { 
   getFirestore,
   collection, 
-  getDocs, 
+  getDocs,
+  getDoc, // ADD THIS
   addDoc, 
   updateDoc, 
   deleteDoc, 
@@ -23,17 +24,15 @@ const firebaseConfig = {
   appId: "1:25256491882:web:99a54c487373e155278313"
 };
 
-// 🔥 Initialize Firebase ONCE
 const app = initializeApp(firebaseConfig);
 
-// 🔥 Export ONCE
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
-// 🔥 Export Firestore functions
 export {
   collection,
   getDocs,
+  getDoc, // ADD THIS
   addDoc,
   updateDoc,
   deleteDoc,

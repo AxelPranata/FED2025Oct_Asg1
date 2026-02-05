@@ -58,19 +58,29 @@ onAuthStateChanged(auth, async (user) => {
     const itemTotal = item.price * item.quantity;
     subtotal += itemTotal;
 
-    items.push({
-      name: item.name,
-      quantity: item.quantity,
-      price: item.price,
-      itemTotal
-    });
+items.push({
+  name: item.name,
+  quantity: item.quantity,
+  price: item.price,
+  itemTotal,
+
+  // 🔥 pass hawker info forward
+  centerName: item.centerName,
+  centreLocation: item.centreLocation,
+  stallName: item.stallName
+});
+
   });
 
+
+
   // 🔹 Pricing
-  const promo = 0;
+  
   const smallOrderFee = subtotal < 10 ? 1.50 : 0;
   const takeoutFee = 0.30;
-  const total = subtotal + promo + smallOrderFee + takeoutFee;
+  let total = parseFloat(sessionStorage.getItem("total")); // Includes promo and takeoutFee
+  total += smallOrderFee; // QJ adding small order fee implementation later
+  const promo = total - (subtotal + smallOrderFee + takeoutFee);
 
 // 🔹 Create order
 await addDoc(collection(db, "orders"), {
@@ -82,7 +92,9 @@ await addDoc(collection(db, "orders"), {
 
   status: "paid",
 
-  fulfillment: { type: "takeout" },
+  fulfillment: {
+  type: sessionStorage.getItem("fulfillmentType") ?? "takeout"
+  },
 
   payment: {
     method: sessionStorage.getItem("paymentMethod") ?? "unknown",
@@ -92,17 +104,32 @@ await addDoc(collection(db, "orders"), {
   items,
   pricing: {
     subtotal,
-    promo,
     smallOrderFee,
     takeoutFee,
+    promo,
     total
   },
 
-  createdAt: serverTimestamp()
+  createdAt: serverTimestamp(),
+
+  hawker: {
+  centreName: items[0]?.centerName ?? "Unknown Centre",
+  location: items[0]?.centreLocation ?? "Unknown Location",
+  stallName: items[0]?.stallName ?? "Unknown Stall"
+},
+
 });
 
   // 🔹 Clear cart
   for (const d of snap.docs) {
+    await deleteDoc(d.ref);
+  }
+
+  // 🔹 Clear appliedCodes
+  const appliedCodeRef = collection(db, "carts", userId, "appliedCodes");
+  const appliedCodeSnap = await getDocs(appliedCodeRef);
+
+  for (const d of appliedCodeSnap.docs) {
     await deleteDoc(d.ref);
   }
 

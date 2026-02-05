@@ -65,14 +65,21 @@
     <div class="order-summary">
       <h3>Order</h3>
 
+      <form id="promo-code">
+        <label for="input-code">Promo Code:</label>
+        <input id="input-code" type="text" placeholder="Enter code">
+        <button id="apply-code" type="submit">Apply</button>
+      </form>
+
       <div class="summary-row">
         <span>Subtotal</span>
         <span id="subtotal">$0.00</span>
       </div>
 
-      <div class="summary-row">
-        <span>Takeaway Charge</span>
-        <span id="takeaway">$0.30</span>
+      <div id="discounts"></div>
+        <div id="fees"></div>
+
+        
       </div>
 
       <div class="summary-total">
@@ -89,6 +96,23 @@
   <button data-method="mastercard">Mastercard</button>
 </div>
 
+<div class="fulfillment">
+  <h4>Fulfillment</h4>
+
+  <label>
+    <input type="radio" name="fulfillment" value="takeout" checked>
+    Takeout
+  </label>
+
+  <label>
+    <input type="radio" name="fulfillment" value="delivery">
+    Delivery
+  </label>
+</div>
+
+<div id="fees"></div>
+
+
 <button id="pay-now" class="pay-btn">Pay Now</button>
 
 
@@ -98,5 +122,4 @@
     </main> 
 
     <script type="module" src="assets/scripts/cart.js"></script>
-
 </body>
