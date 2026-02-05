@@ -9,7 +9,7 @@ import {
   onSnapshot 
 } from './kiki_firebase.js';
 
-let currentVendorId = 'vendor_001'; // Replace with actual logged-in vendor ID
+let currentVendorId = '4I9X843cHGcdTZINaPiAY0DRwFx2'; // Replace with actual logged-in vendor ID
 
 function getWrapperClass(status) {
   const classes = {
@@ -117,7 +117,10 @@ function renderDocuments(documents) {
     grid.appendChild(card);
   });
 
-  lucide.createIcons();
+  // Safely initialize Lucide icons
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  }
 }
 
 // View document
