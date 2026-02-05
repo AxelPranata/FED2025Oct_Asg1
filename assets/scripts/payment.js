@@ -72,8 +72,6 @@ items.push({
 
   });
 
-
-
   // 🔹 Pricing
   
   const smallOrderFee = subtotal < 10 ? 1.50 : 0;
