@@ -6,8 +6,13 @@ import {
   getDoc,
   doc,
   updateDoc,
-  increment
+  increment,
+  runTransaction,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+import {
+  getAuth
+} from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 /* =========================
    Firebase config (UNCHANGED)
@@ -23,6 +28,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 /* =========================
    URL PARAMS
@@ -108,7 +114,7 @@ function renderProducts(products, isSearch = false) {
     return;
   }
 
-  products.forEach(product => {
+  products.forEach( async product => {
     const card = document.createElement("div");
     card.className = "product-card";
 
@@ -119,21 +125,76 @@ function renderProducts(products, isSearch = false) {
         <p class="price">$${product.basePrice ?? "--"}</p>
 
         <button class="like-btn">
-          ❤️ <span class="like-count">${product.likes ?? 0}</span>
+          <img class="like-icon" src="assets/icons/order/unlike.svg" alt="like">
+          <span class="like-count">${product.likes ?? 0}</span>
         </button>
       </div>
     `;
 
     const likeBtn = card.querySelector(".like-btn");
+    const likeIcon = card.querySelector(".like-icon");
     const likeCount = card.querySelector(".like-count");
+    const userId = auth.currentUser?.uid;
+    const productRef = doc(productsRef, product.id);
+    const likeRef = doc(productRef, "likes", userId);
+
+    // Set button state
+    // if (userId) {
+    //   const likeDoc = await getDoc(likeRef);
+    //   if (likeDoc.exists()) {
+    //     likeBtn.textContent = `💔 Unlike (${product.likes ?? 0})`;
+    //   } else {
+    //     likeBtn.textContent = `❤️ Like (${product.likes ?? 0})`;
+    //   }
+    // }
+
+    if (userId) {
+      const likeDoc = await getDoc(likeRef);
+      if (likeDoc.exists()) {
+        likeIcon.src = "assets/icons/order/unlike.svg";
+        likeCount.textContent = product.likes ?? 0;
+      } else {
+        likeIcon.src = "assets/icons/order/like.svg";
+        likeCount.textContent = product.likes ?? 0;
+      }
+    }
+
 
     likeBtn.addEventListener("click", async (e) => {
       e.stopPropagation();
-      likeCount.textContent = Number(likeCount.textContent) + 1;
 
-      await updateDoc(doc(productsRef, product.id), {
-        likes: increment(1)
-      });
+      const userId = auth.currentUser?.uid;
+      if (!userId) {
+        alert("You must be signed in to like!");
+        return;
+      }
+
+      const productRef = doc(productsRef, product.id);
+      const likeRef = doc(productRef, "likes", userId);
+
+      try {
+        await runTransaction(db, async (transaction) => {
+          const likeDoc = await transaction.get(likeRef);
+
+          if (!likeDoc.exists()) {
+            // User hasn't liked → create like doc + increment
+            transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
+            transaction.update(productRef, { likes: increment(1) });
+
+            likeCount.textContent = Number(likeCount.textContent) + 1;
+            likeIcon.src = "assets/icons/order/unlike.svg";
+          } else {
+            // User already liked → delete like doc + decrement
+            transaction.delete(likeRef);
+            transaction.update(productRef, { likes: increment(-1) });
+
+            likeCount.textContent = Number(likeCount.textContent) - 1;
+            likeIcon.src = "assets/icons/order/like.svg";
+          }
+        });
+      } catch (e) {
+        console.error("Transaction failed: ", e);
+      }
     });
 
     card.addEventListener("click", () => {
