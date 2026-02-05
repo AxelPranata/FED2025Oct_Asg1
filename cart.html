@@ -65,6 +65,12 @@
     <div class="order-summary">
       <h3>Order</h3>
 
+      <form id="promo-code">
+        <label for="input-code">Promo Code:</label>
+        <input id="input-code" type="text" placeholder="Enter code">
+        <button id="apply-code" type="submit">Apply</button>
+      </form>
+
       <div class="summary-row">
         <span>Subtotal</span>
         <span id="subtotal">$0.00</span>
@@ -73,6 +79,10 @@
       <div class="summary-row">
         <span>Takeaway Charge</span>
         <span id="takeaway">$0.30</span>
+      </div>
+
+      <div id="discounts">
+        
       </div>
 
       <div class="summary-total">
@@ -98,5 +108,4 @@
     </main> 
 
     <script type="module" src="assets/scripts/cart.js"></script>
-
 </body>

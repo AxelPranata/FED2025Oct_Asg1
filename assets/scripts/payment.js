@@ -66,11 +66,15 @@ onAuthStateChanged(auth, async (user) => {
     });
   });
 
+
+
   // 🔹 Pricing
-  const promo = 0;
+  
   const smallOrderFee = subtotal < 10 ? 1.50 : 0;
   const takeoutFee = 0.30;
-  const total = subtotal + promo + smallOrderFee + takeoutFee;
+  let total = parseFloat(sessionStorage.getItem("total")); // Includes promo and takeoutFee
+  total += smallOrderFee; // QJ adding small order fee implementation later
+  const promo = total - (subtotal + smallOrderFee + takeoutFee);
 
 // 🔹 Create order
 await addDoc(collection(db, "orders"), {
@@ -92,9 +96,9 @@ await addDoc(collection(db, "orders"), {
   items,
   pricing: {
     subtotal,
-    promo,
     smallOrderFee,
     takeoutFee,
+    promo,
     total
   },
 
@@ -103,6 +107,14 @@ await addDoc(collection(db, "orders"), {
 
   // 🔹 Clear cart
   for (const d of snap.docs) {
+    await deleteDoc(d.ref);
+  }
+
+  // 🔹 Clear appliedCodes
+  const appliedCodeRef = collection(db, "carts", userId, "appliedCodes");
+  const appliedCodeSnap = await getDocs(appliedCodeRef);
+
+  for (const d of appliedCodeSnap.docs) {
     await deleteDoc(d.ref);
   }
 

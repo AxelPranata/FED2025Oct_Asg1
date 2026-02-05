@@ -5,7 +5,10 @@ import {
   collection,
   getDocs,
   doc,
-  deleteDoc
+  deleteDoc,
+  addDoc,
+  query,
+  where
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 /* =========================
@@ -77,6 +80,59 @@ onAuthStateChanged(auth, async (user) => {
 
   subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
   totalEl.textContent = `$${(subtotal + 0.3).toFixed(2)}`;
+
+
+  
+  loadAppliedCodes(userId, subtotal);
+
+  const promoCode = document.getElementById("promo-code");
+  promoCode.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const inputCode = document.getElementById("input-code");
+    const promoQuery = query(collection(db, "promotions"), where("code", "==", inputCode.value));
+    const promoSnapshot = await getDocs(promoQuery);
+
+    if (promoSnapshot.empty) {
+      return alert("ℹ️ No promo codes found.");
+    }
+
+    const redemptionQuery = query(
+      collection(db, "redemptions"),
+      where("userId", "==", userId),
+      where("code", "==", inputCode.value)
+    );
+    const redemptionSnapshot = await getDocs(redemptionQuery);
+
+    if (!redemptionSnapshot.empty) {
+      return alert("⚠️ You have already redeemed this promo code.");
+    }
+
+    const promoDoc = promoSnapshot.docs[0];
+    const data = promoDoc.data();
+
+    await addDoc(collection(db, "carts", userId, "appliedCodes"), {
+      code: inputCode.value,
+      discount: data.discount,
+      type: data.type,
+      description: data.description,
+      redeemedAt: new Date().toLocaleDateString()
+    });
+
+    await addDoc(collection(db, "redemptions"), {
+      userId,
+      code: inputCode.value,
+      type: data.type,
+      description: data.description,
+      redeemedAt: new Date()
+    });
+
+    await loadAppliedCodes(userId, subtotal);
+
+
+    alert("✅ Promo code redeemed successfully!");
+    promoCode.reset();
+  });
 });
 
 /* =========================
@@ -119,3 +175,48 @@ payNowBtn.addEventListener("click", () => {
   window.location.href = "payment.html";
 });
 
+
+/* =========================
+   CALCULATE PROMOTIONS
+========================= */
+function applyDiscount(total, discount, type) {
+  if (type === "percent") {
+    return total * (1 - discount / 100);
+  }
+  return total - discount;
+}
+
+function createDiscount(description, discount, type) {
+  const div = document.createElement("div");
+  div.className = "summary-row";
+
+  const labelSpan = document.createElement("span");
+  labelSpan.textContent = description;
+
+  const valueSpan = document.createElement("span");
+  valueSpan.className = "amount";
+  valueSpan.textContent = type === "percent" ? `-${discount}%` : `-$${discount}`;
+
+  div.append(labelSpan, valueSpan);
+  return div;
+}
+
+async function loadAppliedCodes(userId, subtotal) {
+  // const order_summary = document.querySelector(".order-summary");
+  const discounts = document.getElementById("discounts")
+  const appliedCodesRef = collection(db, "carts", userId, "appliedCodes");
+  const snapshot = await getDocs(appliedCodesRef);
+
+  let total = subtotal + 0.3;
+  discounts.querySelectorAll("div").forEach(el => el.remove());
+
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    total = applyDiscount(total, data.discount, data.type);
+
+    discounts.append(createDiscount(data.description, data.discount, data.type));
+  });
+
+  totalEl.textContent = `$${Math.max(total, 0).toFixed(2)}`;
+  sessionStorage.setItem("total", Math.max(total, 0).toFixed(2));
+}
