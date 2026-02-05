@@ -76,12 +76,9 @@
         <span id="subtotal">$0.00</span>
       </div>
 
-      <div class="summary-row">
-        <span>Takeaway Charge</span>
-        <span id="takeaway">$0.30</span>
-      </div>
+      <div id="discounts"></div>
+        <div id="fees"></div>
 
-      <div id="discounts">
         
       </div>
 
@@ -98,6 +95,23 @@
   <button data-method="visa">Visa</button>
   <button data-method="mastercard">Mastercard</button>
 </div>
+
+<div class="fulfillment">
+  <h4>Fulfillment</h4>
+
+  <label>
+    <input type="radio" name="fulfillment" value="takeout" checked>
+    Takeout
+  </label>
+
+  <label>
+    <input type="radio" name="fulfillment" value="delivery">
+    Delivery
+  </label>
+</div>
+
+<div id="fees"></div>
+
 
 <button id="pay-now" class="pay-btn">Pay Now</button>
 
