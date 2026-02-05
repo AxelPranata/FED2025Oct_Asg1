@@ -52,5 +52,14 @@
   <script type="module" src="/assets/scripts/kishore_js/vendor_menu.js"></script>
 
   <script src="/assets/scripts/kishore_js/vendor_nav.js"></script>
+
+  <script>
+  // Make sure Lucide loads
+  if (typeof lucide !== 'undefined') {
+    lucide.createIcons();
+  } else {
+    console.error('Lucide not loaded!');
+  }
+</script>
 </body>
 </html>

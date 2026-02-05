@@ -67,6 +67,9 @@ function renderDocuments(documents) {
     const wrapperClass = getWrapperClass(doc.status);
     const formattedDate = formatDate(doc.expiryDate);
     
+    // Check if document has been uploaded (has fileUrl)
+    const hasFile = doc.fileUrl && doc.fileUrl.trim() !== '';
+    
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
@@ -91,8 +94,8 @@ function renderDocuments(documents) {
             <span class="info-value">${formattedDate}</span>
           </div>
           <div class="button-group">
-            ${doc.uploaded ? `
-              <button class="btn btn-outline" onclick="viewDocument('${doc.id}')">
+            ${hasFile ? `
+              <button class="btn btn-outline" onclick="viewDocument('${doc.id}', '${doc.fileUrl}', '${doc.name}')">
                 <i data-lucide="eye" class="icon"></i>
                 View
               </button>
@@ -106,6 +109,9 @@ function renderDocuments(documents) {
                 Upload
               </button>
             `}
+            <button class="btn btn-outline" onclick="editDocument('${doc.id}', '${doc.name}', '${doc.type}', '${doc.expiryDate}')">
+              <i data-lucide="edit" class="icon"></i>
+            </button>
             <button class="btn btn-outline btn-delete" onclick="deleteDocument('${doc.id}')">
               <i data-lucide="trash-2" class="icon"></i>
             </button>
@@ -124,58 +130,158 @@ function renderDocuments(documents) {
 }
 
 // View document
-window.viewDocument = function(docId) {
-  alert(`Viewing document: ${docId}`);
-  // Add logic to open document in new tab or modal
+window.viewDocument = function(docId, fileUrl, docName) {
+  if (fileUrl && fileUrl.trim() !== '') {
+    // Open in new tab
+    window.open(fileUrl, '_blank');
+  } else {
+    showModal('Error', 'No file available to view.');
+  }
 };
 
 // Upload/Replace document
 window.uploadDocument = function(docId) {
   const input = document.createElement('input');
   input.type = 'file';
-  input.accept = '.pdf,.jpg,.png';
+  input.accept = '.pdf,.jpg,.jpeg,.png';
   input.onchange = async (e) => {
     const file = e.target.files[0];
     if (file) {
       console.log('Uploading file:', file.name);
-      alert(`File "${file.name}" uploaded successfully!`);
       
-      // Update Firestore
-      const docRef = doc(db, 'vendors', currentVendorId, 'agreements', docId);
-      await updateDoc(docRef, {
-        uploaded: true,
-        fileUrl: 'path/to/file',
-      });
+      // TODO: Upload to Firebase Storage and get URL
+      // For now, using placeholder
+      const fileUrl = `https://placeholder.com/${file.name}`;
+      
+      try {
+        const docRef = doc(db, 'vendors', currentVendorId, 'agreements', docId);
+        await updateDoc(docRef, {
+          uploaded: true,
+          fileUrl: fileUrl,
+          fileName: file.name,
+          uploadedAt: new Date().toISOString()
+        });
+        showModal('Success', `File "${file.name}" uploaded successfully!`);
+      } catch (error) {
+        console.error('Error uploading:', error);
+        showModal('Error', 'Failed to upload file. Please try again.');
+      }
     }
   };
   input.click();
 };
 
 window.replaceDocument = function(docId) {
-  window.uploadDocument(docId);
+  if (confirm('Are you sure you want to replace this document?')) {
+    window.uploadDocument(docId);
+  }
+};
+
+// Edit document details
+window.editDocument = async function(docId, currentName, currentType, currentExpiry) {
+  // Create modal
+  const modalHTML = `
+    <div id="editModal" class="modal">
+      <div class="modal-content">
+        <h3>Edit Document Details</h3>
+        <form id="editForm">
+          <div class="form-group">
+            <label>Document Name:</label>
+            <input type="text" id="editName" value="${currentName}" required>
+          </div>
+          <div class="form-group">
+            <label>Document Type:</label>
+            <input type="text" id="editType" value="${currentType}" required>
+          </div>
+          <div class="form-group">
+            <label>Expiry Date:</label>
+            <input type="date" id="editExpiry" value="${currentExpiry}" required>
+          </div>
+          <div class="modal-buttons">
+            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  // Handle form submission
+  document.getElementById('editForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('editName').value;
+    const type = document.getElementById('editType').value;
+    const expiryDate = document.getElementById('editExpiry').value;
+    
+    try {
+      const docRef = doc(db, 'vendors', currentVendorId, 'agreements', docId);
+      await updateDoc(docRef, {
+        name,
+        type,
+        expiryDate,
+        updatedAt: new Date().toISOString()
+      });
+      closeModal();
+      showModal('Success', 'Document updated successfully!');
+    } catch (error) {
+      console.error('Error updating:', error);
+      showModal('Error', 'Failed to update document. Please try again.');
+    }
+  };
 };
 
 // Delete document
 window.deleteDocument = async function(docId) {
-  if (confirm('Are you sure you want to delete this document?')) {
+  if (confirm('Are you sure you want to delete this document? This action cannot be undone.')) {
     try {
       const docRef = doc(db, 'vendors', currentVendorId, 'agreements', docId);
       await deleteDoc(docRef);
-      alert('Document deleted successfully!');
+      showModal('Success', 'Document deleted successfully!');
     } catch (error) {
       console.error('Error deleting document:', error);
-      alert('Error deleting document');
+      showModal('Error', 'Failed to delete document. Please try again.');
     }
   }
 };
 
 // Add new agreement
 window.addNewAgreement = async function() {
-  const name = prompt('Enter document name:');
-  const type = prompt('Enter document type:');
-  const expiryDate = prompt('Enter expiry date (YYYY-MM-DD):');
+  const modalHTML = `
+    <div id="addModal" class="modal">
+      <div class="modal-content">
+        <h3>Add New Agreement</h3>
+        <form id="addForm">
+          <div class="form-group">
+            <label>Document Name:</label>
+            <input type="text" id="addName" placeholder="e.g., Business License" required>
+          </div>
+          <div class="form-group">
+            <label>Document Type:</label>
+            <input type="text" id="addType" placeholder="e.g., License" required>
+          </div>
+          <div class="form-group">
+            <label>Expiry Date:</label>
+            <input type="date" id="addExpiry" required>
+          </div>
+          <div class="modal-buttons">
+            <button type="button" class="btn btn-outline" onclick="closeModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary">Add Agreement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  `;
   
-  if (name && type && expiryDate) {
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+  
+  document.getElementById('addForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const name = document.getElementById('addName').value;
+    const type = document.getElementById('addType').value;
+    const expiryDate = document.getElementById('addExpiry').value;
+    
     try {
       const agreementsRef = collection(db, 'vendors', currentVendorId, 'agreements');
       await addDoc(agreementsRef, {
@@ -184,16 +290,38 @@ window.addNewAgreement = async function() {
         status: 'valid',
         expiryDate,
         uploaded: false,
-        createdAt: new Date().toISOString(),
-        fileUrl: ''
+        fileUrl: '',
+        createdAt: new Date().toISOString()
       });
-      alert('Agreement added successfully!');
+      closeModal();
+      showModal('Success', 'Agreement added successfully!');
     } catch (error) {
       console.error('Error adding agreement:', error);
-      alert('Error adding agreement');
+      showModal('Error', 'Failed to add agreement. Please try again.');
     }
-  }
+  };
 };
+
+// Helper: Close modal
+window.closeModal = function() {
+  const modals = document.querySelectorAll('.modal');
+  modals.forEach(modal => modal.remove());
+};
+
+// Helper: Show notification modal
+function showModal(title, message) {
+  const modalHTML = `
+    <div id="notifModal" class="modal">
+      <div class="modal-content modal-small">
+        <h3>${title}</h3>
+        <p>${message}</p>
+        <button class="btn btn-primary" onclick="closeModal()">OK</button>
+      </div>
+    </div>
+  `;
+  
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
+}
 
 // Initialize
 listenToAgreements();

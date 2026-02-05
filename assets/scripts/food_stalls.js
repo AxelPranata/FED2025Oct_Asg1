@@ -54,8 +54,6 @@ function createItem(id, name, img) {
         window.location.href = `order.html?centerId=${hawkerCenterId}&stallId=${id}`;
     });
 
-    console.log(`Created ${id} ${name} ${img}`)
-
     return item;
 }
 
@@ -83,8 +81,6 @@ async function loadHawkerCenter() {
         const data = snapshot.data()
         hawker_center_title.textContent = data.name;
         hawker_center_desc.textContent = data.description;
-
-        console.log(`Created ${data.name} ${data.description}`)
         hawker_center_img.src = data.imagePath;
     } else {
         console.log("Hawker center does not exist");
@@ -94,4 +90,15 @@ async function loadHawkerCenter() {
 document.addEventListener("DOMContentLoaded", (e) => {
     loadHawkerCenter();
     loadCards();
+
+    const searchBar = document.getElementById('search');
+    searchBar.addEventListener('keyup', () => {
+        const query = searchBar.value.toLowerCase();
+        const items = document.querySelectorAll('.container .item'); // re-query here
+
+        items.forEach(item => {
+        const text = item.textContent.toLowerCase();
+        item.style.display = text.includes(query) ? '' : 'none';
+        });
+    });
 })
