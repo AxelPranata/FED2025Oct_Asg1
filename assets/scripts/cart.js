@@ -55,7 +55,7 @@ onAuthStateChanged(auth, async (user) => {
 
   snap.forEach(docSnap => {
     const item = docSnap.data();
-    subtotal += item.price * item.quantity;
+    subtotal += item.price;
 
     const div = document.createElement("div");
     div.className = "cart-item";
@@ -79,7 +79,73 @@ onAuthStateChanged(auth, async (user) => {
   });
 
   subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
-  totalEl.textContent = `$${(subtotal + 0.3).toFixed(2)}`;
+  // =========================
+// FULFILLMENT LOGIC
+// =========================
+let fulfillmentType = "takeout";
+
+const feesContainer = document.getElementById("fees");
+const radios = document.querySelectorAll("input[name='fulfillment']");
+
+radios.forEach(r => {
+  r.addEventListener("change", () => {
+    fulfillmentType = r.value;
+    updateTotal(subtotal);
+  });
+});
+
+function updateTotal(subtotal) {
+  let total = subtotal;
+  feesContainer.innerHTML = "";
+
+  if (fulfillmentType === "takeout") {
+    const takeoutFee = 0.30;
+    total += takeoutFee;
+
+    feesContainer.innerHTML = `
+      <div class="summary-row">
+        <span>Takeaway Charge</span>
+        <span>$${takeoutFee.toFixed(2)}</span>
+      </div>
+    `;
+  }
+
+  if (fulfillmentType === "delivery") {
+    const deliveryFee = 2.00;
+
+    let minOrderFee = 0;
+    if (subtotal < 10) {
+      minOrderFee = 10 - subtotal;
+      total += minOrderFee;
+    }
+
+    total += deliveryFee;
+
+    feesContainer.innerHTML = `
+      ${minOrderFee > 0 ? `
+        <div class="summary-row">
+          <span>Min Order Fee</span>
+          <span>$${minOrderFee.toFixed(2)}</span>
+        </div>
+      ` : ""}
+
+      <div class="summary-row">
+        <span>Delivery Fee</span>
+        <span>$${deliveryFee.toFixed(2)}</span>
+      </div>
+    `;
+  }
+
+  totalEl.textContent = `$${total.toFixed(2)}`;
+
+  // store for payment.js
+  sessionStorage.setItem("total", total.toFixed(2));
+  sessionStorage.setItem("fulfillmentType", fulfillmentType);
+}
+
+// run once on load
+updateTotal(subtotal);
+
 
 
   

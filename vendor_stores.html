@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Stores - Hawker Management</title>
+
+  <link rel="stylesheet" href="/assets/styles/vendor_stores.css" />
+</head>
+<body>
+  <div id="nav-container"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-content">
+        <h2>My Stores</h2>
+        <p>Manage your hawker stalls and view their status</p>
+      </div>
+
+      <button class="btn btn-primary" id="addStoreBtn">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M3 3h2l.4 2M7 13h10l4-8H5.4
+               M7 13L5.4 5M7 13l-2.293 2.293
+               c-.63.63-.184 1.707.707 1.707H17
+               m0 0a2 2 0 100 4 2 2 0 000-4
+               zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
+        Add New Store
+      </button>
+    </div>
+
+    <!-- Stores rendered by JS -->
+    <div class="stores-grid" id="storesGrid">
+      <!-- Loading state -->
+      <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
+        <p style="color: #666; font-size: 18px;">Loading stores...</p>
+      </div>
+    </div>
+
+    <!-- Hygiene Grading -->
+    <div class="grading-card">
+      <h3>Hygiene Grading System</h3>
+      <div class="grading-grid">
+        <div class="grade-item">
+          <div class="grade-circle grade-circle-a">A</div>
+          <div class="grade-info">
+            <p>Grade A</p>
+            <p>Excellent</p>
+          </div>
+        </div>
+        <div class="grade-item">
+          <div class="grade-circle grade-circle-b">B</div>
+          <div class="grade-info">
+            <p>Grade B</p>
+            <p>Good</p>
+          </div>
+        </div>
+        <div class="grade-item">
+          <div class="grade-circle grade-circle-c">C</div>
+          <div class="grade-info">
+            <p>Grade C</p>
+            <p>Adequate</p>
+          </div>
+        </div>
+        <div class="grade-item">
+          <div class="grade-circle grade-circle-d">D</div>
+          <div class="grade-info">
+            <p>Grade D</p>
+            <p>Pass</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Firebase and scripts -->
+  <script type="module" src="/assets/scripts/kishore_js/vendor_stores.js"></script>
+  <script src="/assets/scripts/kishore_js/vendor_nav.js"></script>
+
+</body>
+</html>

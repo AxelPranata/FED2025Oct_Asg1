@@ -58,12 +58,18 @@ onAuthStateChanged(auth, async (user) => {
     const itemTotal = item.price * item.quantity;
     subtotal += itemTotal;
 
-    items.push({
-      name: item.name,
-      quantity: item.quantity,
-      price: item.price,
-      itemTotal
-    });
+items.push({
+  name: item.name,
+  quantity: item.quantity,
+  price: item.price,
+  itemTotal,
+
+  // 🔥 pass hawker info forward
+  centerName: item.centerName,
+  centreLocation: item.centreLocation,
+  stallName: item.stallName
+});
+
   });
 
 
@@ -86,7 +92,9 @@ await addDoc(collection(db, "orders"), {
 
   status: "paid",
 
-  fulfillment: { type: "takeout" },
+  fulfillment: {
+  type: sessionStorage.getItem("fulfillmentType") ?? "takeout"
+  },
 
   payment: {
     method: sessionStorage.getItem("paymentMethod") ?? "unknown",
@@ -102,7 +110,14 @@ await addDoc(collection(db, "orders"), {
     total
   },
 
-  createdAt: serverTimestamp()
+  createdAt: serverTimestamp(),
+
+  hawker: {
+  centreName: items[0]?.centerName ?? "Unknown Centre",
+  location: items[0]?.centreLocation ?? "Unknown Location",
+  stallName: items[0]?.stallName ?? "Unknown Stall"
+},
+
 });
 
   // 🔹 Clear cart
