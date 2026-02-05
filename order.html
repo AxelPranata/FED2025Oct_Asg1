@@ -6,6 +6,7 @@ refhref<!DOCTYPE html>
 
     <link rel="stylesheet" href="template/template.css">
     <link rel="stylesheet" href="assets/styles/order.css">
+    <link rel="stylesheet" href="assets/styles/feedback.css">
 
 </head>
 <body>
@@ -83,13 +84,111 @@ refhref<!DOCTYPE html>
             <!-- Cards injected by JS -->
         </div>
     </section>
+
+    <!-- Feedback  -->
+    <section id="feedback">
+        <div id="rating">
+            <div id="rating-count">
+                <h3>Overall Rating</h3>
+                <p>0 Reviews</p>
+            </div>
+            <div id="rating-overall">
+                <h3>0.0</h3>
+                <img src="assets/icons/feedback/star-empty-5.svg" alt="Star Rating Icon">
+            </div>
+        </div>
+
+        <div id="reviews">
+            <div id="review-header">
+                <h3>Reviews</h3>
+                <button id="write-review">Write A Review</button>
+            </div>
+
+            <div id="review-carousel">
+                <!-- Reviews here -->
+            </div>
+        </div>
+
+        <form id="review-overlay">
+            <div id="review-overlay-content">
+                <div id="review-overlay-header">
+                    <h4>Rating</h4>
+                    <button id="post-review" type="submit">Post</button>
+                </div>
+
+                <div id="review-options">
+                    <input type="radio" id="star5" name="rating" value="5">
+                    <label for="star5" title="5 stars"></label>
+
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4" title="4 stars"></label>                    
+
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3" title="3 stars"></label>
+                    
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2" title="2 stars"></label>
+
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1" title="1 star"></label>  
+                </div>
+                
+                <div id="review-description">
+                    <h4>Description</h4>
+                    <textarea name="description" rows="1" cols="auto" maxlength="200" placeholder="Describe your experience (optional)"></textarea>
+                    <p>Only reviews with descriptions are displayed; all ratings count toward the average</p>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <!-- Issue -->
+    <div id="issue-header">
+        <button id="write-issue">Report Issue</button>
+    </div>
+    
+    <form id="issue-overlay">
+        <div id="issue-overlay-content">
+
+            <div id="issue-overlay-header">
+                <h4>Issue</h4>
+                <button id="submit-issue" type="submit">Submit</button>
+            </div>
+        
+            <ul id="issue-options">
+                <li>
+                    <input type="radio" id="cleanliness" name="choice" value="Cleanliness">
+                    <label for="cleanliness">Cleanliness</label>
+                </li>
+                <li>
+                    <input type="radio" id="food-quality" name="choice" value="Food Quality">
+                    <label for="food-quality">Food Quality</label>
+                </li>
+                <li>
+                    <input type="radio" id="service-quality" name="choice" value="Service Quality">
+                    <label for="service-quality">Service Quality</label>
+                </li>
+                <li>
+                    <input type="radio" id="others" name="choice" value="Others">
+                    <label for="others">Others</label>
+                </li>
+            </ul>
+
+            <div id="issue-description">
+                <h4>Issue Description</h4>
+                <textarea name="description" rows="1" cols="auto" maxlength="200" placeholder="Describe your issue"></textarea>
+                <p>Issues submited will be reviewed by one of our admins</p>
+            </div>
+
+        </div>
+    </form>
 </main>
 
 <!-- FOOTER (template) -->
 <footer></footer>
 
 <script type="module" src="assets/scripts/order.js"></script>
-
+<script type="module" src="assets/scripts/feedback.js"></script>
 
 
 </body>
