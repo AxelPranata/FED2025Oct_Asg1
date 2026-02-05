@@ -91,9 +91,9 @@ async function loadReviews() {
   if (!snapshot.empty) {
     snapshot.forEach((review) => {
       const data = review.data();
-
       if (data.description != "") {
-        create_review("", data.username, data.date, data.rating, data.description);
+        let date = data.date.toDate();
+        create_review("", data.username, date.toLocaleDateString(), data.rating, data.description);
       }
 
       reviewCount += 1;
