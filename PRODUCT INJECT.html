@@ -83,48 +83,47 @@
 
       // ✅ Your 5 products (edit here if needed)
       // Doc IDs will be clean slugs (e.g. steam-chicken-rice)
+// ✅ Japanese products
 const PRODUCTS = [
   {
-    name: "Grilled Chicken Chop",
+    name: "Chicken Teriyaki Don",
     basePrice: 6.5,
-    description: "Juicy grilled chicken chop served with fries, coleslaw, and brown sauce.",
+    description: "Grilled teriyaki chicken served over fluffy Japanese rice.",
     imagePath: ""
   },
   {
-    name: "Black Pepper Chicken Chop",
-    basePrice: 6.8,
-    description: "Tender chicken chop topped with rich black pepper sauce and sides.",
+    name: "Salmon Mentai Don",
+    basePrice: 7.2,
+    description: "Seared salmon topped with creamy mentaiko sauce on rice.",
     imagePath: ""
   },
   {
-    name: "Mushroom Chicken Chop",
-    basePrice: 6.8,
-    description: "Chicken chop smothered in creamy mushroom sauce with fries and salad.",
+    name: "Chicken Katsu Curry",
+    basePrice: 7.5,
+    description: "Crispy chicken cutlet with rich Japanese curry and rice.",
     imagePath: ""
   },
   {
-    name: "Chicken Chop Combo Set",
+    name: "Ebi Tempura Don",
     basePrice: 7.8,
-    description: "Chicken chop served with extra fries, coleslaw, and sunny side egg.",
+    description: "Golden prawn tempura drizzled with sweet tendon sauce on rice.",
     imagePath: ""
   }
 ];
 
-      // ✅ Addons templates EXACTLY like your screenshots
-      // Applies to every product (edit if a product has different addons)
-
+// ✅ Japanese-style addons
 const ADDONS = [
   {
-    id: "sides",
+    id: "extras",
     data: {
-      title: "Add Sides",
+      title: "Add Extras",
       type: "checkbox",
       required: false,
       options: [
-        { label: "Extra Fries", price: 1.5 },
-        { label: "Onion Rings", price: 1.8 },
-        { label: "Coleslaw", price: 1.0 },
-        { label: "Sunny Side Egg", price: 1.0 }
+        { label: "Onsen Egg", price: 1.2 },
+        { label: "Extra Rice", price: 1.0 },
+        { label: "Miso Soup", price: 1.5 },
+        { label: "Seaweed Salad", price: 1.8 }
       ]
     }
   },
@@ -135,13 +134,14 @@ const ADDONS = [
       type: "radio",
       required: false,
       options: [
-        { label: "Black Pepper Sauce", price: 0 },
-        { label: "Mushroom Sauce", price: 0 },
-        { label: "Brown Sauce", price: 0 }
+        { label: "Teriyaki Sauce", price: 0 },
+        { label: "Japanese Curry", price: 0 },
+        { label: "Mentai Mayo", price: 0 }
       ]
     }
   }
 ];
+
 
 
       async function safeSetDoc(ref, data, overwrite) {

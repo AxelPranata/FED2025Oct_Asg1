@@ -12,7 +12,6 @@ import {
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-
 import {
   getAuth,
   onAuthStateChanged
@@ -61,78 +60,105 @@ onAuthStateChanged(auth, async (user) => {
     const itemTotal = (item.unitPrice ?? item.price ?? 0) * item.quantity;
     subtotal += itemTotal;
 
-items.push({
-  name: item.name,
-  quantity: item.quantity,
-  price: item.unitPrice ?? item.price ?? 0,
-  itemTotal,
+    items.push({
+      name: item.name,
+      quantity: item.quantity,
+      price: item.unitPrice ?? item.price ?? 0,
+      itemTotal,
 
-  // 🔥 pass hawker info forward
-  centerName: item.centerName,
-  centreLocation: item.centreLocation,
-  stallName: item.stallName
-});
-
+      // 🔥 pass hawker info forward
+      centerName: item.centerName,
+      centreLocation: item.centreLocation,
+      stallName: item.stallName
+    });
   });
 
+  // 🔹 Get applied promo from Firestore
+  const promoRef = doc(db, "carts", userId, "meta", "appliedPromo");
+  const promoSnap = await getDoc(promoRef);
+
+  let appliedPromo = null;
+  if (promoSnap.exists()) {
+    appliedPromo = promoSnap.data();
+  }
+
   // 🔹 Pricing
-  
-const smallOrderFee = 0;
-const takeoutFee = 0.30;
+  const smallOrderFee = 0;
+  const takeoutFee = 0.30;
 
-let total = parseFloat(sessionStorage.getItem("total"));
-const promo = total - (subtotal + takeoutFee);
+  // ✅ declare fulfillmentType BEFORE using it
+  const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
 
-const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
+  // ✅ declare total FIRST (keeps your original logic intact)
+  let total = parseFloat(sessionStorage.getItem("total")) || 0;
 
-let deliveryAddress = null;
+  // keep original promo math (not removed)
+  const promo = total - (subtotal + takeoutFee);
 
-if (fulfillmentType === "delivery") {
-  const userRef = doc(db, "users", userId);
-  const userSnap = await getDoc(userRef);
+  // ✅ delivery rules
+  const deliveryFee = fulfillmentType === "delivery" ? 2.0 : 0;
 
-  deliveryAddress = userSnap.data()?.address ?? null;
-}
+  const minOrderFee =
+    fulfillmentType === "delivery" && subtotal < 10
+      ? 10 - subtotal
+      : 0;
 
+  const promoDiscount = appliedPromo?.discountAmount || 0;
 
-// 🔹 Create order
-await addDoc(collection(db, "orders"), {
-  user: {
-    userId: user.uid,
-    name: user.displayName ?? "Unknown User",
-    email: user.email ?? "No email"
-  },
+  // ✅ final corrected total overwrite
+  total = subtotal + deliveryFee + minOrderFee - promoDiscount;
 
-  status: "paid",
+  let deliveryAddress = null;
 
-  fulfillment: {
-  type: fulfillmentType,
-  address: deliveryAddress
-},
+  if (fulfillmentType === "delivery") {
+    const userRef = doc(db, "users", userId);
+    const userSnap = await getDoc(userRef);
 
-  payment: {
-    method: sessionStorage.getItem("paymentMethod") ?? "unknown",
-    paidAt: serverTimestamp()
-  },
+    deliveryAddress = userSnap.data()?.address ?? null;
+  }
 
-  items,
-  pricing: {
-    subtotal,
-    smallOrderFee,
-    takeoutFee,
-    promo,
-    total
-  },
+  // 🔹 Create order
+  await addDoc(collection(db, "orders"), {
+    user: {
+      userId: user.uid,
+      name: user.displayName ?? "Unknown User",
+      email: user.email ?? "No email"
+    },
 
-  createdAt: serverTimestamp(),
+    status: "paid",
 
-  hawker: {
-  centreName: items[0]?.centerName ?? "Unknown Centre",
-  location: items[0]?.centreLocation ?? "Unknown Location",
-  stallName: items[0]?.stallName ?? "Unknown Stall"
-},
+    fulfillment: {
+      type: fulfillmentType,
+      address: deliveryAddress
+    },
 
-});
+    payment: {
+      method: sessionStorage.getItem("paymentMethod") ?? "unknown",
+      paidAt: serverTimestamp()
+    },
+
+    items,
+
+    pricing: {
+      subtotal,
+      smallOrderFee,
+      takeoutFee,
+      promo,
+      total,
+      promoCode: appliedPromo?.code || null,
+      promoDiscount,
+      deliveryFee,
+      minOrderFee,
+    },
+
+    createdAt: serverTimestamp(),
+
+    hawker: {
+      centreName: items[0]?.centerName ?? "Unknown Centre",
+      location: items[0]?.centreLocation ?? "Unknown Location",
+      stallName: items[0]?.stallName ?? "Unknown Stall"
+    },
+  });
 
   // 🔹 Clear cart
   for (const d of snap.docs) {
