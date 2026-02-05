@@ -82,12 +82,11 @@ let totalRating = 0;
 async function loadReviews() {
   const q = query(
     collection(db, "reviews"),
-    where("hawkercenterid", "==", hawkerCenterId),
-    where("foodstallid", "==", foodStallId)
+    where("hawkerCenterId", "==", hawkerCenterId),
+    where("foodStallId", "==", foodStallId)
   );
 
   const snapshot = await getDocs(q);
-
   if (!snapshot.empty) {
     snapshot.forEach((review) => {
       const data = review.data();
