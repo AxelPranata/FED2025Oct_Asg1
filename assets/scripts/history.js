@@ -97,7 +97,10 @@ onAuthStateChanged(auth, async (user) => {
         <div class="title">${firstItem}</div>
         <div class="meta">
             <span>🕒 ${timeText}</span>
-            <span>📍 ${order.hawker?.centreName ?? "Unknown Centre"}</span>
+            <span>📍 ${
+            order.fulfillment?.type === "delivery"
+              ? order.fulfillment?.address?.line1 ?? "No Address"
+              : order.hawker?.centreName ?? "Unknown Centre"}</span>
             <span>📍 ${order.fulfillment?.type ?? "Takeout"}</span>
         </div>
         </div>

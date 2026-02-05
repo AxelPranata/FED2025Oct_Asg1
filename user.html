@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans&family=Playfair+Display&family=Poppins&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="template/template.css">
   <link rel="stylesheet" href="assets/styles/main.css">
@@ -18,9 +14,6 @@
 
 <header>
   <div class="header-brand">
-    <button id="hamburger">
-      <img src="assets/icons/template/hamburger_menu.svg">
-    </button>
     <div class="logo">
       <img src="assets/icons/template/hawkers.svg">
       <h1>Hawkers</h1>
@@ -28,110 +21,97 @@
   </div>
 
   <nav class="header-nav">
-    <ul id="nav-links">
+    <ul>
       <li><a href="home.html">Home</a></li>
       <li><a href="order.html">Order</a></li>
       <li><a href="history.html">History</a></li>
       <li><a href="promotions.html">Promotions</a></li>
-      <li><div class="divider"></div></li>
       <li><a href="cart.html">Cart</a></li>
       <li><a href="user.html">User</a></li>
     </ul>
   </nav>
-
-  <div class="header-actions">
-    <a href="cart.html" id="cart">
-      Cart <img src="assets/icons/template/shopping_cart.svg">
-    </a>
-    <div id="user">
-      <a href="user.html">
-        <img src="assets/icons/template/user.svg">
-      </a>
-    </div>
-  </div>
 </header>
 
 <main>
-
-<nav id="breadcrumbs">
-  <ul>
-    <li><a href="home.html">Home / </a></li>
-    <li><a href="user.html">User</a></li>
-  </ul>
-</nav>
-
 <section class="profile-section">
-  <h2>My Profile</h2>
+<h2>My Profile</h2>
 
-  <div class="profile-card">
+<div class="profile-card">
 
-    <div class="profile-row">
-      <span class="label">Username</span>
-      <span class="value" id="profileUsername"></span>
-      <button class="btn-pill" data-edit="username">Edit</button>
-    </div>
+<!-- USERNAME -->
+<div class="profile-row">
+  <span class="label">Username</span>
+  <span class="value" id="profileUsername"></span>
+  <button class="btn-pill" data-edit="username">Edit</button>
+</div>
 
-    <div class="profile-row">
-      <span class="label">Description</span>
-      <span class="value" id="profileDescription"></span>
-      <button class="btn-pill" data-edit="description">Edit</button>
-    </div>
+<!-- DESCRIPTION -->
+<div class="profile-row">
+  <span class="label">Description</span>
+  <span class="value" id="profileDescription"></span>
+  <button class="btn-pill" data-edit="description">Edit</button>
+</div>
 
-    <div class="profile-row">
-      <span class="label">Email</span>
-      <span class="value" id="profileEmail"></span>
-      <button class="btn-pill" data-edit="email">Edit</button>
-    </div>
+<!-- EMAIL -->
+<div class="profile-row">
+  <span class="label">Email</span>
+  <span class="value" id="profileEmail"></span>
+  <button class="btn-pill" data-edit="email">Edit</button>
+</div>
 
-    <div class="profile-row">
-      <span class="label">Address</span>
-      <span class="value" id="profileAddress"></span>
-      <button class="btn-pill" data-edit="address">Edit</button>
-    </div>
+<!-- ADDRESS -->
+<div class="profile-row">
+  <span class="label">Address</span>
+  <span class="value" id="profileAddress"></span>
+  <button class="btn-pill" data-edit="address">Edit</button>
+</div>
 
-    <div class="profile-row">
-      <span class="label">Payment</span>
-      <span class="value" id="profilePayment"></span>
-      <button id="editPaymentBtn" class="btn-pill">Change</button>
-    </div>
+<!-- PAYMENT -->
+<div class="profile-row">
+  <span class="label">Payment</span>
+  <span class="value" id="profilePayment"></span>
+  <button id="editPaymentBtn" class="btn-pill">Edit</button>
+</div>
 
-    <!-- SHARED EDITOR -->
-    <div id="editor" style="display:none; margin-top:12px;">
-      <input id="editInput" class="input">
+<!-- GENERAL EDITOR -->
+<div id="editor" style="display:none;">
+  <input id="editInput" class="input">
 
-      <div id="addressFields" style="display:none;">
-        <input id="addrLine" class="input" placeholder="Address line">
-        <input id="addrCity" class="input" placeholder="City">
-        <input id="addrPostal" class="input" placeholder="Postal code">
-      </div>
+  <input id="emailPassword"
+         class="input"
+         type="password"
+         placeholder="Confirm password"
+         style="display:none;">
 
-      <button id="saveEditBtn" class="btn" style="margin-top:10px;">Save</button>
-    </div>
-
-    <!-- PAYMENT EDIT -->
-    <div id="paymentEdit" style="display:none; margin-top:12px;">
-      <select id="paymentMethod" class="input">
-        <option value="">Select</option>
-        <option value="Card">Card</option>
-        <option value="PayNow">PayNow</option>
-        <option value="Cash">Cash</option>
-      </select>
-      <input id="cardLast4" class="input" maxlength="4" placeholder="1234">
-      <button id="savePaymentBtn" class="btn">Save Payment</button>
-    </div>
-
-    <button id="logoutBtn" class="primary-btn">Logout</button>
-
+  <div id="addressFields" style="display:none;">
+    <input id="addrLine" class="input" placeholder="Address line">
+    <input id="addrCity" class="input" placeholder="City">
+    <input id="addrPostal" class="input" placeholder="Postal code">
   </div>
-</section>
 
+  <button id="saveEditBtn" class="btn">Save</button>
+</div>
+
+<!-- PAYMENT EDIT -->
+<div id="paymentEdit" style="display:none;">
+  <select id="paymentMethod" class="input">
+    <option value="">Select</option>
+    <option value="Card">Card</option>
+    <option value="PayNow">PayNow</option>
+    <option value="Cash">Cash</option>
+  </select>
+
+  <input id="cardLast4" class="input" maxlength="4" placeholder="Last 4 digits">
+
+  <button id="savePaymentBtn" class="btn">Save Payment</button>
+</div>
+
+<button id="logoutBtn" class="primary-btn">Logout</button>
+
+</div>
+</section>
 </main>
 
-<footer>
-  <p>&copy; 2026 Hawkers. All rights reserved.</p>
-</footer>
-
-<script src="template/template.js"></script>
 <script type="module" src="assets/scripts/js-ignatius/user.js"></script>
 </body>
 </html>
