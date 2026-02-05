@@ -150,7 +150,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
     updateRating();
 
     if (reviewDesc) {
-      create_review("", userName ?? "Anonymous", reviewDate.toLocaleDateString(), reviewRating, reviewDesc);
+      create_review("", displayName ?? "Anonymous", reviewDate.toLocaleDateString(), reviewRating, reviewDesc);
     }
 
     reviewOverlay.style.display = "none";
@@ -164,7 +164,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
 });
 
 // Create review card
-function create_review(userProfile, userName, reviewDate, reviewRating, reviewDesc) {
+function create_review(userProfile, displayName, reviewDate, reviewRating, reviewDesc) {
   let reviewCarousel = document.getElementById("review-carousel");
 
   let review = document.createElement("div");
@@ -176,7 +176,7 @@ function create_review(userProfile, userName, reviewDate, reviewRating, reviewDe
 
   let name = document.createElement("p");
   name.className = "review-name";
-  name.textContent = userName;
+  name.textContent = displayName;
 
   let date = document.createElement("p");
   date.className = "review-date";
@@ -264,7 +264,7 @@ issueOverlay.addEventListener("submit", async (e) => {
   try {
     await addDoc(collection(db, "issues"), {
       userId: userId,
-      username: userName ?? "Anonymous",       
+      displayName: displayName ?? "Anonymous",       
       hawkercenterid: hawkerCenterId,           
       foodstallid: foodStallId,                 
       foodstallname: foodStallName,             
