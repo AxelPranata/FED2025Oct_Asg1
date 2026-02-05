@@ -274,6 +274,8 @@ issueOverlay.addEventListener("submit", async (e) => {
         foodstallname: foodStallName,
         category: issueSelected,
         description: issueDesc,
+        status: "pending",
+        date: new Date().toLocaleDateString()
       }
     );
 
