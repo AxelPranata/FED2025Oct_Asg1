@@ -143,7 +143,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
         foodstallname: foodStallName,
         rating: parseInt(reviewRating),
         description: reviewDesc,
-        date: reviewDate
+        date: new Date()
       }
     );
 
@@ -152,7 +152,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
     updateRating();
 
     if (reviewDesc) {
-      create_review("", userName ?? "Anonymous", reviewDate, reviewRating, reviewDesc);
+      create_review("", userName ?? "Anonymous", reviewDate.toLocaleDateString(), reviewRating, reviewDesc);
     }
 
     reviewOverlay.style.display = "none";
@@ -275,7 +275,7 @@ issueOverlay.addEventListener("submit", async (e) => {
         category: issueSelected,
         description: issueDesc,
         status: "pending",
-        date: new Date().toLocaleDateString()
+        date: new Date()
       }
     );
 
