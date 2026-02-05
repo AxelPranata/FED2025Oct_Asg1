@@ -124,7 +124,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
 
   const reviewRating = document.querySelector('#review-options input[name="rating"]:checked')?.value;
   const reviewDesc = document.querySelector('#review-description textarea[name="description"]')?.value?.trim();
-  const reviewDate = new Date().toLocaleDateString();
+  const reviewDate = new Date();
 
   if (!reviewRating) {
     alert("❌ Rating is required.");
@@ -143,7 +143,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
         foodstallname: foodStallName,
         rating: parseInt(reviewRating),
         description: reviewDesc,
-        date: new Date()
+        date: reviewDate
       }
     );
 
@@ -156,8 +156,8 @@ reviewOverlay.addEventListener("submit", async (e) => {
     }
 
     reviewOverlay.style.display = "none";
-    alert("✅ Review submitted successfully!");
     reviewOverlay.reset();
+    alert("✅ Review submitted successfully!");
 
   } catch (error) {
     console.error("Error adding review:", error);
@@ -280,8 +280,8 @@ issueOverlay.addEventListener("submit", async (e) => {
     );
 
     issueOverlay.style.display = "none";
-    alert("✅ Issue submitted successfully!");
     issueOverlay.reset();
+    alert("✅ Issue submitted successfully!");
 
   } catch (error) {
     console.error("Error adding issue:", error);
