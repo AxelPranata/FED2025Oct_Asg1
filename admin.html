@@ -68,7 +68,7 @@
     <div class="stat-card">
       <h3>Total Stalls</h3>
       <div class="stat-value">
-        <p>2,303</p>
+        <p id="total-stalls">0</p>
         <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
       </div>
     </div>
@@ -76,7 +76,7 @@
     <div class="stat-card">
       <h3>Total Users</h3>
       <div class="stat-value">
-        <p>92,105</p>
+        <p id="total-users">0</p>
         <img src="assets/icons/Dashboard/user.png" alt="user">
       </div>
     </div>
@@ -84,7 +84,7 @@
     <div class="stat-card">
       <h3>Pending Complaints</h3>
       <div class="stat-value">
-        <p>6</p>
+        <p id="pending-complaints">0</p>
         <img src="assets/icons/Dashboard/report.png" alt="complaint">
       </div>
     </div>
@@ -92,32 +92,27 @@
     <div class="stat-card">
       <h3>Average Rating</h3>
       <div class="stat-value">
-        <p>4.7</p>
+        <p id="avg-rating">0.0</p>
         <img src="assets/icons/Dashboard/star.png" alt="star">
       </div>
-      <p class="stat-subtext">Based on 1,893 Reviews</p>
+      <p class="stat-subtext" id="review-count-text">Based on 0 Reviews</p>
     </div>
   </section>
 
   <!-- Main Content -->
   <section class="content">
-    <article class="card">
+    <article class="card" id="highest-rated-card">
       <h3>Highest Rated Hawker</h3>
+      <div id="highest-rated-content"></div>
     </article>
 
-    <article class="card">
+    <article class="card" id="recent-complaints-card">
       <div class="card-header">
         <h3>Recent Complaints</h3>
         <button class="button"><a href="complaint-management.html">View all</a></button>
       </div>
 
-      <div class="complaint">
-        <div class="complaint-header">
-          <h4>Complaint #4</h4>
-          <span class="progress">Pending</span>
-        </div>
-        <p>Cleanliness | Laksa Paradise</p>
-      </div>
+      <div id="recent-complaints"></div>
     </article>
   </section>
 
@@ -144,7 +139,7 @@
 
 </div> <!-- END .page -->
 
-<script type="module" src="assets\scripts\admin-dashboard.js"></script>
+<script type="module" src="assets/scripts/admin-dashboard.js"></script>
 
 </body>
 </html>
