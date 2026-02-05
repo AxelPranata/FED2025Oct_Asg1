@@ -193,11 +193,6 @@ body {
   cursor: pointer;
 }
 
-.like-btn img {
-  width: 14px;
-  height: 14px;
-}
-
 .like-btn {
   display: flex;
   align-items: center;
@@ -208,16 +203,16 @@ body {
   padding: 0;
 }
 
-.like-btn img {
+.like-btn .like-icon {
   width: 14px;
   height: 14px;
 }
 
-.like-btn:hover img {
+.like-btn:hover .like-icon {
   transform: scale(1.15);
 }
 
-.like-btn:active img {
+.like-btn:active .like-icon {
   transform: scale(0.95);
 }
 
