@@ -62,17 +62,17 @@
     <div class="stat-card">
       <h3>Best Hawker</h3>
       <div class="stat-value">
-        <p>Jurong West Hawker</p>
+        <p id="best-hawker">Loading...</p>
       </div>
     </div>
 
     <div class="stat-card">
       <h3>Best selling stall</h3>
       <div class="stat-value">
-        <p>Prata Boi</p>
+        <p id="best-stall">Loading...</p>
         <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
       </div>
-      <p class="stat-subtext">Maxwell Hawker center</p>
+      <p class="stat-subtext" id="best-stall-centre"> </p>
     </div>
 
     <div class="stat-card large">
@@ -101,16 +101,16 @@
       <div class="two-stats">
         <div class="mini-card">
           <h3>Total Complaints</h3>
-          <p>23</p>
+          <p id="total-complaints">0</p>
         </div>
 
         <div class="mini-card">
           <h3>Average Rating</h3>
           <div class="stat-value">
-            <p>4.7/5</p>
+            <p id="avg-rating">0.0/5</p>
             <img src="assets/icons/Dashboard/star.png" alt="star">
           </div>
-          <p class="stat-subtext">Based on 1,834 reviews</p>
+          <p class="stat-subtext">Based on <span id="review-count">0</span> reviews</p>
         </div>
       </div>
 
@@ -138,41 +138,24 @@
         <th>Orders</th>
         <th>Revenue</th>
       </tr>
-      <tr>
-        <td>1</td>
-        <td>Prata Boi by Maxwell hawker</td>
-        <td><span>5</span>/5</td>
-        <td>1,282</td>
-        <td id="Revenue">$12,282</td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Laksa Paradise by Jurong hawker</td>
-        <td><span>4.7</span>/5</td>
-        <td>1,122</td>
-        <td id="Revenue">$10,082</td>
-      </tr>
-      <tr>
-        <td>3</td>
-        <td>Ah Lim Chicken Rice by Jurong</td>
-        <td><span>4.8</span>/5</td>
-        <td>1,082</td>
-        <td id="Revenue">$9,999</td>
-      </tr>
-      <tr>
-        <td>4</td>
-        <td>Nasi Lemak Corner by Changi</td>
-        <td><span>4.6</span>/5</td>
-        <td>992</td>
-        <td id="Revenue">$7,999</td>
-      </tr>
-      <tr>
-        <td>5</td>
-        <td>Satay King by Jurong</td>
-        <td><span>4.3</span>/5</td>
-        <td>892</td>
-        <td id="Revenue">$9,009</td>
-      </tr>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
+      <tbody id="top-stalls-body">
+        <!-- Filled by JS -->
+      </tbody>
     </table>
   </section>
 
