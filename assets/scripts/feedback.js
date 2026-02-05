@@ -37,7 +37,7 @@ const auth = getAuth(app);
 
 // Get user id and name
 let userId = "";
-let userName = "";
+let displayName = "";
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -48,7 +48,7 @@ onAuthStateChanged(auth, async (user) => {
 
     if (usersSnap.exists()) {
       const data = usersSnap.data();
-      userName = data.username;
+      displayName = data.displayName;
     }
   }
 });
@@ -135,7 +135,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
       collection(db, "reviews"),
       {
         userId: userId,
-        userName: userName ?? "Anonymous",
+        displayName: displayName ?? "Anonymous",
         hawkerCenterId: hawkerCenterId,
         foodStallId: foodStallId,
         foodStallName: foodStallName,
