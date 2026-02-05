@@ -1,144 +1,151 @@
 import { auth, db } from "./firebase.js";
-import {
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, getDoc, updateDoc } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { signOut, updateEmail } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-window.addEventListener("DOMContentLoaded", () => {
+const els = {
+  username: document.getElementById("profileUsername"),
+  description: document.getElementById("profileDescription"),
+  email: document.getElementById("profileEmail"),
+  address: document.getElementById("profileAddress"),
+  payment: document.getElementById("profilePayment"),
 
-  // ==========================
-  // DOM ELEMENTS
-  // ==========================
-  const usernameEl = document.getElementById("profileUsername");
-  const descEl = document.getElementById("profileDescription");
-  const emailEl = document.getElementById("profileEmail");
-  const addressEl = document.getElementById("profileAddress");
-  const logoutBtn = document.getElementById("logoutBtn");
+  editor: document.getElementById("editor"),
+  editInput: document.getElementById("editInput"),
+  saveEditBtn: document.getElementById("saveEditBtn"),
 
-  const profilePayment = document.getElementById("profilePayment");
-  const editPaymentBtn = document.getElementById("editPaymentBtn");
-  const paymentEdit = document.getElementById("paymentEdit");
-  const paymentMethodInput = document.getElementById("paymentMethod");
-  const cardLast4Input = document.getElementById("cardLast4");
-  const savePaymentBtn = document.getElementById("savePaymentBtn");
+  addrFields: document.getElementById("addressFields"),
+  addrLine: document.getElementById("addrLine"),
+  addrCity: document.getElementById("addrCity"),
+  addrPostal: document.getElementById("addrPostal"),
 
-  // ==========================
-  // AUTH + LOAD PROFILE
-  // ==========================
-  auth.onAuthStateChanged(async (user) => {
-    if (!user) {
-      window.location.href = "login.html";
-      return;
-    }
+  editPaymentBtn: document.getElementById("editPaymentBtn"),
+  paymentEdit: document.getElementById("paymentEdit"),
+  paymentMethod: document.getElementById("paymentMethod"),
+  cardLast4: document.getElementById("cardLast4"),
+  savePaymentBtn: document.getElementById("savePaymentBtn"),
 
-    emailEl.textContent = user.email;
+  logoutBtn: document.getElementById("logoutBtn")
+};
 
-    const userRef = doc(db, "users", user.uid);
-    const snap = await getDoc(userRef);
+let currentEdit = null;
+let userRef = null;
 
-    // Create user document if missing
-    if (!snap.exists()) {
-      await setDoc(userRef, {
-        displayName: user.displayName || "User",
-        description: "",
-        email: user.email,
-        address: null,
-        payment: null
-      });
-    }
-
-    const data = snap.exists() ? snap.data() : {};
-
-    // ==========================
-    // BASIC INFO
-    // ==========================
-    usernameEl.textContent = data.displayName || "Not set";
-    descEl.textContent = data.description || "No description";
-
-    // ==========================
-    // ADDRESS (OBJECT → STRING)
-    // ==========================
-    if (data.address && typeof data.address === "object") {
-      const { line1, city, postalCode } = data.address;
-
-      addressEl.textContent = [line1, city, postalCode]
-        .filter(Boolean)
-        .join(", ");
-    } else {
-      addressEl.textContent = "Not set";
-    }
-
-    // ==========================
-    // PAYMENT
-    // ==========================
-    if (data.payment && data.payment.method) {
-      profilePayment.textContent =
-        data.payment.method === "Card"
-          ? `${data.payment.method} •••• ${data.payment.last4}`
-          : data.payment.method;
-    } else {
-      profilePayment.textContent = "Not set";
-    }
-  });
-
-  // ==========================
-  // PAYMENT UI
-  // ==========================
-  if (editPaymentBtn && paymentEdit) {
-    editPaymentBtn.addEventListener("click", () => {
-      paymentEdit.style.display =
-        paymentEdit.style.display === "none" ? "block" : "none";
-    });
+auth.onAuthStateChanged(async (user) => {
+  if (!user) {
+    window.location.href = "/hawkers-app-ignatius/index.html";
+    return;
   }
 
-  if (savePaymentBtn) {
-    savePaymentBtn.addEventListener("click", async () => {
-      const user = auth.currentUser;
-      if (!user) return;
+  userRef = doc(db, "users", user.uid);
+  const snap = await getDoc(userRef);
+  const data = snap.data();
 
-      const method = paymentMethodInput.value;
-      const last4 = cardLast4Input.value.trim();
+  els.username.textContent = data.displayName || "Not set";
+  els.description.textContent = data.description || "Not set";
+  els.email.textContent = user.email;
 
-      if (!method) {
-        alert("Please select a payment method");
-        return;
-      }
-
-      if (method === "Card" && last4.length !== 4) {
-        alert("Please enter the last 4 digits");
-        return;
-      }
-
-      try {
-        await updateDoc(doc(db, "users", user.uid), {
-          payment: {
-            method,
-            last4: method === "Card" ? last4 : ""
-          }
-        });
-
-        profilePayment.textContent =
-          method === "Card"
-            ? `${method} •••• ${last4}`
-            : method;
-
-        paymentEdit.style.display = "none";
-        alert("Payment updated!");
-      } catch (err) {
-        console.error(err);
-        alert("Failed to update payment");
-      }
-    });
+  if (data.address) {
+    els.address.textContent =
+      `${data.address.line1}, ${data.address.city}, ${data.address.postalCode}`;
   }
 
-  // ==========================
-  // LOGOUT
-  // ==========================
-  logoutBtn.addEventListener("click", async () => {
-    await signOut(auth);
-    window.location.href = "login.html";
+  if (data.payment) {
+    els.payment.textContent =
+      data.payment.method === "Card"
+        ? `Card •••• ${data.payment.last4}`
+        : data.payment.method;
+  }
+
+  document.querySelectorAll("[data-edit]").forEach(btn => {
+    btn.onclick = () => openEditor(btn.dataset.edit, data);
   });
 });
+
+// ================= EDITOR =================
+function openEditor(type, data) {
+  currentEdit = type;
+  els.editor.style.display = "block";
+  els.paymentEdit.style.display = "none";
+  els.addrFields.style.display = "none";
+  els.editInput.style.display = "block";
+
+  if (type === "address") {
+    els.editInput.style.display = "none";
+    els.addrFields.style.display = "block";
+    els.addrLine.value = data.address?.line1 || "";
+    els.addrCity.value = data.address?.city || "";
+    els.addrPostal.value = data.address?.postalCode || "";
+    return;
+  }
+
+  els.editInput.value =
+    type === "email" ? auth.currentUser.email : data[type];
+}
+
+els.saveEditBtn.onclick = async () => {
+  const user = auth.currentUser;
+
+  if (currentEdit === "email") {
+    await updateEmail(user, els.editInput.value);
+    els.email.textContent = els.editInput.value;
+  }
+
+  if (currentEdit === "username") {
+    await updateDoc(userRef, { displayName: els.editInput.value });
+    els.username.textContent = els.editInput.value;
+  }
+
+  if (currentEdit === "description") {
+    await updateDoc(userRef, { description: els.editInput.value });
+    els.description.textContent = els.editInput.value;
+  }
+
+  if (currentEdit === "address") {
+    const addr = {
+      line1: els.addrLine.value,
+      city: els.addrCity.value,
+      postalCode: els.addrPostal.value
+    };
+    await updateDoc(userRef, { address: addr });
+    els.address.textContent =
+      `${addr.line1}, ${addr.city}, ${addr.postalCode}`;
+  }
+
+  els.editor.style.display = "none";
+};
+
+// ================= PAYMENT =================
+els.editPaymentBtn.onclick = () => {
+  els.paymentEdit.style.display =
+    els.paymentEdit.style.display === "block" ? "none" : "block";
+  els.editor.style.display = "none";
+};
+
+els.savePaymentBtn.onclick = async () => {
+  const method = els.paymentMethod.value;
+  const last4 = els.cardLast4.value.trim();
+
+  if (!method) return alert("Select payment method");
+  if (method === "Card" && last4.length !== 4)
+    return alert("Enter last 4 digits");
+
+  await updateDoc(userRef, {
+    payment: {
+      method,
+      last4: method === "Card" ? last4 : ""
+    }
+  });
+
+  els.payment.textContent =
+    method === "Card" ? `Card •••• ${last4}` : method;
+
+  els.paymentEdit.style.display = "none";
+};
+
+// ================= LOGOUT =================
+els.logoutBtn.onclick = async () => {
+  await signOut(auth);
+  window.location.href = "/hawkers-app-ignatius/index.html";
+};
