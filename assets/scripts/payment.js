@@ -1,14 +1,17 @@
 import { initializeApp } from
   "https://www.gstatic.com/firebasejs/12.8.0/firebase-app.js";
-
+  
 import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
+  doc,
   addDoc,
   deleteDoc,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
+
 
 import {
   getAuth,
@@ -55,13 +58,13 @@ onAuthStateChanged(auth, async (user) => {
 
   snap.forEach(docSnap => {
     const item = docSnap.data();
-    const itemTotal = item.price * item.quantity;
+    const itemTotal = (item.unitPrice ?? item.price ?? 0) * item.quantity;
     subtotal += itemTotal;
 
 items.push({
   name: item.name,
   quantity: item.quantity,
-  price: item.price,
+  price: item.unitPrice ?? item.price ?? 0,
   itemTotal,
 
   // 🔥 pass hawker info forward
@@ -74,11 +77,23 @@ items.push({
 
   // 🔹 Pricing
   
-  const smallOrderFee = subtotal < 10 ? 1.50 : 0;
-  const takeoutFee = 0.30;
-  let total = parseFloat(sessionStorage.getItem("total")); // Includes promo and takeoutFee
-  total += smallOrderFee; // QJ adding small order fee implementation later
-  const promo = total - (subtotal + smallOrderFee + takeoutFee);
+const smallOrderFee = 0;
+const takeoutFee = 0.30;
+
+let total = parseFloat(sessionStorage.getItem("total"));
+const promo = total - (subtotal + takeoutFee);
+
+const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
+
+let deliveryAddress = null;
+
+if (fulfillmentType === "delivery") {
+  const userRef = doc(db, "users", userId);
+  const userSnap = await getDoc(userRef);
+
+  deliveryAddress = userSnap.data()?.address ?? null;
+}
+
 
 // 🔹 Create order
 await addDoc(collection(db, "orders"), {
@@ -91,8 +106,9 @@ await addDoc(collection(db, "orders"), {
   status: "paid",
 
   fulfillment: {
-  type: sessionStorage.getItem("fulfillmentType") ?? "takeout"
-  },
+  type: fulfillmentType,
+  address: deliveryAddress
+},
 
   payment: {
     method: sessionStorage.getItem("paymentMethod") ?? "unknown",
