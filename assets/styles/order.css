@@ -75,9 +75,8 @@ body {
     margin: 2rem 0 1rem;
 }
 
-/* ===== SEARCH BAR ===== */
 .search-bar {
-    max-width: 280px;
+    width: 280px;          /* fixed width instead of max-width */
     margin: 0 auto;
     padding: 0.5rem 1rem;
     border: 1px solid #ccc;
@@ -85,13 +84,21 @@ body {
 
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 8px;              /* space between items */
 }
 
+/* keep input from pushing size */
 .search-bar input {
     border: none;
     outline: none;
-    width: 100%;
+    flex: 1;               /* fill remaining space */
+    min-width: 0;          /* prevent flex overflow */
+    font-size: 0.9rem;
+}
+
+/* keep "Search Results" from stretching container */
+#search-title {
+    white-space: nowrap;
     font-size: 0.9rem;
 }
 
@@ -213,3 +220,76 @@ body {
 .like-btn:active img {
   transform: scale(0.95);
 }
+
+/* Empty search message */
+.empty-search {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Make grid always look nice */
+.product-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);  /* softer premium shadow */
+  overflow: hidden;
+  text-align: left;
+  position: relative;
+
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* hover like GrabFood */
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0,0,0,0.12);
+}
+
+.product-card img {
+  width: 100%;
+  height: 190px;          /* was 150px */
+  object-fit: cover;
+}
+
+.product-card .info {
+  padding: 1.2rem;
+}
+
+.product-card h4 {
+  font-size: 1.35rem;
+  margin-bottom: 0.3rem;
+}
+
+.product-card .price {
+  font-size: 1.1rem;
+}
+
+#products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* always 4 columns on desktop */
+  gap: 28px;
+  margin-top: 30px;
+  padding: 0 40px;
+}
+
+/* responsive */
+@media (max-width: 1100px) {
+  #products-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  #products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  #products-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+

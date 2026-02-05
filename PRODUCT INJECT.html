@@ -83,62 +83,66 @@
 
       // ✅ Your 5 products (edit here if needed)
       // Doc IDs will be clean slugs (e.g. steam-chicken-rice)
-      const PRODUCTS = [
-        {
-          name: "Steam Chicken Rice",
-          basePrice: 5,
-          description: "Steam chicken rice is a classic dish featuring tender, gently steamed chicken served with fragrant rice cooked in chicken broth."
-        },
-        { name: "Roast Chicken Rice", basePrice: 5, description: "" },
-        { name: "Roast Pork Rice", basePrice: 5, description: "" },
-        { name: "Lemon Cutlet Rice", basePrice: 5, description: "" },
-        { name: "Chicken Rice (Set)", basePrice: 5, description: "" }
-      ];
+const PRODUCTS = [
+  {
+    name: "Chicken Teriyaki Don",
+    basePrice: 6.5,
+    description: "Grilled chicken glazed with sweet teriyaki sauce served over rice.",
+    imagePath: ""
+  },
+  {
+    name: "Salmon Mentai Don",
+    basePrice: 8.5,
+    description: "Seared salmon topped with creamy mentaiko sauce on warm rice.",
+    imagePath: ""
+  },
+  {
+    name: "Chicken Katsu Curry Rice",
+    basePrice: 7.5,
+    description: "Crispy chicken cutlet served with Japanese curry and rice.",
+    imagePath: ""
+  },
+  {
+    name: "Tamago & Ebi Bento",
+    basePrice: 9,
+    description: "Japanese bento set with tamago, fried prawn, rice, and sides.",
+    imagePath: ""
+  }
+];
 
       // ✅ Addons templates EXACTLY like your screenshots
       // Applies to every product (edit if a product has different addons)
-      const ADDONS = [
-        {
-          id: "extras",
-          data: {
-            title: "Add On",
-            type: "checkbox",
-            required: false,
-            options: [
-              { label: "Add Rice", price: 1.5 },
-              { label: "Add Veg", price: 2 },
-              { label: "Add Dumplings", price: 2 },
-              { label: "Add Meat", price: 3.5 },
-              { label: "Add Egg", price: 1.5 }
-            ]
-          }
-        },
-        {
-          id: "meat",
-          data: {
-            title: "Meat",
-            type: "radio",
-            required: true,
-            options: [
-              { label: "Chicken Thigh", price: 0 },
-              { label: "Chicken Breast", price: 0 },
-              { label: "Mix of both", price: 0 }
-            ]
-          }
-        },
-        {
-          id: "rice",
-          data: {
-            title: "Rice",
-            type: "radio",
-            required: true,
-            options: [
-              { label: "Chicken Stock Rice", price: 0 },
-              { label: "White Rice", price: 0 }
-            ]
-          }
-        }
-      ];
+const ADDONS = [
+  {
+    id: "extras",
+    data: {
+      title: "Add Ingredients",
+      type: "checkbox",
+      required: false,
+      options: [
+        { label: "Add Egg", price: 1 },
+        { label: "Add Century Egg", price: 1.5 },
+        { label: "Add Pork Slices", price: 2 },
+        { label: "Add Fish Slices", price: 2 }
+      ]
+    }
+  },
+  {
+    id: "toppings",
+    data: {
+      title: "Toppings",
+      type: "radio",
+      required: false,
+      options: [
+        { label: "Spring Onion", price: 0 },
+        { label: "Fried Shallots", price: 0.5 },
+        { label: "No Toppings", price: 0 }
+      ]
+    }
+  }
+];
+
+
 
       async function safeSetDoc(ref, data, overwrite) {
         const snap = await getDoc(ref);
