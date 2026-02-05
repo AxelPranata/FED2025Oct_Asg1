@@ -138,16 +138,6 @@ function renderProducts(products, isSearch = false) {
     const productRef = doc(productsRef, product.id);
     const likeRef = doc(productRef, "likes", userId);
 
-    // Set button state
-    // if (userId) {
-    //   const likeDoc = await getDoc(likeRef);
-    //   if (likeDoc.exists()) {
-    //     likeBtn.textContent = `💔 Unlike (${product.likes ?? 0})`;
-    //   } else {
-    //     likeBtn.textContent = `❤️ Like (${product.likes ?? 0})`;
-    //   }
-    // }
-
     if (userId) {
       const likeDoc = await getDoc(likeRef);
       if (likeDoc.exists()) {
