@@ -4,6 +4,7 @@ import {
   getFirestore,
   collection,
   getDocs,
+  getDoc,
   doc,
   deleteDoc,
   addDoc,
@@ -55,7 +56,7 @@ onAuthStateChanged(auth, async (user) => {
 
   snap.forEach(docSnap => {
     const item = docSnap.data();
-    subtotal += item.price;
+    subtotal += (item.unitPrice ?? item.price ?? 0) * item.quantity;
 
     const div = document.createElement("div");
     div.className = "cart-item";
@@ -65,7 +66,7 @@ onAuthStateChanged(auth, async (user) => {
       <div class="cart-info">
         <h4>${item.quantity}x ${item.name}</h4>
         <p>${item.description ?? ""}</p>
-        <span class="cart-price">$${item.price.toFixed(2)}</span>
+        <span class="cart-price">$${Number(item.unitPrice ?? item.price ?? 0).toFixed(2)}</span>
         <div class="remove">Remove</div>
       </div>
     `;
@@ -226,20 +227,35 @@ paymentButtons.forEach(btn => {
 /* =========================
    PAY NOW BUTTON
 ========================= */
-
 const payNowBtn = document.getElementById("pay-now");
-
-payNowBtn.addEventListener("click", () => {
+payNowBtn.addEventListener("click", async () => {
   if (!selectedPaymentMethod) {
     alert("Please select a payment method");
     return;
   }
 
-  // store for payment page
-  sessionStorage.setItem("paymentMethod", selectedPaymentMethod);
+  const user = auth.currentUser;
+  const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
 
+  // 🔴 BLOCK delivery without address BEFORE payment page
+  if (fulfillmentType === "delivery") {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
+
+    const hasAddress = userSnap.exists() && userSnap.data()?.address?.line1;
+
+    if (!hasAddress) {
+      alert("Please add your delivery address in your profile before checkout.");
+      window.location.href = "user.html";
+      return; // ⛔ STOP navigation to payment
+    }
+  }
+
+  // ✅ continue to payment
+  sessionStorage.setItem("paymentMethod", selectedPaymentMethod);
   window.location.href = "payment.html";
 });
+
 
 
 /* =========================

@@ -85,63 +85,63 @@
       // Doc IDs will be clean slugs (e.g. steam-chicken-rice)
 const PRODUCTS = [
   {
-    name: "Chicken Teriyaki Don",
+    name: "Grilled Chicken Chop",
     basePrice: 6.5,
-    description: "Grilled chicken glazed with sweet teriyaki sauce served over rice.",
+    description: "Juicy grilled chicken chop served with fries, coleslaw, and brown sauce.",
     imagePath: ""
   },
   {
-    name: "Salmon Mentai Don",
-    basePrice: 8.5,
-    description: "Seared salmon topped with creamy mentaiko sauce on warm rice.",
+    name: "Black Pepper Chicken Chop",
+    basePrice: 6.8,
+    description: "Tender chicken chop topped with rich black pepper sauce and sides.",
     imagePath: ""
   },
   {
-    name: "Chicken Katsu Curry Rice",
-    basePrice: 7.5,
-    description: "Crispy chicken cutlet served with Japanese curry and rice.",
+    name: "Mushroom Chicken Chop",
+    basePrice: 6.8,
+    description: "Chicken chop smothered in creamy mushroom sauce with fries and salad.",
     imagePath: ""
   },
   {
-    name: "Tamago & Ebi Bento",
-    basePrice: 9,
-    description: "Japanese bento set with tamago, fried prawn, rice, and sides.",
+    name: "Chicken Chop Combo Set",
+    basePrice: 7.8,
+    description: "Chicken chop served with extra fries, coleslaw, and sunny side egg.",
     imagePath: ""
   }
 ];
 
       // ✅ Addons templates EXACTLY like your screenshots
       // Applies to every product (edit if a product has different addons)
+
 const ADDONS = [
   {
-    id: "extras",
+    id: "sides",
     data: {
-      title: "Add Ingredients",
+      title: "Add Sides",
       type: "checkbox",
       required: false,
       options: [
-        { label: "Add Egg", price: 1 },
-        { label: "Add Century Egg", price: 1.5 },
-        { label: "Add Pork Slices", price: 2 },
-        { label: "Add Fish Slices", price: 2 }
+        { label: "Extra Fries", price: 1.5 },
+        { label: "Onion Rings", price: 1.8 },
+        { label: "Coleslaw", price: 1.0 },
+        { label: "Sunny Side Egg", price: 1.0 }
       ]
     }
   },
   {
-    id: "toppings",
+    id: "sauce",
     data: {
-      title: "Toppings",
+      title: "Sauce Choice",
       type: "radio",
       required: false,
       options: [
-        { label: "Spring Onion", price: 0 },
-        { label: "Fried Shallots", price: 0.5 },
-        { label: "No Toppings", price: 0 }
+        { label: "Black Pepper Sauce", price: 0 },
+        { label: "Mushroom Sauce", price: 0 },
+        { label: "Brown Sauce", price: 0 }
       ]
     }
   }
 ];
-
 
 
       async function safeSetDoc(ref, data, overwrite) {
