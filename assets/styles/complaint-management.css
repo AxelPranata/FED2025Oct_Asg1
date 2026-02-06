@@ -209,10 +209,8 @@ header {
     border: 2px solid #EA580C;
     border-radius: 8px;
     background: white;
+    justify-content: space-around;
 }
-
-/* ===== HAWKER DROPDOWN STYLE ===== */
-
 
 /* STATUS TAG COLORS (MATCH STATS CARDS) */
 .tag-pending {
@@ -245,6 +243,10 @@ header {
     align-items: center;
     gap: 6px;
     cursor: pointer;
+    justify-content: center; 
+    flex: 1;
+    min-width: 140px; 
+    max-width: 220px;      
 }
 
 
@@ -322,9 +324,13 @@ img {
 
 /* ===== MOBILE ===== */
 @media (max-width: 576px) {
-    .stats,
     .filter {
-        flex-direction: column;
+        flex-direction: row;   /* KEEP ROW, allow wrapping */
+        justify-content: center;
+    }
+
+    .button {
+        min-width: 160px;  /* slightly bigger on mobile */
     }
 
     .stats-card {
