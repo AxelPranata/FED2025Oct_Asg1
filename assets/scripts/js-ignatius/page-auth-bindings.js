@@ -35,10 +35,19 @@ function getInputs(){
 }
 
 async function postAuthProfile(user, role, name){
-  // Optional: save basic identity
-  const minimal = { displayName: name || user.displayName || "" };
-  await saveProfile(user.uid, role.includes("vendor") ? "vendor" : role.includes("admin") ? "admin" : "user", minimal);
+  const profile = {
+    displayName: name || user.displayName || "",
+    email: user.email || "",           
+  };
+
+  const resolvedRole =
+    role.includes("vendor") ? "vendor" :
+    role.includes("admin") ? "admin" :
+    "user";
+
+  await saveProfile(user.uid, resolvedRole, profile);
 }
+
 
 async function handleEmail(){
   const role = getRole();
