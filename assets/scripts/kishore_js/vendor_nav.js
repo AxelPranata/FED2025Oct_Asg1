@@ -37,7 +37,11 @@ fetch('/vendor_nav.html')
     if (logoutBtn) {
       logoutBtn.addEventListener('click', () => {
         console.log('Logout clicked');
-        alert('Logout functionality would be implemented here');
+        // Clear any session data
+        localStorage.clear();
+        sessionStorage.clear();
+        // Redirect to login page
+        window.location.href = '/hawkers-app-ignatius/login-vendor.html';
       });
     }
   })
