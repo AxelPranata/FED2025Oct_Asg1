@@ -183,3 +183,43 @@ body {
         white-space: wrap;
     }
 }
+
+/* QR MODAL */
+.qr-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.qr-box {
+  background: #fff;
+  padding: 28px;
+  border-radius: 18px;
+  text-align: center;
+
+  display: flex;              /* ⭐ enable flex */
+  flex-direction: column;     /* ⭐ stack vertically */
+  align-items: center;        /* ⭐ center horizontally */
+  gap: 18px;                  /* ⭐ space between QR and button */
+}
+
+
+.qr-box img {
+  width: 220px;
+  margin-bottom: 16px;
+}
+
+.qr-box button {
+  background: #8b1e1e;
+  color: #fff;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+}
+

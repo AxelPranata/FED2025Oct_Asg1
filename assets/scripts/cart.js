@@ -55,7 +55,10 @@ onAuthStateChanged(auth, async (user) => {
   let subtotal = 0;
   container.innerHTML = "";
 
+  let hasItems = false;
+
   snap.forEach(docSnap => {
+    hasItems = true;
     const item = docSnap.data();
     subtotal += (item.unitPrice ?? item.price ?? 0) * item.quantity;
 
@@ -80,6 +83,20 @@ onAuthStateChanged(auth, async (user) => {
     container.appendChild(div);
   });
 
+  // 🔒 Block payment if cart empty
+  
+if (!hasItems) {
+  paymentButtons.forEach(btn => {
+    btn.disabled = true;
+    btn.style.opacity = "0.5";
+    btn.style.cursor = "not-allowed";
+  });
+
+  payNowBtn.disabled = true;
+  payNowBtn.style.opacity = "0.5";
+  payNowBtn.style.cursor = "not-allowed";
+}
+
   subtotalEl.textContent = `$${subtotal.toFixed(2)}`;
   // =========================
 // FULFILLMENT LOGIC
@@ -92,9 +109,12 @@ const radios = document.querySelectorAll("input[name='fulfillment']");
 radios.forEach(r => {
   r.addEventListener("change", () => {
     fulfillmentType = r.value;
-    updateTotal(subtotal);
+
+    updateTotal(subtotal);          // updates fee label UI
+    loadAppliedCodes(userId, subtotal); // recalculates promo + final total
   });
 });
+
 
 function updateTotal(subtotal) {
   let total = subtotal;
@@ -257,8 +277,13 @@ payNowBtn.addEventListener("click", async () => {
   }
 
   // ✅ continue to payment
+  // store payment method
+  // store payment method
   sessionStorage.setItem("paymentMethod", selectedPaymentMethod);
-  window.location.href = "payment.html";
+
+  // show QR modal
+  document.getElementById("qr-modal").style.display = "flex";
+
 });
 
 
@@ -294,12 +319,33 @@ async function loadAppliedCodes(userId, subtotal) {
   const appliedCodesRef = collection(db, "carts", userId, "appliedCodes");
   const snapshot = await getDocs(appliedCodesRef);
 
-  let total = subtotal + 0.3;
+  const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
+
+let total = subtotal;
+
+// apply promo first
+snapshot.forEach(doc => {
+  const data = doc.data();
+  total = applyDiscount(total, data.discount, data.type);
+});
+
+// apply correct fee AFTER promo
+if (fulfillmentType === "takeout") {
+  total += 0.30;
+}
+
+if (fulfillmentType === "delivery") {
+  total += 2.00;
+
+  if (subtotal < 10) {
+    total += (10 - subtotal); // min order fee
+  }
+}
+
   discounts.querySelectorAll("div").forEach(el => el.remove());
 
   snapshot.forEach(doc => {
     const data = doc.data();
-    total = applyDiscount(total, data.discount, data.type);
 
     discounts.append(createDiscount(data.description, data.discount, data.type));
   });
@@ -307,3 +353,8 @@ async function loadAppliedCodes(userId, subtotal) {
   totalEl.textContent = `$${Math.max(total, 0).toFixed(2)}`;
   sessionStorage.setItem("total", Math.max(total, 0).toFixed(2));
 }
+
+// QR DONE → go to payment page (register ONCE)
+document.getElementById("qr-done").addEventListener("click", () => {
+  window.location.href = "payment.html";
+});

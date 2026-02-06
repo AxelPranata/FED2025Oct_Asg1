@@ -121,20 +121,27 @@ onAuthStateChanged(auth, async (user) => {
 
   ${order.fulfillment?.type === "delivery"
     ? `<div class="detail-item">Delivery Fee: $${order.pricing?.deliveryFee?.toFixed(2) ?? "0.00"}</div>`
-    : `<div class="detail-item">Takeaway Fee: $${order.pricing?.takeoutFee?.toFixed(2) ?? "0.00"}</div>`}
+    : `<div class="detail-item">Takeaway Charge: $${order.pricing?.takeoutFee?.toFixed(2) ?? "0.00"}</div>`}
 
   ${order.pricing?.minOrderFee > 0
     ? `<div class="detail-item">Min Order Fee: $${order.pricing.minOrderFee.toFixed(2)}</div>`
     : ""}
 
   ${order.pricing?.promoCode
-    ? `<div class="detail-item">Promo (${order.pricing.promoCode}): -$${(order.pricing.promoDiscount ?? 0).toFixed(2)}</div>`
+    ? `<div class="detail-item">
+        Promo (${order.pricing.promoCode}): ${
+          order.pricing?.promoType === "percent"
+            ? `-${order.pricing.promoDiscount}%`
+            : `-$${Number(order.pricing?.promoDiscount ?? 0).toFixed(2)}`
+        }
+      </div>`
     : ""}
 
   <div class="detail-total">
     Total: $${order.pricing?.total?.toFixed(2) ?? "0.00"}
   </div>
 </div>
+
     `;
 
     card.querySelector(".main-row").onclick = () => {

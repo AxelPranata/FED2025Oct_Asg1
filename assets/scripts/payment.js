@@ -73,40 +73,25 @@ onAuthStateChanged(auth, async (user) => {
     });
   });
 
-  // 🔹 Get applied promo from Firestore
-  const promoRef = doc(db, "carts", userId, "meta", "appliedPromo");
-  const promoSnap = await getDoc(promoRef);
+// 🔹 Get final total from cart page (source of truth)
+const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
+const total = Number(sessionStorage.getItem("total")) || 0;
 
-  let appliedPromo = null;
-  if (promoSnap.exists()) {
-    appliedPromo = promoSnap.data();
-  }
+// Promo info (read from appliedCodes instead of meta/appliedPromo)
+let promoCode = null;
+let promoDiscount = 0;
+let promoType = null;
 
-  // 🔹 Pricing
-  const smallOrderFee = 0;
-  const takeoutFee = 0.30;
+// 🔹 Read applied promo codes from cart
+const appliedCodesRef = collection(db, "carts", userId, "appliedCodes");
+const appliedSnap = await getDocs(appliedCodesRef);
 
-  // ✅ declare fulfillmentType BEFORE using it
-  const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
-
-  // ✅ declare total FIRST (keeps your original logic intact)
-  let total = parseFloat(sessionStorage.getItem("total")) || 0;
-
-  // keep original promo math (not removed)
-  const promo = total - (subtotal + takeoutFee);
-
-  // ✅ delivery rules
-  const deliveryFee = fulfillmentType === "delivery" ? 2.0 : 0;
-
-  const minOrderFee =
-    fulfillmentType === "delivery" && subtotal < 10
-      ? 10 - subtotal
-      : 0;
-
-  const promoDiscount = appliedPromo?.discountAmount || 0;
-
-  // ✅ final corrected total overwrite
-  total = subtotal + deliveryFee + minOrderFee - promoDiscount;
+appliedSnap.forEach(d => {
+  const data = d.data();
+  promoCode = data.code;
+  promoDiscount = data.discount;
+  promoType = data.type;   // ⭐ THIS LINE IS REQUIRED
+});
 
   let deliveryAddress = null;
 
@@ -116,6 +101,23 @@ onAuthStateChanged(auth, async (user) => {
 
     deliveryAddress = userSnap.data()?.address ?? null;
   }
+
+  let deliveryFee = 0;
+let takeoutFee = 0;
+let minOrderFee = 0;
+
+if (fulfillmentType === "delivery") {
+  deliveryFee = 2.00;
+
+  if (subtotal < 10) {
+    minOrderFee = 10 - subtotal;
+  }
+}
+
+if (fulfillmentType === "takeout") {
+  takeoutFee = 0.30;
+}
+
 
   // 🔹 Create order
   await addDoc(collection(db, "orders"), {
@@ -139,17 +141,19 @@ onAuthStateChanged(auth, async (user) => {
 
     items,
 
-    pricing: {
-      subtotal,
-      smallOrderFee,
-      takeoutFee,
-      promo,
-      total,
-      promoCode: appliedPromo?.code || null,
-      promoDiscount,
-      deliveryFee,
-      minOrderFee,
-    },
+    
+
+  pricing: {
+  subtotal,
+  total,
+  promoType,
+  promoCode,
+  promoDiscount,
+  deliveryFee,
+  takeoutFee,
+  minOrderFee,
+},
+
 
     createdAt: serverTimestamp(),
 
