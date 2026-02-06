@@ -140,3 +140,34 @@
             }
         }
     
+
+
+        .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.user-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: white;
+}
+
+.user-icon:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.user-icon .icon {
+    width: 24px;
+    height: 24px;
+    stroke: white; 
+}

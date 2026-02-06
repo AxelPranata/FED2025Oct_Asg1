@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  
+  <link rel="stylesheet" href="/assets/styles/main.css">
+
+  <title>User Profile</title>
+</head>
+
+<body>
+     <div id="nav-container"></div>
+
+
+
+<main>
+<section class="profile-section">
+<h2>My Profile</h2>
+
+<div class="profile-card">
+
+<!-- USERNAME -->
+<div class="profile-row">
+  <span class="label">Username</span>
+  <span class="value" id="profileUsername"></span>
+  <button class="btn-pill" data-edit="username">Edit</button>
+</div>
+
+<!-- DESCRIPTION -->
+<div class="profile-row">
+  <span class="label">Description</span>
+  <span class="value" id="profileDescription"></span>
+  <button class="btn-pill" data-edit="description">Edit</button>
+</div>
+
+<!-- EMAIL -->
+<div class="profile-row">
+  <span class="label">Email</span>
+  <span class="value" id="profileEmail"></span>
+  <button class="btn-pill" data-edit="email">Edit</button>
+</div>
+
+<!-- ADDRESS -->
+<div class="profile-row">
+  <span class="label">Address</span>
+  <span class="value" id="profileAddress"></span>
+  <button class="btn-pill" data-edit="address">Edit</button>
+</div>
+
+<!-- RECEIVE MONEY METHOD -->
+<div class="profile-row">
+  <span class="label">Receive Money Method</span>
+  <span class="value" id="profileReceiveMethod"></span>
+  <button id="editReceiveMethodBtn" class="btn-pill">Edit</button>
+</div>
+
+<!-- GENERAL EDITOR -->
+<div id="editor" style="display:none;">
+  <input id="editInput" class="input">
+
+  <input id="emailPassword"
+         class="input"
+         type="password"
+         placeholder="Confirm password"
+         style="display:none;">
+
+  <div id="addressFields" style="display:none;">
+    <input id="addrLine" class="input" placeholder="Address line">
+    <input id="addrCity" class="input" placeholder="City">
+    <input id="addrPostal" class="input" placeholder="Postal code">
+  </div>
+
+  <button id="saveEditBtn" class="btn">Save</button>
+</div>
+
+<!-- RECEIVE METHOD EDIT -->
+<div id="receiveMethodEdit" style="display:none;">
+  <select id="receiveMethodType" class="input">
+    <option value="">Select</option>
+    <option value="Bank Transfer">Bank Transfer</option>
+    <option value="PayNow">PayNow</option>
+    <option value="Cash">Cash</option>
+  </select>
+
+  <input id="bankAccountNumber" class="input" placeholder="Bank Account Number (last 4 digits)" maxlength="4">
+
+  <button id="saveReceiveMethodBtn" class="btn">Save Receive Method</button>
+</div>
+
+<button id="logoutBtn" class="primary-btn">Logout</button>
+
+</div>
+</section>
+</main>
+<script src="/assets/scripts/kishore_js/vendor_nav.js"></script>
+<script type="module" src="assets/scripts/js-ignatius/user.js"></script>
+</body>
+</html>

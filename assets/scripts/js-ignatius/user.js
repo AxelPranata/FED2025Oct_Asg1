@@ -243,3 +243,91 @@ els.logoutBtn.onclick = async () => {
 };
 }
 )
+
+/* =========================
+   VENDOR RECEIVE METHOD (NEW ADDITION)
+========================= */
+
+// Add new DOM elements (won't break existing code)
+const vendorEls = {
+  receiveMethod: document.getElementById("profileReceiveMethod"),
+  receiveMethodEdit: document.getElementById("receiveMethodEdit"),
+  receiveMethodType: document.getElementById("receiveMethodType"),
+  bankAccountNumber: document.getElementById("bankAccountNumber")
+};
+
+// Check if we're on vendor user page
+if (vendorEls.receiveMethod) {
+  
+  // Display receive method when page loads
+  auth.onAuthStateChanged(async (user) => {
+    if (!user) return;
+    
+    const userRef = doc(db, "users", user.uid);
+    const snap = await getDoc(userRef);
+    const data = snap.data();
+    
+    if (data.receiveMethod) {
+      vendorEls.receiveMethod.textContent =
+        data.receiveMethod.type === "Bank Transfer"
+          ? `Bank Transfer •••• ${data.receiveMethod.accountLast4}`
+          : data.receiveMethod.type;
+    } else {
+      vendorEls.receiveMethod.textContent = "Not set";
+    }
+  });
+
+  // Edit button click
+  document.getElementById("editReceiveMethodBtn")?.addEventListener("click", () => {
+    if (vendorEls.receiveMethodEdit.style.display === "block") {
+      vendorEls.receiveMethodEdit.style.display = "none";
+      return;
+    }
+    
+    // Close other editors
+    if (els.editor) els.editor.style.display = "none";
+    if (els.paymentEdit) els.paymentEdit.style.display = "none";
+    if (els.addrFields) els.addrFields.style.display = "none";
+    
+    vendorEls.receiveMethodEdit.style.display = "block";
+  });
+
+  // Save button click
+  document.getElementById("saveReceiveMethodBtn")?.addEventListener("click", async () => {
+    try {
+      const user = auth.currentUser;
+      if (!user) return;
+      
+      const type = vendorEls.receiveMethodType.value;
+      const accountLast4 = vendorEls.bankAccountNumber.value.trim();
+
+      if (!type) {
+        alert("Select a receive method");
+        return;
+      }
+
+      if (type === "Bank Transfer" && accountLast4.length !== 4) {
+        alert("Enter last 4 digits of bank account");
+        return;
+      }
+
+      const userRef = doc(db, "users", user.uid);
+      await updateDoc(userRef, {
+        receiveMethod: {
+          type,
+          accountLast4: type === "Bank Transfer" ? accountLast4 : ""
+        }
+      });
+
+      vendorEls.receiveMethod.textContent =
+        type === "Bank Transfer" ? `Bank Transfer •••• ${accountLast4}` : type;
+
+      vendorEls.receiveMethodEdit.style.display = "none";
+      alert("Receive method updated");
+
+    } catch (err) {
+      console.error(err);
+      alert("Receive method update failed");
+    }
+  });
+}
