@@ -9,7 +9,8 @@ import {
   deleteDoc,
   addDoc,
   query,
-  where
+  where,
+  Timestamp
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
 /* =========================
@@ -147,9 +148,6 @@ function updateTotal(subtotal) {
 // run once on load
 updateTotal(subtotal);
 
-
-
-  
   loadAppliedCodes(userId, subtotal);
 
   const promoCode = document.getElementById("promo-code");
@@ -157,7 +155,14 @@ updateTotal(subtotal);
     e.preventDefault();
 
     const inputCode = document.getElementById("input-code");
-    const promoQuery = query(collection(db, "promotions"), where("code", "==", inputCode.value));
+    const now = Timestamp.fromDate(new Date());
+    const promoQuery = query(
+      collection(db, "promotions"),
+      where("code", "==", inputCode.value),
+      where("start", "<=", now),
+      where("end", ">=", now)
+    );
+
     const promoSnapshot = await getDocs(promoQuery);
 
     if (promoSnapshot.empty) {
