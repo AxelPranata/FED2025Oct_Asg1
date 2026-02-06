@@ -137,6 +137,10 @@ onAuthStateChanged(auth, async (user) => {
       </div>`
     : ""}
 
+    <div class="detail-item">
+      Payment Method: ${order.payment?.method?.toUpperCase() ?? "UNKNOWN"}
+    </div>
+
   <div class="detail-total">
     Total: $${order.pricing?.total?.toFixed(2) ?? "0.00"}
   </div>
