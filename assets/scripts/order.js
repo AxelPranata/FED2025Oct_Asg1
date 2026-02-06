@@ -170,6 +170,7 @@ function renderProducts(products, isSearch = false) {
             // User hasn't liked → create like doc + increment
             transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
             transaction.update(productRef, { likes: increment(1) });
+            product.likes = (product.likes ?? 0) + 1;
 
             likeCount.textContent = Number(likeCount.textContent) + 1;
             likeIcon.src = "assets/icons/order/unlike.svg";
@@ -177,6 +178,7 @@ function renderProducts(products, isSearch = false) {
             // User already liked → delete like doc + decrement
             transaction.delete(likeRef);
             transaction.update(productRef, { likes: increment(-1) });
+            product.likes = (product.likes ?? 0) - 1;
 
             likeCount.textContent = Number(likeCount.textContent) - 1;
             likeIcon.src = "assets/icons/order/like.svg";
