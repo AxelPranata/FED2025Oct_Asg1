@@ -58,6 +58,16 @@ const params = new URLSearchParams(window.location.search);
 const hawkerCenterId = params.get("centerId");
 const foodStallId = params.get("stallId");
 
+async function getHawkerCenterName(hawkerCenterId) {
+  const centerRef = doc(db, "hawker-centers", hawkerCenterId);
+  const centerSnap = await getDoc(centerRef);
+
+  if (centerSnap.exists()) {
+    return centerSnap.data().name;
+  }
+  return null;
+}
+
 async function getFoodStallName(hawkerCenterId, foodStallId) {
   const stallRef = doc(db, "hawker-centers", hawkerCenterId, "food-stalls", foodStallId);
   const stallSnap = await getDoc(stallRef);
@@ -69,10 +79,12 @@ async function getFoodStallName(hawkerCenterId, foodStallId) {
 }
 
 let foodStallName = "";
-async function loadFoodStall() {
+let hawkerCenterName = "";
+async function loadLocationNames() {
   foodStallName = await getFoodStallName(hawkerCenterId, foodStallId);
+  hawkerCenterName = await getHawkerCenterName(hawkerCenterId)
 }
-loadFoodStall();
+loadLocationNames();
 
 // Rating variables
 let reviewCount = 0;
@@ -137,6 +149,7 @@ reviewOverlay.addEventListener("submit", async (e) => {
         userId: userId,
         displayName: displayName ?? "Anonymous",
         hawkerCenterId: hawkerCenterId,
+        hawkerCenterName: hawkerCenterName,
         foodStallId: foodStallId,
         foodStallName: foodStallName,
         rating: parseInt(reviewRating),
@@ -265,9 +278,10 @@ issueOverlay.addEventListener("submit", async (e) => {
     await addDoc(collection(db, "issues"), {
       userId: userId,
       displayName: displayName ?? "Anonymous",       
-      hawkercenterid: hawkerCenterId,           
-      foodstallid: foodStallId,                 
-      foodstallname: foodStallName,             
+      hawkerCenterId: hawkerCenterId,  
+      hawkerCenterName: hawkerCenterName,     
+      foodStallId: foodStallId,                 
+      foodStallName: foodStallName,             
       category: issueSelected,
       description: issueDesc,
       status: "pending",
