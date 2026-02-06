@@ -17,7 +17,12 @@ import {
 document.addEventListener("DOMContentLoaded", () => {
   const storesGrid = document.getElementById("storesGrid");
   const addStoreBtn = document.getElementById("addStoreBtn");
+  const searchInput = document.getElementById("searchInput");
+  const gradeFilter = document.getElementById("gradeFilter");
+  const statusFilter = document.getElementById("statusFilter");
+  
   let currentUserUID = null;
+  let allStores = [];
 
   // Auth state listener
   onAuthStateChanged(auth, (user) => {
@@ -51,6 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
 
+      allStores = stores;
       renderStores(stores);
     } catch (error) {
       console.error("Error loading stores:", error);
@@ -63,8 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (stores.length === 0) {
       storesGrid.innerHTML = `
-        <div style="grid-column: 1/-1; text-align: center; padding: 40px;">
-          <p style="color: #666; font-size: 18px;">No stores found. Add your first store to get started!</p>
+        <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px;">
+          <svg class="icon-xl" style="color: #d1d5db; margin-bottom: 1rem;" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4
+                 M7 13L5.4 5M7 13l-2.293 2.293
+                 c-.63.63-.184 1.707.707 1.707H17
+                 m0 0a2 2 0 100 4 2 2 0 000-4
+                 zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+          </svg>
+          <h3 style="color: #374151; margin-bottom: 0.5rem;">No stores found</h3>
+          <p style="color: #6b7280; margin-bottom: 1.5rem;">Add your first store to get started!</p>
+          <button class="btn btn-primary" onclick="document.getElementById('addStoreBtn').click()">
+            Add Your First Store
+          </button>
         </div>
       `;
       return;
@@ -92,7 +110,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
           <div class="store-header">
             <h3>${store.name}</h3>
-            <p class="store-location">${store.location}</p>
+            <p class="store-location">
+              <svg class="icon" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              ${store.location} ${store.unitNumber ? '• ' + store.unitNumber : ''}
+            </p>
           </div>
 
           <div class="store-content">
@@ -105,15 +131,49 @@ document.addEventListener("DOMContentLoaded", () => {
               <span class="detail-value">${store.hours}</span>
             </div>
 
-            <button class="btn btn-outline view-store-btn" data-id="${store.id}">
-              View Store Profile
-            </button>
+            
           </div>
         </div>
       `
       );
     });
   }
+
+  // Filter stores
+  function filterStores() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const gradeValue = gradeFilter.value;
+    const statusValue = statusFilter.value;
+
+    let filtered = allStores;
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(store => 
+        store.name.toLowerCase().includes(searchTerm) ||
+        store.location.toLowerCase().includes(searchTerm) ||
+        (store.unitNumber && store.unitNumber.toLowerCase().includes(searchTerm)) ||
+        store.cuisine.toLowerCase().includes(searchTerm)
+      );
+    }
+
+    // Grade filter
+    if (gradeValue) {
+      filtered = filtered.filter(store => store.grade === gradeValue);
+    }
+
+    // Status filter
+    if (statusValue) {
+      filtered = filtered.filter(store => store.status === statusValue);
+    }
+
+    renderStores(filtered);
+  }
+
+  // Event listeners for filters
+  searchInput.addEventListener('input', filterStores);
+  gradeFilter.addEventListener('change', filterStores);
+  statusFilter.addEventListener('change', filterStores);
 
   // Event delegation for dynamic buttons
   storesGrid.addEventListener("click", async (e) => {
@@ -201,7 +261,17 @@ document.addEventListener("DOMContentLoaded", () => {
             
             <div style="margin-bottom: 15px;">
               <label style="display: block; margin-bottom: 5px; font-weight: 500;">Location *</label>
-              <input type="text" name="location" required style="
+              <input type="text" name="location" placeholder="e.g., ABC Hawker Centre" required style="
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+              ">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+              <label style="display: block; margin-bottom: 5px; font-weight: 500;">Unit Number *</label>
+              <input type="text" name="unitNumber" placeholder="e.g., #01-01" required style="
                 width: 100%;
                 padding: 8px;
                 border: 1px solid #ddd;
@@ -223,6 +293,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 <option value="Indian">Indian</option>
                 <option value="Peranakan">Peranakan</option>
                 <option value="Western">Western</option>
+                <option value="Japanese">Japanese</option>
+                <option value="Korean">Korean</option>
+                <option value="Thai">Thai</option>
+                <option value="Vietnamese">Vietnamese</option>
+                <option value="Indonesian">Indonesian</option>
                 <option value="Other">Other</option>
               </select>
             </div>
@@ -284,6 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const storeData = {
         name: formData.get('name'),
         location: formData.get('location'),
+        unitNumber: formData.get('unitNumber'),
         cuisine: formData.get('cuisine'),
         hours: formData.get('hours'),
         grade: formData.get('grade'),

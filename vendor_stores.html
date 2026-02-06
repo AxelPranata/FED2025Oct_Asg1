@@ -14,21 +14,40 @@
     <!-- Header -->
     <div class="header">
       <div class="header-content">
-        <h2>My Stores</h2>
+        <h2>Stores</h2>
         <p>Manage your hawker stalls and view their status</p>
       </div>
 
       <button class="btn btn-primary" id="addStoreBtn">
         <svg class="icon" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round"
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4
-               M7 13L5.4 5M7 13l-2.293 2.293
-               c-.63.63-.184 1.707.707 1.707H17
-               m0 0a2 2 0 100 4 2 2 0 000-4
-               zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            d="M12 4v16m8-8H4" />
         </svg>
         Add New Store
       </button>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="filters">
+      <input 
+        type="search" 
+        id="searchInput" 
+        placeholder="Search by name, location, unit number, or cuisine..."
+      />
+      
+      <select id="gradeFilter">
+        <option value="">All Grades</option>
+        <option value="A">Grade A</option>
+        <option value="B">Grade B</option>
+        <option value="C">Grade C</option>
+        <option value="D">Grade D</option>
+      </select>
+      
+      <select id="statusFilter">
+        <option value="">All Status</option>
+        <option value="open">Open</option>
+        <option value="closed">Closed</option>
+      </select>
     </div>
 
     <!-- Stores rendered by JS -->
