@@ -61,7 +61,7 @@
     <div class="stat-card">
       <h3>Vendors</h3>
       <div class="stat-value">
-        <p>2,308</p>
+        <p id="stat-vendors">Loading...</p>
         <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
       </div>
     </div>
@@ -69,7 +69,7 @@
     <div class="stat-card">
       <h3>Customers</h3>
       <div class="stat-value">
-        <p>92,308</p>
+        <p id="stat-customers">Loading...</p>
         <img src="assets/icons/Dashboard/user.png" alt="user">
       </div>
     </div>
@@ -77,7 +77,7 @@
     <div class="stat-card">
       <h3>Admins</h3>
       <div class="stat-value">
-        <p>6</p>
+        <p id="stat-admins">Loading...</p>
         <img src="assets/icons/Dashboard/admin.png" alt="admin">
       </div>
     </div>
@@ -85,7 +85,7 @@
     <div class="stat-card">
       <h3>Total Users</h3>
       <div class="stat-value">
-        <p>94,308</p>
+        <p id="stat-total">Loading...</p>
         <img src="assets/icons/Dashboard/group.png" alt="all user">
       </div>
     </div>
@@ -98,11 +98,11 @@
     <select class="dropdown">
       <option>All Roles</option>
       <option>Vendors</option>
-      <option>Customers</option>
+      <option>User</option>
       <option>Admins</option>
     </select>
 
-    <button class="button">Add Vendor +</button>
+    <button class="button">Vendor Signin +</button>
   </section>
 
   <!-- Users table -->
@@ -118,45 +118,9 @@
         <th>Delete</th>
       </tr>
 
-      <tr>
-        <td>Balasubramanian Aswin kumar</td>
-        <td>aswin@gmail.com</td>
-        <td><span class="badge vendor">Vendor</span></td>
-        <td>Prata Boi</td>
-        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
-      </tr>
-
-      <tr>
-        <td>Axel</td>
-        <td>axel@gmail.com</td>
-        <td><span class="badge customer">Customer</span></td>
-        <td>-</td>
-        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
-      </tr>
-
-      <tr>
-        <td>Ignatius</td>
-        <td>ignatius@gmail.com</td>
-        <td><span class="badge vendor">Vendor</span></td>
-        <td>Laksa Paradise</td>
-        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
-      </tr>
-
-      <tr>
-        <td>Quan Jun</td>
-        <td>qj@yahoo.com</td>
-        <td><span class="badge admin">Admin</span></td>
-        <td>-</td>
-        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
-      </tr>
-
-      <tr>
-        <td>Kishore</td>
-        <td>kishorebad@gmail.com</td>
-        <td><span class="badge vendor">Vendor</span></td>
-        <td>Super biryani</td>
-        <td><img src="assets/icons/Dashboard/delete.png" alt="Delete"></td>
-      </tr>
+      <tbody id="users-body">
+        <!-- JS fills this -->
+      </tbody>
 
     </table>
   </section>

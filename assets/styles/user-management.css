@@ -246,6 +246,10 @@ table {
   min-width: 700px;
 }
 
+.delete-btn{
+  cursor: pointer;
+}
+
 th, td {
   text-align: left;
   padding: 8px;
