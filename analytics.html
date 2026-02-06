@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <title>Analytics & Reports</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="assets/styles/analytics.css">
 </head>
 
@@ -58,73 +59,78 @@
   </section>
 
   <!-- Top summary cards -->
-  <section class="stats">
-    <div class="stat-card">
-      <h3>Best Hawker</h3>
-      <div class="stat-value">
-        <p id="best-hawker">Loading...</p>
-      </div>
-    </div>
+  <!-- ===== DASHBOARD GRID ===== -->
+<section class="dashboard">
 
-    <div class="stat-card">
-      <h3>Best selling stall</h3>
-      <div class="stat-value">
-        <p id="best-stall">Loading...</p>
-        <img src="assets/icons/Dashboard/food-stand.png" alt="food stand">
-      </div>
-      <p class="stat-subtext" id="best-stall-centre"> </p>
-    </div>
+  <div class="dashboard-row">
 
-    <div class="stat-card large">
-      <h3>Highest Rated Hawker</h3>
-      <div class="chart-placeholder">
-        <p>Bar chart placeholder (Chart.js later)</p>
-      </div>
-    </div>
-  </section>
+    <!-- LEFT: 4 STAT CARDS -->
+    <div class="dashboard-col">
+      <div class="stats-grid">
 
-  <!-- Middle section -->
-  <section class="content">
+        <div class="stat-card">
+          <h3>Best Hawker</h3>
+          <p id="best-hawker">Loading...</p>
+        </div>
 
-    <!-- LEFT -->
-    <article class="card">
-      <h3>Complaint by Category</h3>
-      <div class="chart-placeholder">
-        <p>Pie chart placeholder (Chart.js later)</p>
-      </div>
-    </article>
+        <div class="stat-card">
+          <h3>Total Users</h3>
+          <p id="total-users">Loading...</p>
+        </div>
 
-    <!-- RIGHT COLUMN -->
-    <div class="right-column">
-
-      <!-- Top two separate stat boxes -->
-      <div class="two-stats">
-        <div class="mini-card">
+        <div class="stat-card">
           <h3>Total Complaints</h3>
           <p id="total-complaints">0</p>
         </div>
 
-        <div class="mini-card">
+        <div class="stat-card">
           <h3>Average Rating</h3>
-          <div class="stat-value">
-            <p id="avg-rating">0.0/5</p>
-            <img src="assets/icons/Dashboard/star.png" alt="star">
-          </div>
+          <p id="avg-rating">0.0/5</p>
           <p class="stat-subtext">Based on <span id="review-count">0</span> reviews</p>
         </div>
+
       </div>
-
-      <!-- Monthly trend box below -->
-      <article class="card">
-        <h3>Monthly Complaint Trend</h3>
-        <div class="chart-placeholder">
-          <p>Line chart placeholder (Chart.js later)</p>
-        </div>
-      </article>
-
     </div>
 
-  </section>
+    <!-- RIGHT: BAR CHART -->
+    <div class="dashboard-col">
+      <div class="card fill">
+        <h3>Top 5 Most Complained Hawker</h3>
+        <div class="chart-placeholder">
+          <canvas id="complaintPolarChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- ===== ROW 2 ===== -->
+  <div class="dashboard-row">
+
+    <!-- LEFT: PIE -->
+    <div class="dashboard-col">
+      <div class="card fill">
+        <h3>Complaints by Category</h3>
+        <div class="chart-placeholder">
+          <canvas id="categoryAreaChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: LINE -->
+    <div class="dashboard-col">
+      <div class="card fill">
+        <h3>Monthly Complaint Trend</h3>
+        <div class="chart-placeholder">
+          <canvas id="monthlyLineChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</section>
 
   <!-- Table Section -->
   <section class="table-section">
@@ -138,21 +144,6 @@
         <th>Orders</th>
         <th>Revenue</th>
       </tr>
-      <tbody id="top-stalls-body">
-        <!-- Filled by JS -->
-      </tbody>
-      <tbody id="top-stalls-body">
-        <!-- Filled by JS -->
-      </tbody>
-      <tbody id="top-stalls-body">
-        <!-- Filled by JS -->
-      </tbody>
-      <tbody id="top-stalls-body">
-        <!-- Filled by JS -->
-      </tbody>
-      <tbody id="top-stalls-body">
-        <!-- Filled by JS -->
-      </tbody>
       <tbody id="top-stalls-body">
         <!-- Filled by JS -->
       </tbody>

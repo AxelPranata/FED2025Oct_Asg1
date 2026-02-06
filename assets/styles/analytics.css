@@ -162,14 +162,6 @@ p {
 }
 
 /* Top stats */
-.stats {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 16px 0;
-  flex-wrap: wrap;
-}
-
 .stat-card {
   border: 2px solid #EA580C;
   padding: 12px 20px;
@@ -202,13 +194,6 @@ p {
 }
 
 /* ===== MAIN CONTENT ===== */
-.content {
-  display: flex;
-  gap: 12px;
-  padding: 16px 0;
-  flex-wrap: wrap;
-}
-
 /* Cards */
 .card {
   border: 2px solid #EA580C;
@@ -219,29 +204,6 @@ p {
   background: white;
 }
 
-/* Right column layout */
-.right-column {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-/* Two stat boxes on top */
-.two-stats {
-  display: flex;
-  gap: 12px;
-}
-
-/* Mini cards */
-.mini-card {
-  border: 2px solid #EA580C;
-  border-radius: 8px;
-  padding: 12px 16px;
-  flex: 1;
-  background: white;
-}
-
 /* Chart placeholders */
 .chart-placeholder {
   border: 1px dashed #EA580C;
@@ -249,6 +211,51 @@ p {
   padding: 40px;
   margin-top: 12px;
   text-align: center;
+}
+
+/* ===== DASHBOARD WRAPPER ===== */
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== EACH ROW (50/50 split) ===== */
+.dashboard-row {
+  display: flex;
+  gap: 16px;
+  align-items: stretch; /* equal height */
+}
+
+/* ===== EACH COLUMN ===== */
+.dashboard-col {
+  flex: 1; /* 50 / 50 */
+  display: flex;
+}
+
+/* Make inner card fill full height */
+.fill {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== 2×2 STAT GRID ===== */
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  width: 100%;
+}
+
+.stats-grid .stat-card {
+  flex: 1 1 48%; /* 2 per row */
+  min-width: 0;
+}
+
+/* Ensure cards stretch nicely */
+.card.fill .chart-placeholder {
+  flex: 1;
 }
 
 /* Table */
@@ -276,9 +283,6 @@ th, td {
   border-bottom: 1px solid #EA580C;
 }
 
-#Revenue {
-  color: green;
-}
 
 /* ===== MOBILE NAV ===== */
 @media (max-width: 905px) {
@@ -322,20 +326,12 @@ th, td {
 }
 
 /* ===== MOBILE PAGE LAYOUT ===== */
-@media (max-width: 576px) {
-
-  .stats,
-  .content {
+@media (max-width: 768px) {
+  .dashboard-row {
     flex-direction: column;
   }
 
-  .two-stats {
-    flex-direction: column;
-  }
-
-  .stat-card,
-  .card,
-  .mini-card {
-    min-width: 100%;
+  .stats-grid .stat-card {
+    flex: 1 1 100%;
   }
 }

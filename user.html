@@ -5,32 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <link rel="stylesheet" href="template/template.css">
-  <link rel="stylesheet" href="assets/styles/main.css">
+  <link rel="stylesheet" href="/assets/styles/main.css">
 
   <title>User Profile</title>
 </head>
 
 <body>
 
-<header>
-  <div class="header-brand">
-    <div class="logo">
-      <img src="assets/icons/template/hawkers.svg">
-      <h1>Hawkers</h1>
-    </div>
-  </div>
-
-  <nav class="header-nav">
-    <ul>
-      <li><a href="home.html">Home</a></li>
-      <li><a href="order.html">Order</a></li>
-      <li><a href="history.html">History</a></li>
-      <li><a href="promotions.html">Promotions</a></li>
-      <li><a href="cart.html">Cart</a></li>
-      <li><a href="user.html">User</a></li>
-    </ul>
-  </nav>
-</header>
+<header> 
+  <div class="header-brand"> 
+    <button id="hamburger"> 
+      <img src="assets/icons/template/hamburger_menu.svg" 
+alt="Hamburger Menu"> 
+  </button> 
+  <div class="logo"> <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo"> 
+        <h1>Hawkers</h1> 
+      </div> 
+    </div> 
+    <nav class="header-nav"> 
+      <ul id="nav-links"> 
+        <li><a href="homepage.html">Home</a></li> 
+        <li><a href="order.html">Order</a></li> 
+        <li><a href="history.html">History</a></li> 
+        <li><a href="promotions.html">Promotions</a></li> 
+        <li><div class="divider"></div></li> 
+        <li><a href="cart.html">Cart</a></li> 
+        <li><a href="user.html">User</a></li> 
+      </ul> 
+    </nav> 
+    <div class="header-actions"> 
+      <a href="cart.html" id="cart"> 
+        Cart <img src="assets/icons/template/shopping_cart.svg" alt="Shopping Cart Icon"> 
+      </a> <div id="user"> 
+        <a href="../user.html"> 
+          <img src="assets/icons/template/user.svg" alt="User Icon"> 
+        </a> 
+      </div> 
+    </header>
 
 <main>
 <section class="profile-section">
