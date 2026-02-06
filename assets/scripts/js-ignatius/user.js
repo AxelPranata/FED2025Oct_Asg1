@@ -43,6 +43,12 @@ let currentEdit = null;
 let userRef = null;
 let cachedData = null;
 
+function closeAllEditors() {
+  if (els.editor) els.editor.style.display = "none";
+  if (els.paymentEdit) els.paymentEdit.style.display = "none";
+  if (els.addrFields) els.addrFields.style.display = "none";
+}
+
 /* =========================
    AUTH STATE
 ========================= */
@@ -81,24 +87,36 @@ auth.onAuthStateChanged(async (user) => {
   document.querySelectorAll("[data-edit]").forEach(btn => {
     btn.onclick = () => openEditor(btn.dataset.edit, user);
   });
-
-  document.getElementById("editPaymentBtn").onclick = () => {
-    els.paymentEdit.style.display = "block";
-  };
-
   els.saveBtn.onclick = () => saveEdit(user);
-});
+  document.getElementById("editPaymentBtn").onclick = () => {
+  // Toggle payment editor
+  if (els.paymentEdit.style.display === "block") {
+    closeAllEditors();
+    return;
+  }
+
+  closeAllEditors();
+  currentEdit = "payment";
+  els.paymentEdit.style.display = "block";
+};
 
 /* =========================
    OPEN EDITOR
 ========================= */
 function openEditor(type, user) {
+  // 🔁 If clicking the SAME edit again → close it
+  if (currentEdit === type && els.editor.style.display === "block") {
+    closeAllEditors();
+    return;
+  }
+
+  // Otherwise, switch editor
+  closeAllEditors();
   currentEdit = type;
 
   els.editor.style.display = "block";
-  els.paymentEdit.style.display = "none";
-  els.addrFields.style.display = "none";
   els.editInput.style.display = "block";
+  els.addrFields.style.display = "none";
 
   if (type === "address") {
     els.editInput.style.display = "none";
@@ -116,6 +134,7 @@ function openEditor(type, user) {
 
   els.editInput.value = cachedData[type] || "";
 }
+
 
 /* =========================
    SAVE EDIT
@@ -170,7 +189,7 @@ async function saveEdit(user) {
         `${addr.line1}, ${addr.city}, ${addr.postalCode}`;
     }
 
-    els.editor.style.display = "none";
+    closeAllEditors();
 
   } catch (err) {
     console.error(err);
@@ -222,3 +241,5 @@ els.logoutBtn.onclick = async () => {
   await signOut(auth);
   window.location.href = "/hawkers-app-ignatius/index.html";
 };
+}
+)
