@@ -1,7 +1,6 @@
-#nav-links li.active {
-  background-color: #DBDFD0;
-  border-radius: 15px;
-}
+#nav-links li:nth-child(3) {
+    background-color: #DBDFD0;
+} */
 
 body {
   background: url("../images/order/background.png") no-repeat center top;
