@@ -2,6 +2,10 @@ main {
   padding-top: 0px; /* adjust to match navbar height */
 }
 
+header {
+  z-index: 1;
+}
+
 /* ===== STALL HEADER ===== */
 .stall-header {
     text-align: center;
