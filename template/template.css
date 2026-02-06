@@ -197,6 +197,10 @@ header {
     justify-content: center;
 }
 
+#user a {
+    display: flex;
+}
+
 
 
 /* Footer */
