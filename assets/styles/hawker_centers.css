@@ -59,6 +59,7 @@ input[type="text"] {
     justify-content: flex-end;
 
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .item p {

@@ -1,5 +1,9 @@
 main {
-  padding-top: 90px; /* adjust to match navbar height */
+  padding-top: 0px; /* adjust to match navbar height */
+}
+
+header {
+  z-index: 1;
 }
 
 /* ===== STALL HEADER ===== */
@@ -94,6 +98,7 @@ main {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
     gap: 1.5rem;
+    z-index: -1;
 }
 
 /* ===== PRODUCT CARD ===== */
