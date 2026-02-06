@@ -35,8 +35,9 @@ const auth = getAuth(app);
 ========================= */
 const params = new URLSearchParams(window.location.search);
 
-let centerId = params.get("centerId") || params.get("hc");
-let stallId = params.get("stallId") || params.get("fs");
+let centerId = params.get("centerId");
+let stallId = params.get("stallId");
+document.querySelector('#breadcrumbs ul li:nth-child(2) a').href = `/food_stalls.html?centerId=${centerId}`;
 
 if (!centerId || !stallId) {
   console.error("❌ Missing centerId or stallId in URL");
