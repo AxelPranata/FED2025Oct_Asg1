@@ -104,7 +104,7 @@ async function loadReviews() {
       const data = review.data();
       if (data.description != "") {
         let date = data.date.toDate();
-        create_review("", data.userName, date.toLocaleDateString(), data.rating, data.description);
+        create_review("", data.displayName, date.toLocaleDateString(), data.rating, data.description);
       }
 
       reviewCount += 1;
