@@ -11,9 +11,8 @@ body {
 /* ===== PAGE LAYOUT ===== */
 .history-page {
   max-width: 900px;
-  margin: 100px auto;
-  padding: 1rem;
-}
+  margin: 0 auto 40px auto;   /* remove huge top gap */
+  padding: 0 1rem; }
 
 /* ===== TITLE ===== */
 .history-title {
@@ -101,4 +100,15 @@ body {
 .detail-total {
   margin-top: 0.4rem;
   font-weight: bold;
+}
+
+/* Give safe space under fixed navbar */
+main.history-page{
+  margin-top: 100px;   /* pushes title below header shadow */
+}
+
+/* Keep title aligned nicely */
+.history-title{
+  text-align: center;
+  margin: 0 0 16px 0;
 }
