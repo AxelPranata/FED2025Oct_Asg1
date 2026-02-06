@@ -24,6 +24,7 @@ onAuthStateChanged(auth, async (user) => {
 
   loadDashboardStats();
   loadRecentComplaints();
+  loadHighestRatedHawkersChart();
 });
 
 
@@ -200,4 +201,111 @@ function formatStatus(status) {
   if (s === "in progress") return "In Progress";
 
   return status;
+}
+
+/* =========================
+   CHART: TOP 5 HIGHEST RATED HAWKER CENTRES
+========================= */
+
+async function loadHighestRatedHawkersChart() {
+  try {
+    const reviewsSnap = await getDocs(collection(db, "reviews"));
+
+    const hawkerRatings = {};
+
+    reviewsSnap.forEach(doc => {
+      const data = doc.data();
+
+      const hawkerName = data.hawkerCenterName; // ✅ NEW (use name directly)
+      const rating = Number(data.rating);
+
+      if (!hawkerName || isNaN(rating)) return;
+
+      if (!hawkerRatings[hawkerName]) {
+        hawkerRatings[hawkerName] = { total: 0, count: 0 };
+      }
+
+      hawkerRatings[hawkerName].total += rating;
+      hawkerRatings[hawkerName].count += 1;
+    });
+
+    const hawkerArray = Object.entries(hawkerRatings).map(([name, r]) => {
+      return {
+        hawkerName: name,
+        avgRating: r.count ? (r.total / r.count) : 0
+      };
+    });
+
+    hawkerArray.sort((a, b) => b.avgRating - a.avgRating);
+    const top5 = hawkerArray.slice(0, 5);
+
+    const labels = top5.map(h => h.hawkerName);
+    const data = top5.map(h => h.avgRating.toFixed(2));
+
+    const ctx = document.getElementById("highestRatedChart").getContext("2d");
+
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: labels,
+        datasets: [
+          {
+            label: "Average Rating",
+            data: data,
+            backgroundColor: "#EA580C",
+            borderColor: "#C2410C",
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 5,
+            title: {
+              display: true,
+              text: "Rating (out of 5)"
+            }
+          },
+          x: {
+            title: {
+              display: true,
+              text: "Hawker Centre"
+            }
+          }
+        }
+      }
+    });
+
+    console.log("Highest Rated Hawker Chart loaded");
+
+  } catch (err) {
+    console.error("Chart load error:", err);
+  }
+}
+
+async function getHawkerCentreNameMap() {
+  const map = {}; // { "050335": "Chinatown Complex Market" }
+
+  const centersSnap = await getDocs(collection(db, "hawker-centers"));
+
+  for (const centerDoc of centersSnap.docs) {
+    const centerId = centerDoc.id;
+
+    const stallsSnap = await getDocs(
+      collection(db, "hawker-centers", centerId, "food-stalls")
+    );
+
+    // Take the hawker centre NAME from any stall document (same centre)
+    if (!stallsSnap.empty) {
+      const firstStall = stallsSnap.docs[0].data();
+      if (firstStall.name) {
+        map[centerId] = firstStall.name;
+      }
+    }
+  }
+
+  return map;
 }

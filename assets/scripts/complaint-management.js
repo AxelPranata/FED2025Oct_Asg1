@@ -133,7 +133,7 @@ function renderComplaints(issues) {
           <p>
             ${data.category} | 
             ${data.foodStallName ?? "Unknown Stall"} | 
-            submitted by ${data.userName ?? "Anonymous"}
+            submitted by ${data.displayName ?? "Anonymous"}
           </p>
         </div>
 
