@@ -36,14 +36,25 @@ onAuthStateChanged(auth, async (user) => {
    DOM ELEMENTS (NON-CHART)
 ========================= */
 const bestHawkerEl = document.getElementById("best-hawker");
-const bestStallEl = document.getElementById("best-stall");
-const bestStallCentreEl = document.getElementById("best-stall-centre");
+const totalUsersEl = document.getElementById("total-users");
 
 const totalComplaintsEl = document.getElementById("total-complaints");
 const avgRatingEl = document.getElementById("avg-rating");
 const reviewCountEl = document.getElementById("review-count");
 
 const tableBody = document.getElementById("top-stalls-body");
+
+const complaintPolarCtx = document
+  .getElementById("complaintPolarChart")
+  .getContext("2d");
+
+const categoryAreaCtx = document
+  .getElementById("categoryAreaChart")
+  .getContext("2d");
+
+const monthlyLineCtx = document
+  .getElementById("monthlyLineChart")
+  .getContext("2d");  
 
 /* =========================
    MAIN LOADER
@@ -66,54 +77,19 @@ async function loadAnalytics() {
     reviewsSnap.forEach(d => reviews.push(d.data()));
 
     // ----- TOP CARDS -----
-    computeBestStall(orders);
     computeBestHawker(orders);
     computeTotalComplaints(issues);
     computeAverageRating(reviews);
 
     // ----- TABLE -----
     buildTopStallsTable(orders, reviews);
+    buildTopComplaintsPolarChart(issues);
+    buildCategoryAreaChart(issues);
+    buildMonthlyLineChart(issues);
 
   } catch (err) {
     console.error("Analytics load error:", err);
   }
-}
-
-/* =========================
-   BEST SELLING STALL
-========================= */
-function computeBestStall(orders) {
-  const stallTotals = {};
-
-  orders.forEach(order => {
-    if (!order.items) return;
-
-    order.items.forEach(item => {
-      const stall = item.stallName;
-      const centre = item.centreName;
-      const qty = item.quantity || 0;
-
-      if (!stallTotals[stall]) {
-        stallTotals[stall] = { qty: 0, centre };
-      }
-      stallTotals[stall].qty += qty;
-    });
-  });
-
-  let bestStall = "N/A";
-  let bestCentre = "";
-  let maxQty = 0;
-
-  Object.entries(stallTotals).forEach(([stall, data]) => {
-    if (data.qty > maxQty) {
-      maxQty = data.qty;
-      bestStall = stall;
-      bestCentre = data.centre;
-    }
-  });
-
-  bestStallEl.textContent = bestStall;
-  bestStallCentreEl.textContent = bestCentre || " ";
 }
 
 /* =========================
@@ -240,5 +216,149 @@ function buildTopStallsTable(orders, reviews) {
     `;
 
     tableBody.appendChild(tr);
+  });
+}
+
+/* ====== CHARTS ================ */
+
+/* =========================
+   CHART #1: TOP 5 MOST COMPLAINED HAWKER (POLAR AREA)
+========================= */
+function buildTopComplaintsPolarChart(issues) {
+  // Count complaints per hawker centre
+  const counts = {};
+
+  issues.forEach(issue => {
+    const centre = issue.hawkerCenterName || "Unknown";
+    counts[centre] = (counts[centre] || 0) + 1;
+  });
+
+  // Convert to array and sort DESC
+  const sorted = Object.entries(counts)
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5); // top 5 only
+
+  const labels = sorted.map(i => i.name);
+  const data = sorted.map(i => i.count);
+
+  new Chart(complaintPolarCtx, {
+    type: "polarArea",
+    data: {
+      labels: labels,
+      datasets: [
+      {
+        label: "Complaints by Category",
+        data: data,
+        backgroundColor: [
+          "#22C55E", // green
+          "#3B82F6", // blue
+          "#FACC15", // yellow
+          "#EA580C", // your orange
+          "#EC4899"  // little pink for fun
+        ],
+        borderColor: "#ffffff",
+        borderWidth: 1
+      }
+    ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: "right"
+        }
+      }
+    }
+  });
+}
+
+/* =========================
+   CHART #2: COMPLAINTS BY CATEGORY (pie chart)
+========================= */
+function buildCategoryAreaChart(issues) {
+  const categoryCounts = {};
+
+  issues.forEach(issue => {
+    const category = issue.category || "Others";
+    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+  });
+
+  const labels = Object.keys(categoryCounts);
+  const data = Object.values(categoryCounts);
+
+  new Chart(categoryAreaCtx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Complaints by Category",
+          data: data,
+          backgroundColor: [
+            "#3B82F6", // blue
+            "#22C55E", // green
+            "#FACC15", // yellow
+            "#EA580C", // orange
+            "#A855F7"  // purple
+          ],
+          borderColor: "#ffffff",
+          borderWidth: 1
+          }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+  });
+}
+
+/* =========================
+   CHART #3: MONTHLY COMPLAINT TREND (LINE)
+========================= */
+function buildMonthlyLineChart(issues) {
+  const monthCounts = {};
+
+  issues.forEach(issue => {
+    if (!issue.date) return;
+
+    const d = issue.date.toDate(); // Firestore timestamp → JS Date
+    const key = `${d.getFullYear()}-${d.getMonth() + 1}`; // e.g. "2026-2"
+
+    monthCounts[key] = (monthCounts[key] || 0) + 1;
+  });
+
+  // Sort months chronologically
+  const sortedMonths = Object.keys(monthCounts).sort((a, b) => new Date(a) - new Date(b));
+
+  const labels = sortedMonths;
+  const data = sortedMonths.map(m => monthCounts[m]);
+
+  new Chart(monthlyLineCtx, {
+    type: "line",
+    data: {
+      labels: labels,
+      datasets: [
+      {
+        label: "Complaints per Month",
+        data: data,
+        tension: 0.3,
+        borderColor: "#3B82F6", // blue line
+        backgroundColor: "rgba(59, 130, 246, 0.2)", // light blue fill
+        fill: true
+      }
+    ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
   });
 }
