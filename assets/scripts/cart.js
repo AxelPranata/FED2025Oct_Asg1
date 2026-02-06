@@ -84,7 +84,7 @@ onAuthStateChanged(auth, async (user) => {
   });
 
   // 🔒 Block payment if cart empty
-  
+
 if (!hasItems) {
   paymentButtons.forEach(btn => {
     btn.disabled = true;
@@ -253,6 +253,7 @@ paymentButtons.forEach(btn => {
    PAY NOW BUTTON
 ========================= */
 const payNowBtn = document.getElementById("pay-now");
+
 payNowBtn.addEventListener("click", async () => {
   if (!selectedPaymentMethod) {
     alert("Please select a payment method");
@@ -262,7 +263,7 @@ payNowBtn.addEventListener("click", async () => {
   const user = auth.currentUser;
   const fulfillmentType = sessionStorage.getItem("fulfillmentType") ?? "takeout";
 
-  // 🔴 BLOCK delivery without address BEFORE payment page
+  // 🔴 BLOCK delivery without address
   if (fulfillmentType === "delivery") {
     const userRef = doc(db, "users", user.uid);
     const userSnap = await getDoc(userRef);
@@ -272,21 +273,38 @@ payNowBtn.addEventListener("click", async () => {
     if (!hasAddress) {
       alert("Please add your delivery address in your profile before checkout.");
       window.location.href = "user.html";
-      return; // ⛔ STOP navigation to payment
+      return;
     }
   }
 
-  // ✅ continue to payment
-  // store payment method
-  // store payment method
-  sessionStorage.setItem("paymentMethod", selectedPaymentMethod);
+  // 🔴 BLOCK Visa/Mastercard without saved card
+  if (selectedPaymentMethod === "visa" || selectedPaymentMethod === "mastercard") {
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
-  // show QR modal
+    const hasCard =
+      userSnap.exists() &&
+      userSnap.data()?.payment?.last4; // matches your Firestore
+
+    if (!hasCard) {
+      alert("Please add your card details in your profile before paying with card.");
+      window.location.href = "user.html";
+      return;
+    }
+  }
+
+  /// store payment method
+sessionStorage.setItem("paymentMethod", selectedPaymentMethod);
+
+// 🟢 Show QR ONLY for PayNow
+if (selectedPaymentMethod === "paynow") {
   document.getElementById("qr-modal").style.display = "flex";
+  return;
+}
 
+// 🟢 Card or Cash → go straight to payment page
+window.location.href = "payment.html";
 });
-
-
 
 /* =========================
    CALCULATE PROMOTIONS
