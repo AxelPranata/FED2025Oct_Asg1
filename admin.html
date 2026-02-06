@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <title>Admin Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="assets/styles/admin.css">
 </head>
 
@@ -102,8 +103,8 @@
   <!-- Main Content -->
   <section class="content">
     <article class="card" id="highest-rated-card">
-      <h3>Highest Rated Hawker</h3>
-      <div id="highest-rated-content"></div>
+      <h3>Highest Rated Hawker Centres (Top 5)</h3>
+      <canvas id="highestRatedChart"></canvas>
     </article>
 
     <article class="card" id="recent-complaints-card">
@@ -121,18 +122,24 @@
     <h3>Quick Actions</h3>
     <div class="actions">
       <div class="action">
-        <button class="button"><a href="complaint-management.html">Manage Complaints</a></button>
+        <a class="button full-btn" href="complaint-management.html">
+          Manage Complaints
+        </a>
         <img src="assets/icons/Dashboard/report.png" alt="Complaint">
       </div>
 
       <div class="action">
-        <button class="button"><a href="analytics.html">View Reports</a></button>
-        <img src="assets/icons/Dashboard/trend.png" alt="trend">
+        <a class="button full-btn" href="analytics.html">
+          View Reports
+        </a>
+        <img src="assets/icons/Dashboard/report.png" alt="Complaint">
       </div>
 
       <div class="action">
-        <button class="button"><a href="user-management.html">Manage Users</a></button>
-        <img src="assets/icons/Dashboard/user.png" alt="user">
+        <a class="button full-btn" href="user-management.html">
+          Manage Users
+        </a>
+        <img src="assets/icons/Dashboard/report.png" alt="Complaint">
       </div>
     </div>
   </section>
