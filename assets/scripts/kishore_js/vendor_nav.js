@@ -9,6 +9,7 @@ fetch('/vendor_nav.html')
     ========================= */
     const currentPage = window.location.pathname.split('/').pop();
 
+    // Highlight desktop tabs
     document.querySelectorAll('.nav-tab').forEach(tab => {
       const href = tab.getAttribute('href');
       if (href === currentPage) {
@@ -16,8 +17,47 @@ fetch('/vendor_nav.html')
       }
     });
 
+    // Highlight mobile tabs
+    document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
+      const href = tab.getAttribute('href');
+      if (href === currentPage) {
+        tab.classList.add('active');
+      }
+    });
+
     /* =========================
-       Tab click handling
+       Hamburger Menu Toggle
+    ========================= */
+    const hamburgerBtn = document.querySelector('.hamburger-btn');
+    const mobileMenu = document.querySelector('.mobile-menu');
+
+    if (hamburgerBtn && mobileMenu) {
+      hamburgerBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('open');
+        
+        // Optional: Change hamburger icon to X when open
+        const icon = hamburgerBtn.querySelector('.hamburger-icon path');
+        if (mobileMenu.classList.contains('open')) {
+          // Change to X icon
+          icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+        } else {
+          // Change back to hamburger
+          icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+        }
+      });
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll('.mobile-nav-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          mobileMenu.classList.remove('open');
+          const icon = hamburgerBtn.querySelector('.hamburger-icon path');
+          icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+        });
+      });
+    }
+
+    /* =========================
+       Tab click handling (Desktop)
     ========================= */
     const tabs = document.querySelectorAll('.nav-tab');
 
@@ -25,7 +65,7 @@ fetch('/vendor_nav.html')
       tab.addEventListener('click', () => {
         tabs.forEach(t => t.classList.remove('active'));
         tab.classList.add('active');
-        console.log('Switched to:', tab.dataset.tab);
+        console.log('Switched to:', tab.getAttribute('href'));
       });
     });
 
