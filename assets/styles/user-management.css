@@ -4,9 +4,11 @@
 }
 
 body {
-  width: 100%;
   margin: 0;
   padding: 0;
+}
+
+html {
   background-color: #F6F6F6;
   background-image: radial-gradient(#EA580C 0.5px, transparent 0.5px);
   background-size: 20px 20px;
@@ -227,6 +229,10 @@ img {
   padding: 6px 12px;
   border-radius: 8px;
   border: none;
+  text-decoration: none;
+  display: flex;              
+  justify-content: center;     
+  align-items: center;
 }
 
 /* Table */
