@@ -250,7 +250,6 @@ function buildTopComplaintsPolarChart(issues) {
       labels: labels,
       datasets: [
       {
-        label: "Complaints by Category",
         data: data,
         backgroundColor: [
           "#22C55E", // green
