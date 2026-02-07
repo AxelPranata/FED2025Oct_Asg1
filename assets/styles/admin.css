@@ -1,4 +1,3 @@
-/* ===== CORE TEMPLATE STUFF (FROM YOUR REFERENCE) ===== */
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -86,10 +85,15 @@ header {
     color: #000000;
 }
 
+#highestRatedChart {
+  width: 100% !important;
+  height: 300px !important;
+}
+
 /* Hide divider + extra links on desktop */
-#nav-links :nth-child(5),
-#nav-links :nth-child(6),
-#nav-links :nth-child(7) {
+#nav-links li:nth-child(5),
+#nav-links li:nth-child(6),
+#nav-links li:nth-child(7) {
     display: none;
 }
 
@@ -143,7 +147,7 @@ header {
     padding: 96px 24px 16px;
 }
 
-/* ===== YOUR ORIGINAL PAGE STYLES (MOSTLY UNCHANGED) ===== */
+/* =====  PAGE STYLES  ===== */
 .text {
     font-family: 'Poppins', sans-serif;
     margin: 0;
@@ -161,7 +165,6 @@ p {
     padding: 16px 0;
 }
 
-/* Make sure this is different from nav header-right */
 .page-date {
     text-align: right;
     display: flex;
@@ -260,7 +263,6 @@ p {
   max-height: 350px;
 }
 
-/* ---------- Buttons & badges ---------- */
 .button{
     background-color: #EA580C;
     color: white;
@@ -351,7 +353,7 @@ p {
     height: auto;
 }
 
-/* ===== MOBILE NAV (MATCHES YOUR REFERENCE) ===== */
+/* ===== MOBILE NAV  ===== */
 @media (max-width: 905px) {
     #hamburger {
         display: flex;
@@ -385,15 +387,14 @@ p {
         display: none;
     }
 
-    #nav-links :nth-child(5),
-    #nav-links :nth-child(6),
-    #nav-links :nth-child(7) {
+    #nav-links li:nth-child(5),
+    #nav-links li:nth-child(6),
+    #nav-links li:nth-child(7) {
         display: flex;
     }
 
 }
 
-/* ===== MOBILE PAGE LAYOUT ===== */
 @media (max-width: 576px) {
     .header {
         flex-direction: column;

@@ -148,13 +148,17 @@ async function loadRecentComplaints() {
     issuesSnap.forEach(docu => issues.push(docu.data()));
 
     /* ---------- SORT NEWEST FIRST ---------- */
-    issues.sort((a, b) => b.date.toDate() - a.date.toDate());
+    issues.sort((a, b) => {
+      const da = a.date?.toDate?.() ?? 0;
+      const db = b.date?.toDate?.() ?? 0;
+      return db - da;
+    });
 
     /* ---------- TAKE LATEST 3 + KEEP REAL NUMBER ---------- */
     const latestIssues = issues.slice(0, 3).map((issue, index) => {
       return {
         ...issue,
-        complaintNumber: issues.length - index  // <-- REAL running number
+        complaintNumber: issues.length - index  
       };
     });
 
@@ -229,13 +233,13 @@ function getStatusClass(status) {
 async function loadHighestRatedHawkersChart() {
   try {
     const reviewsSnap = await getDocs(collection(db, "reviews"));
-
+    const isSmall = window.innerWidth < 1552;
     const hawkerRatings = {};
 
     reviewsSnap.forEach(doc => {
       const data = doc.data();
 
-      const hawkerName = data.hawkerCenterName; // ✅ NEW (use name directly)
+      const hawkerName = data.hawkerCenterName; 
       const rating = Number(data.rating);
 
       if (!hawkerName || isNaN(rating)) return;
@@ -279,6 +283,7 @@ async function loadHighestRatedHawkersChart() {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         scales: {
           y: {
             beginAtZero: true,
@@ -287,14 +292,26 @@ async function loadHighestRatedHawkersChart() {
               display: true,
               text: "Rating (out of 5)"
             }
+
           },
           x: {
             title: {
               display: true,
               text: "Hawker Centre"
+            },
+            ticks: {
+              maxRotation: 0,
+              minRotation: 0,
+              autoSkip: true,
+              maxTicksLimit: 5,
+              callback: function(value) {
+              const label = this.getLabelForValue(value);
+              return label.length > 12 ? label.substring(0, 12) + "…" : label;
+              }
             }
           }
         }
+        
       }
     });
 
@@ -303,28 +320,4 @@ async function loadHighestRatedHawkersChart() {
   } catch (err) {
     console.error("Chart load error:", err);
   }
-}
-
-async function getHawkerCentreNameMap() {
-  const map = {}; // { "050335": "Chinatown Complex Market" }
-
-  const centersSnap = await getDocs(collection(db, "hawker-centers"));
-
-  for (const centerDoc of centersSnap.docs) {
-    const centerId = centerDoc.id;
-
-    const stallsSnap = await getDocs(
-      collection(db, "hawker-centers", centerId, "food-stalls")
-    );
-
-    // Take the hawker centre NAME from any stall document (same centre)
-    if (!stallsSnap.empty) {
-      const firstStall = stallsSnap.docs[0].data();
-      if (firstStall.name) {
-        map[centerId] = firstStall.name;
-      }
-    }
-  }
-
-  return map;
 }
