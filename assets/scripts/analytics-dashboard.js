@@ -4,7 +4,7 @@ console.log("✅ analytics-dashboard.js loaded");
 import { db, auth } from "./firebase.js";
 import {
   collection,
-  getDocs
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
@@ -64,7 +64,8 @@ async function loadAnalytics() {
     const [ordersSnap, issuesSnap, reviewsSnap] = await Promise.all([
       getDocs(collection(db, "orders")),
       getDocs(collection(db, "issues")),
-      getDocs(collection(db, "reviews"))
+      getDocs(collection(db, "reviews")),
+      getDocs(collection(db, "users"))
     ]);
 
     const orders = [];
@@ -80,6 +81,7 @@ async function loadAnalytics() {
     computeBestHawker(orders);
     computeTotalComplaints(issues);
     computeAverageRating(reviews);
+    totalUsersEl.textContent = (await getDocs(collection(db, "users"))).size;
 
     // ----- TABLE -----
     buildTopStallsTable(orders, reviews);
