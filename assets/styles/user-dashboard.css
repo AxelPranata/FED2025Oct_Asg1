@@ -1,0 +1,259 @@
+/* ===== RESET ===== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  background-color: #F6F6F6;
+  background-image: radial-gradient(#EA580C 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+}
+
+/* TEXT */
+h1, h2, h3 { margin: 0; }
+p { margin: 0; }
+
+/* ===== FIXED HEADER (FROM USER-MANAGEMENT) ===== */
+header {
+  width: 100%;
+  height: 80px;
+  padding: 1rem 1.5rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  background-color: white;
+  z-index: 999;
+}
+
+/* ===== LOGO (FROM USER-MANAGEMENT) ===== */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+}
+
+.logo h1 {
+  margin: 0;
+  color: #474747;
+  font-size: 1.4rem;
+}
+
+.logo img { width: 40px; height: auto; }
+
+/* ===== NAVIGATION (FROM USER-MANAGEMENT) ===== */
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+#hamburger {
+  height: 100%;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  display: none;
+  cursor: pointer;
+}
+
+#nav-links {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 0.2rem;
+  list-style: none;
+}
+
+#nav-links li {
+  padding: 0.2rem 0.8rem;
+  border-radius: 15px;
+}
+
+#nav-links li a {
+  text-decoration: none;
+  font-weight: 600;
+  color: #000000;
+}
+
+/* Divider line in dropdown/mobile (same as user-management) */
+.right-buttons {
+  width: 100%;
+  margin: 8px 0;
+  border: 1px solid rgba(71, 71, 71, 0.5);
+}
+
+/* ===== RIGHT HEADER BUTTONS (FROM USER-MANAGEMENT) ===== */
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+#logout-btn {
+  width: 120px;
+  padding: 0.6rem 1.2rem;
+  border: 0.10rem solid #474747;
+  border-radius: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+
+  text-decoration: none;
+  font-weight: bold;
+  color: #474747;
+}
+
+#user {
+  padding: 0.6em;
+  border: 0.10rem solid #474747;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+}
+
+#user img { display: block; }
+
+/* ===== KEY FIX: PUSH CONTENT BELOW NAV (FROM USER-MANAGEMENT) ===== */
+.page {
+  padding: 96px 24px 24px;
+}
+
+/* ===== MOBILE NAV (FROM USER-MANAGEMENT) ===== */
+@media (max-width: 905px) {
+  #hamburger { display: flex; }
+
+  #nav-links {
+    width: 100%;
+    margin: 0;
+    padding: 1.5rem;
+    border-radius: 0px 0px 15px 15px;
+
+    display: none;
+    flex-flow: column nowrap;
+    gap: 0.4rem;
+
+    position: absolute;
+    top: 78px;
+    right: 0px;
+
+    background-color: #FFFFFF;
+    box-shadow: 0px 3px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  #nav-links.active { display: flex; }
+}
+
+@media (max-width: 460px) {
+  .header-right { display: none; }
+}
+
+/* ========================= */
+/* PROFILE PAGE (YOUR CSS 2 PROFILE SECTION) */
+/* ========================= */
+
+.profile-section {
+  max-width: 32rem;
+  margin: 2rem auto;
+  padding: 0 1.5rem;
+}
+
+.profile-section h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #474747;
+}
+
+.profile-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.2rem;
+
+  background-color: #FFFFFF;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-row .label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgba(71, 71, 71, 0.6);
+}
+
+.profile-row .value {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #474747;
+  text-align: right;
+  flex: 1;
+}
+
+/* Inputs + buttons used by your JS */
+.input{
+  width: 100%;
+  border: 1px solid #e7e7e7;
+  border-radius: 8px;
+  padding: 10px 12px;
+  outline: none;
+  font-size: 12px;
+}
+
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  background: #EA580C;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-pill{
+  border: 1px solid #222;
+  background: #fff;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.primary-btn {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 25px;
+
+  font-size: 1rem;
+  font-weight: 600;
+
+  color: white;
+  background-color: #474747;
+  cursor: pointer;
+}
+
+.primary-btn:hover { opacity: 0.9; }
