@@ -294,11 +294,25 @@ p {
 }
 
 .progress {
-    background-color: #FDB8B8;
-    color: #AD5151;
     font-size: 12px;
     padding: 4px 10px;
     border-radius: 8px;
+}
+
+/* STATUS COLORS (same as complaint page) */
+.tag-pending {
+  color: #EA0C10;
+  background-color: #FDB8B8;
+}
+
+.tag-progress {
+  color: #C7B00A;
+  background-color: #FFF0C2;
+}
+
+.tag-resolved {
+  color: #70EA0C;
+  background-color: #E6FCAE;
 }
 
 /* ---------- Quick Actions ---------- */

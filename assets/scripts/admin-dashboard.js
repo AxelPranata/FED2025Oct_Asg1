@@ -150,13 +150,15 @@ async function loadRecentComplaints() {
     /* ---------- SORT NEWEST FIRST ---------- */
     issues.sort((a, b) => b.date.toDate() - a.date.toDate());
 
-    /* ---------- TAKE LATEST 3 ---------- */
-    const latestIssues = issues.slice(0, 3);
+    /* ---------- TAKE LATEST 3 + KEEP REAL NUMBER ---------- */
+    const latestIssues = issues.slice(0, 3).map((issue, index) => {
+      return {
+        ...issue,
+        complaintNumber: issues.length - index  // <-- REAL running number
+      };
+    });
 
     recentComplaintsContainer.innerHTML = "";
-
-    /* ---------- NUMBERING FIX ---------- */
-    let number = latestIssues.length;
 
     latestIssues.forEach((data) => {
       const dateStr = data.date?.toDate().toLocaleDateString("en-GB") ?? "";
@@ -164,10 +166,15 @@ async function loadRecentComplaints() {
       const complaint = document.createElement("div");
       complaint.className = "complaint";
 
+      const status = (data.status || "pending").toLowerCase();
+      const statusClass = getStatusClass(status);
+
       complaint.innerHTML = `
         <div class="complaint-header">
-          <h4>Complaint #${number--}</h4>
-          <span class="progress">${formatStatus(data.status)}</span>
+          <h4>Complaint #${data.complaintNumber}</h4>
+          <span class="progress ${statusClass}">
+            ${formatStatus(data.status)}
+          </span>
         </div>
         <p>
           ${data.category ?? "Unknown"} |
@@ -201,6 +208,18 @@ function formatStatus(status) {
   if (s === "in progress") return "In Progress";
 
   return status;
+}
+
+function getStatusClass(status) {
+  if (!status) return "tag-pending";
+
+  const s = status.toLowerCase();
+
+  if (s === "pending") return "tag-pending";
+  if (s === "in progress") return "tag-progress";
+  if (s === "resolved") return "tag-resolved";
+
+  return "tag-pending";
 }
 
 /* =========================
