@@ -94,16 +94,15 @@ const allProducts = productsSnap.docs.map(docSnap => ({
 ========================= */
 const grid = document.getElementById("products-grid");
 
+let renderToken = 0;
+
 function renderProducts(products, isSearch = false) {
+  const currentToken = ++renderToken;
+
   grid.innerHTML = "";
 
   const searchTitle = document.getElementById("search-title");
-
-  if (isSearch) {
-    searchTitle.style.display = "block";
-  } else {
-    searchTitle.style.display = "none";
-  }
+  searchTitle.style.display = isSearch ? "block" : "none";
 
   if (products.length === 0) {
     grid.innerHTML = `
@@ -115,96 +114,93 @@ function renderProducts(products, isSearch = false) {
     return;
   }
 
-  products.forEach( async product => {
-    const card = document.createElement("div");
-    card.className = "product-card";
+  (async () => {
+    for (const product of products) {
 
-    card.innerHTML = `
-      <img src="${product.imagePath || "assets/images/placeholder.png"}" alt="${product.name}">
-      <div class="info">
-        <h4>${product.name}</h4>
-        <p class="price">$${product.basePrice ?? "--"}</p>
+      // 🛑 stop if a new render started
+      if (currentToken !== renderToken) return;
 
-        <button class="like-btn">
-          <img class="like-icon" src="assets/icons/order/unlike.svg" alt="like">
-          <span class="like-count">${product.likes ?? 0}</span>
-        </button>
-      </div>
-    `;
+      const card = document.createElement("div");
+      card.className = "product-card";
 
-    const likeBtn = card.querySelector(".like-btn");
-    const likeIcon = card.querySelector(".like-icon");
-    const likeCount = card.querySelector(".like-count");
-    const userId = auth.currentUser?.uid;
-    const productRef = doc(productsRef, product.id);
-    const likeRef = doc(productRef, "likes", userId);
+      card.innerHTML = `
+        <img src="${product.imagePath || "assets/images/placeholder.png"}" alt="${product.name}">
+        <div class="info">
+          <h4>${product.name}</h4>
+          <p class="price">$${product.basePrice ?? "--"}</p>
 
-    if (userId) {
-      const likeDoc = await getDoc(likeRef);
-      if (likeDoc.exists()) {
-        likeIcon.src = "assets/icons/order/unlike.svg";
-        likeCount.textContent = product.likes ?? 0;
-      } else {
-        likeIcon.src = "assets/icons/order/like.svg";
-        likeCount.textContent = product.likes ?? 0;
-      }
-    }
+          <button class="like-btn">
+            <img class="like-icon" src="assets/icons/order/unlike.svg" alt="like">
+            <span class="like-count">${product.likes ?? 0}</span>
+          </button>
+        </div>
+      `;
 
-
-    likeBtn.addEventListener("click", async (e) => {
-      e.stopPropagation();
+      const likeBtn = card.querySelector(".like-btn");
+      const likeIcon = card.querySelector(".like-icon");
+      const likeCount = card.querySelector(".like-count");
 
       const userId = auth.currentUser?.uid;
-      if (!userId) {
-        alert("You must be signed in to like!");
-        return;
-      }
-
       const productRef = doc(productsRef, product.id);
       const likeRef = doc(productRef, "likes", userId);
 
-      try {
-        await runTransaction(db, async (transaction) => {
-          const likeDoc = await transaction.get(likeRef);
+      if (userId) {
+        const likeDoc = await getDoc(likeRef);
 
-          if (!likeDoc.exists()) {
-            // User hasn't liked → create like doc + increment
-            transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
-            transaction.update(productRef, { likes: increment(1) });
-            product.likes = (product.likes ?? 0) + 1;
+        // 🛑 stop if render changed while awaiting
+        if (currentToken !== renderToken) return;
 
-            likeCount.textContent = Number(likeCount.textContent) + 1;
-            likeIcon.src = "assets/icons/order/unlike.svg";
-          } else {
-            // User already liked → delete like doc + decrement
-            transaction.delete(likeRef);
-            transaction.update(productRef, { likes: increment(-1) });
-            product.likes = (product.likes ?? 0) - 1;
-
-            likeCount.textContent = Number(likeCount.textContent) - 1;
-            likeIcon.src = "assets/icons/order/like.svg";
-          }
-        });
-      } catch (e) {
-        console.error("Transaction failed: ", e);
+        likeIcon.src = likeDoc.exists()
+          ? "assets/icons/order/unlike.svg"
+          : "assets/icons/order/like.svg";
       }
-    });
 
-    card.addEventListener("click", () => {
-      window.location.href =
-        `addtocart.html?centerId=${centerId}&stallId=${stallId}&productId=${product.id}`;
-    });
+      likeBtn.addEventListener("click", async (e) => {
+        e.stopPropagation();
 
-    grid.appendChild(card);
-  });
+        const userId = auth.currentUser?.uid;
+        if (!userId) {
+          alert("You must be signed in to like!");
+          return;
+        }
+
+        try {
+          await runTransaction(db, async (transaction) => {
+            const likeDoc = await transaction.get(likeRef);
+
+            if (!likeDoc.exists()) {
+              transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
+              transaction.update(productRef, { likes: increment(1) });
+
+              likeCount.textContent = Number(likeCount.textContent) + 1;
+              likeIcon.src = "assets/icons/order/unlike.svg";
+            } else {
+              transaction.delete(likeRef);
+              transaction.update(productRef, { likes: increment(-1) });
+
+              likeCount.textContent = Number(likeCount.textContent) - 1;
+              likeIcon.src = "assets/icons/order/like.svg";
+            }
+          });
+        } catch (e) {
+          console.error("Transaction failed: ", e);
+        }
+      });
+
+      card.addEventListener("click", () => {
+        window.location.href =
+          `addtocart.html?centerId=${centerId}&stallId=${stallId}&productId=${product.id}`;
+      });
+
+      grid.appendChild(card);
+    }
+  })();
 }
 
 /* Initial render */
 renderProducts(allProducts);
 
-/* =========================
-   SEARCH LOGIC  ✅ FIXED
-========================= */
+/* SEARCH */
 const searchInput = document.getElementById("search-input");
 
 searchInput.addEventListener("input", () => {
@@ -221,3 +217,6 @@ searchInput.addEventListener("input", () => {
 
   renderProducts(filtered, true);
 });
+
+
+
