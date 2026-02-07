@@ -172,15 +172,28 @@ function renderProducts(products, isSearch = false) {
               transaction.set(likeRef, { userId, timestamp: serverTimestamp() });
               transaction.update(productRef, { likes: increment(1) });
 
+              // update UI
               likeCount.textContent = Number(likeCount.textContent) + 1;
               likeIcon.src = "assets/icons/order/unlike.svg";
+
+              // ⭐ FIX: update local cache
+              const p = allProducts.find(p => p.id === product.id);
+              if (p) p.likes = (p.likes ?? 0) + 1;
+
             } else {
               transaction.delete(likeRef);
               transaction.update(productRef, { likes: increment(-1) });
 
+              // update UI
               likeCount.textContent = Number(likeCount.textContent) - 1;
               likeIcon.src = "assets/icons/order/like.svg";
+
+              // ⭐ FIX: update local cache
+              const p = allProducts.find(p => p.id === product.id);
+              if (p) p.likes = Math.max((p.likes ?? 0) - 1, 0);
             }
+
+
           });
         } catch (e) {
           console.error("Transaction failed: ", e);
