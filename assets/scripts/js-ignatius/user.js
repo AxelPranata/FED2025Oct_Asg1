@@ -60,7 +60,7 @@ onAuthStateChanged(auth, async (user) => {
     return;
   }
 
-  userRef = doc(db, "profiles", `user_${user.uid}`)
+  userRef = doc(db, "users", `user_${user.uid}`)
 
   const snap = await getDoc(userRef);
 
@@ -277,7 +277,7 @@ if (vendorEls.receiveMethod) {
   onAuthStateChanged(auth, async (user) => {
     if (!user) return;
     
-    const userRef = doc(db, "profiles", `user_${user.uid}`);
+    const userRef = doc(db, "users", `user_${user.uid}`);
     const snap = await getDoc(userRef);
     const data = snap.data();
     
@@ -325,7 +325,7 @@ if (vendorEls.receiveMethod) {
         return;
       }
 
-      const userRef = doc(db, "profiles", `user_${user.uid}`)
+      const userRef = doc(db, "users", `user_${user.uid}`)
       await updateDoc(userRef, {
         receiveMethod: {
           type,
