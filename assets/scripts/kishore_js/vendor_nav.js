@@ -1,4 +1,4 @@
-fetch('/vendor_nav.html')
+fetch('./vendor_nav.html')
   .then(response => response.text())
   .then(html => {
     // Inject nav HTML
