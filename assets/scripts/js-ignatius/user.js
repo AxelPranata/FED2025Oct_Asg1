@@ -63,7 +63,14 @@ onAuthStateChanged(auth, async (user) => {
   userRef = doc(db, "profiles", `user_${user.uid}`)
 
   const snap = await getDoc(userRef);
-  cachedData = snap.data();
+
+if (!snap.exists()) {
+  console.error("Profile not found for user:", user.uid);
+  alert("Profile not found. Please complete signup.");
+  return;
+}
+
+cachedData = snap.data();
 
   // Populate UI
   els.username.textContent = cachedData.displayName || "Not set";
@@ -90,18 +97,23 @@ onAuthStateChanged(auth, async (user) => {
   document.querySelectorAll("[data-edit]").forEach(btn => {
     btn.onclick = () => openEditor(btn.dataset.edit, user);
   });
+  
   els.saveBtn.onclick = () => saveEdit(user);
-  document.getElementById("editPaymentBtn").onclick = () => {
-  // Toggle payment editor
-  if (els.paymentEdit.style.display === "block") {
-    closeAllEditors();
-    return;
-  }
 
-  closeAllEditors();
-  currentEdit = "payment";
-  els.paymentEdit.style.display = "block";
-};
+  const paymentBtn = document.getElementById("editPaymentBtn");
+  if (paymentBtn) {
+    paymentBtn.onclick = () => {
+      if (els.paymentEdit.style.display === "block") {
+        closeAllEditors();
+        return;
+      }
+
+      closeAllEditors();
+      currentEdit = "payment";
+      els.paymentEdit.style.display = "block";
+    };
+  }
+  });
 
 /* =========================
    OPEN EDITOR
@@ -244,8 +256,7 @@ els.logoutBtn.onclick = async () => {
   await signOut(auth);
   window.location.href = "../index.html";
 };
-}
-)
+
 
 /* =========================
    VENDOR RECEIVE METHOD (NEW ADDITION)
