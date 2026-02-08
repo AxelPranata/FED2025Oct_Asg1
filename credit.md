@@ -235,3 +235,4 @@ RandomQR. (n.d.). Random QR code generator.
 https://randomqr.com/
 reference and learning for js: https://www.w3schools.com/
 learning of chart.js: https://youtu.be/6q5d3Z1-5kQ?si=-i-BgxI52wsV1IaG
+chart js canva import: https://cdn.jsdelivr.net/npm/chart.js
