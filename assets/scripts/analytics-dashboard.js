@@ -9,7 +9,7 @@ import {
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 /* =========================
-   NAV TOGGLE (KEEP)
+   NAV TOGGLE 
 ========================= */
 const hamburger = document.getElementById("hamburger");
 const nav_links = document.getElementById("nav-links");
@@ -153,7 +153,7 @@ function computeAverageRating(reviews) {
 function buildTopStallsTable(orders, reviews) {
   const stallData = {};
 
-  // --- ORDERS + REVENUE (FIXED) ---
+  // --- ORDERS + REVENUE ---
   orders.forEach(order => {                 
     if (!order.items) return;
 
@@ -174,7 +174,7 @@ function buildTopStallsTable(orders, reviews) {
     });
   });
 
-  // --- RATINGS (UNCHANGED) ---
+  // --- RATINGS  ---
   reviews.forEach(r => {
     const stall = r.foodStallName;
     if (!stallData[stall]) {
@@ -224,7 +224,7 @@ function buildTopStallsTable(orders, reviews) {
 /* ====== CHARTS ================ */
 
 /* =========================
-   CHART #1: TOP 5 MOST COMPLAINED HAWKER (POLAR AREA)
+   CHART #1: TOP MOST COMPLAINED HAWKER (POLAR AREA)
 ========================= */
 function buildTopComplaintsPolarChart(issues) {
   // Count complaints per hawker centre
@@ -239,7 +239,7 @@ function buildTopComplaintsPolarChart(issues) {
   const sorted = Object.entries(counts)
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count)
-    .slice(0, 5); // top 5 only
+    .slice(0, 5); // top 5 max
 
   const labels = sorted.map(i => i.name);
   const data = sorted.map(i => i.count);
@@ -255,8 +255,7 @@ function buildTopComplaintsPolarChart(issues) {
           "#22C55E", // green
           "#3B82F6", // blue
           "#FACC15", // yellow
-          "#EA580C", // your orange
-          "#EC4899"  // little pink for fun
+          "#EA580C", // orange
         ],
         borderColor: "#ffffff",
         borderWidth: 1
@@ -265,7 +264,7 @@ function buildTopComplaintsPolarChart(issues) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false,
+      maintainAspectRatio: true,
       plugins: {
         legend: {
           position: "right"
@@ -311,7 +310,14 @@ function buildCategoryAreaChart(issues) {
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false
+      maintainAspectRatio: true,
+
+      plugins: {
+        legend: {
+          display: window.innerWidth > 768, // ⭐ hide on small
+          position: "top"
+        }
+      }
     }
   });
 }
