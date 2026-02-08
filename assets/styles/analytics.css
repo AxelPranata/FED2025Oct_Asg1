@@ -216,9 +216,9 @@ p {
 .chart-placeholder {
   position: relative;
   width: 100%;
-  height: clamp(160px, 18vw, 260px); /* ⭐ smaller overall */
+  height: clamp(160px, 18vw, 260px); /* smaller overall */
   margin-top: 12px;
-  overflow: hidden; /* ⭐ prevents overflow */
+  overflow: hidden; /* prevents overflow */
 }
 
 /* ONLY stretch line/bar charts */

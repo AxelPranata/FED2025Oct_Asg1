@@ -167,7 +167,7 @@ function renderComplaints(issues) {
 }
 
 /* =========================
-   STATUS COLORS (MATCH YOUR CSS THEME)
+   STATUS COLORS
 ========================= */
 
 function getStatusClass(status) {
@@ -220,7 +220,7 @@ async function updateStatus(issueId, newStatus) {
 }
 
 /* =========================
-   DELETE COMPLAINT (D in CRUD)
+   DELETE COMPLAINT 
 ========================= */
 
 async function deleteComplaint(issueId) {

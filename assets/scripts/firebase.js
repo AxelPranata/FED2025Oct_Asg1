@@ -4,7 +4,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.8.0/firebas
 // Import Firestore
 import { getFirestore } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-firestore.js";
 
-// Import Auth  ← THIS WAS MISSING
+// Import Auth  
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.8.0/firebase-auth.js";
 
 /* =========================
@@ -25,5 +25,5 @@ const app = initializeApp(firebaseConfig);
 // Export Firestore
 export const db = getFirestore(app);
 
-// ✅ Export Auth  ← IMPORTANT
+// Export Auth  
 export const auth = getAuth(app);

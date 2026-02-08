@@ -142,7 +142,7 @@ header {
     border-radius: 25px;
 }
 
-/* ===== KEY FIX: PUSH CONTENT BELOW NAV ===== */
+/* ===== PUSH CONTENT BELOW NAV ===== */
 .page {
     padding: 96px 24px 16px;
 }
