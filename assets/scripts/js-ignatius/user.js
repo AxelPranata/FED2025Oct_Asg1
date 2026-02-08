@@ -1,3 +1,5 @@
+import { onAuthStateChanged } from
+  "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { auth, db } from "./firebase.js";
 import {
   doc,
@@ -52,13 +54,14 @@ function closeAllEditors() {
 /* =========================
    AUTH STATE
 ========================= */
-auth.onAuthStateChanged(async (user) => {
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    window.location.href = "../index.html";
+    window.location.href = "index.html";
     return;
   }
 
-  userRef = doc(db, "users", user.uid);
+  userRef = doc(db, "profiles", `user_${user.uid}`)
+
   const snap = await getDoc(userRef);
   cachedData = snap.data();
 
@@ -260,10 +263,10 @@ const vendorEls = {
 if (vendorEls.receiveMethod) {
   
   // Display receive method when page loads
-  auth.onAuthStateChanged(async (user) => {
+  onAuthStateChanged(auth, async (user) => {
     if (!user) return;
     
-    const userRef = doc(db, "users", user.uid);
+    const userRef = doc(db, "profiles", `user_${user.uid}`);
     const snap = await getDoc(userRef);
     const data = snap.data();
     
@@ -311,7 +314,7 @@ if (vendorEls.receiveMethod) {
         return;
       }
 
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(db, "profiles", `user_${user.uid}`)
       await updateDoc(userRef, {
         receiveMethod: {
           type,
@@ -329,5 +332,5 @@ if (vendorEls.receiveMethod) {
       console.error(err);
       alert("Receive method update failed");
     }
-  });
+});
 }
