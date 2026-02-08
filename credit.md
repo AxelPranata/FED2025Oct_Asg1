@@ -12,7 +12,7 @@
 - https://www.figma.com/community/file/880472656109554171
 - https://www.figma.com/community/file/800815864899415771
 - https://www.figma.com/community/file/1190762834806849748
-
+- https://www.flaticon.com/
 <br>
 
 ## Google Fonts (https://fonts.google.com/)
@@ -233,3 +233,5 @@ https://tenya.com.sg/product/aburi-mentai-salmon-don/
 ## Others
 RandomQR. (n.d.). Random QR code generator.
 https://randomqr.com/
+reference and learning for js: https://www.w3schools.com/
+learning of chart.js: https://youtu.be/6q5d3Z1-5kQ?si=-i-BgxI52wsV1IaG
