@@ -54,7 +54,7 @@ function closeAllEditors() {
 ========================= */
 auth.onAuthStateChanged(async (user) => {
   if (!user) {
-    window.location.href = "/hawkers-app-ignatius/index.html";
+    window.location.href = "../index.html";
     return;
   }
 
@@ -239,7 +239,7 @@ document.getElementById("savePaymentBtn").onclick = async () => {
 ========================= */
 els.logoutBtn.onclick = async () => {
   await signOut(auth);
-  window.location.href = "/hawkers-app-ignatius/index.html";
+  window.location.href = "../index.html";
 };
 }
 )

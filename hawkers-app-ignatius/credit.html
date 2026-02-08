@@ -1,20 +1,145 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Credits</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/styles/main.css">
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-</head><body>
-<div class="container">
-  <h1 class="form-title">Credits</h1>
-  <p class="brand-subtitle">List your image sources here (URLs + author/site). Required by the brief.</p>
-  <ul>
-    <li>city.jpg – TODO: source</li>
-    <li>hawker.jpg – TODO: source</li>
-    <li>sg.jpg – TODO: source</li>
-  </ul>
-</div>
-</body></html>
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@1,500;1,600&family=DM+Sans&family=Poppins&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../template/template.css">
+  <link rel="stylesheet" href="../assets/styles/main.css">
+
+  <title>Credits</title>
+</head>
+
+<body>
+
+  <!-- ================= HEADER ================= -->
+  <header>
+    <div class="header-brand">
+      <button id="hamburger">
+        <img src="../assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+      </button>
+      <div class="logo">
+        <img src="../assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+        <h1>Hawkers</h1>
+      </div>
+    </div>
+
+    <nav class="header-nav">
+      <ul id="nav-links">
+        <li><a href="../home.html">Home</a></li>
+        <li><a href="../order.html">Order</a></li>
+        <li><a href="../history.html">History</a></li>
+        <li><a href="../promotions.html">Promotions</a></li>
+        <li><div class="divider"></div></li>
+        <li><a href="../cart.html">Cart</a></li>
+        <li><a href="../user.html">User</a></li>
+      </ul>
+    </nav>
+
+    <div class="header-actions">
+      <a href="cart.html" id="cart">
+        Cart <img src="../assets/icons/template/shopping_cart.svg" alt="Shopping Cart Icon">
+      </a>
+      <div id="user">
+        <a href="user.html">
+          <img src="../assets/icons/template/user.svg" alt="User Icon">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN ================= -->
+  <main>
+
+    <!-- Breadcrumbs -->
+    <nav id="breadcrumbs">
+      <ul>
+        <li><a href="../home.html">Home / </a></li>
+        <li><span>Credits</span></li>
+      </ul>
+    </nav>
+
+    <!-- Credits Content -->
+    <div class="container">
+      <h1 class="form-title">Credits</h1>
+      <p class="brand-subtitle">
+        List your image sources here (URLs + author/site). Required by the brief.
+      </p>
+
+      <ul>
+        <li>
+          <strong>city.jpg</strong> – Unsplash, Singapore Marina Bay skyline at sunset
+        </li>
+        <li>
+          <strong>hawker.jpg</strong> – Unsplash, Singapore hawker centre cooking
+        </li>
+        <li>
+          <strong>sg.jpg</strong> – Unsplash, Singapore Chinatown street food at night
+        </li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer>
+    <div class="sub_footer">
+
+      <div class="footer-branding">
+        <div class="logo">
+          <img src="assets/icons/template/hawkers_white.svg" alt="Hawkers Logo">
+          <h1>Hawkers</h1>
+        </div>
+
+        <h3>Connect with us</h3>
+        <ul>
+          <li><a href="#"><img src="../assets/icons/template/twitter.svg" alt="Twitter"></a></li>
+          <li><a href="#"><img src="../assets/icons/template/facebook.svg" alt="Facebook"></a></li>
+          <li><a href="#"><img src="../assets/icons/template/instagram.svg" alt="Instagram"></a></li>
+          <li><a href="#"><img src="../assets/icons/template/github.svg" alt="GitHub"></a></li>
+        </ul>
+      </div>
+
+      <div class="footer-nav">
+        <nav>
+          <h3>Pages</h3>
+          <ul>
+            <li><a href="../home.html">Home</a></li>
+            <li><a href="../order.html">Order</a></li>
+            <li><a href="../history.html">History</a></li>
+            <li><a href="../promotions.html">Promotions</a></li>
+          </ul>
+        </nav>
+
+        <nav>
+          <h3>Order</h3>
+          <ul>
+            <li><a href="../hawker_centers.html">Hawker Centers</a></li>
+            <li><a href="../stalls.html">Stalls</a></li>
+            <li><a href="../cart.html">Cart</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <div class="footer-info">
+        <h3>Contact Us</h3>
+        <p>21 Revolution Street, Paris, France</p>
+        <p>+65 5752 6239</p>
+        <p>support@company.com</p>
+      </div>
+
+    </div>
+
+    <p>&copy; 2026 Hawkers. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="template/template.js"></script>
+</body>
+</html>

@@ -186,11 +186,30 @@ document.getElementById("qty-minus").onclick = () => {
 calculateTotal();
 
 document.getElementById("add-to-cart").onclick = async () => {
+
+  const cartItemsRef = collection(db, "carts", CURRENT_USER_ID, "items");
+  const cartSnap = await getDocs(cartItemsRef);
+
+  const centersInCart = new Set();
+
+  cartSnap.forEach(docSnap => {
+    const data = docSnap.data();
+    if (data.centerId) centersInCart.add(data.centerId);
+  });
+
+  // ❌ BLOCK if different hawker centre
+  if (centersInCart.size > 0 && !centersInCart.has(centerId)) {
+    alert("You can only order from ONE hawker centre at a time. Please clear your cart first.");
+    return;
+  }
+
+  // =============================
+  // ORIGINAL ADD-TO-CART LOGIC
+  // =============================
   const itemRef = doc(db, "carts", CURRENT_USER_ID, "items", productId);
   const itemSnap = await getDoc(itemRef);
 
   if (itemSnap.exists()) {
-    // increase quantity + price
     const existing = itemSnap.data();
 
     await setDoc(
@@ -204,27 +223,27 @@ document.getElementById("add-to-cart").onclick = async () => {
     );
 
   } else {
-    // new item
-await setDoc(itemRef, {
-  productId,
-  name: product.name,
-  imagePath: product.imagePath,
- unitPrice: basePrice + selectedAddons.reduce((s, a) => s + a.price, 0),
-  quantity,
-  addons: selectedAddons,
 
-  centerId,
-  stallId,
+    await setDoc(itemRef, {
+      productId,
+      name: product.name,
+      imagePath: product.imagePath,
+      unitPrice: basePrice + selectedAddons.reduce((s, a) => s + a.price, 0),
+      quantity,
+      addons: selectedAddons,
 
-  centerName: centerData.name ?? "Unknown Centre",
-  centreLocation: centerData.location ?? "Unknown Location",
-  stallName: stallData.name ?? "Unknown Stall"
+      centerId,
+      stallId,
 
-});
-
+      centerName: centerData.name ?? "Unknown Centre",
+      centreLocation: centerData.location ?? "Unknown Location",
+      stallName: stallData.name ?? "Unknown Stall"
+    });
   }
 
   alert("Added to cart!");
 };
+
+
 
 
