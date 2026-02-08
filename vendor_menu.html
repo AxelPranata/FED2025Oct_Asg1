@@ -1,15 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- <div id="nav-container"></div> -->
-
-
-  <link rel="stylesheet" href="styles/vendor_menu.css">
+  <link rel="stylesheet" href="assets/styles/vendor_menu.css">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu Management</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.min.js"></script>
-  
 </head>
 <body>
   <div id="nav-container"></div>
@@ -49,17 +45,15 @@
     <div class="grid-stats" id="stats-grid"></div>
   </div>
 
- <script type="module" src="scripts/kishore_js/vendor_menu.js"></script>
-
-  <script src="scripts/kishore_js/vendor_nav.js"></script>
+  <script type="module" src="assets/scripts/kishore_js/vendor_menu.js"></script>
+  <script src="assets/scripts/kishore_js/vendor_nav.js"></script>
 
   <script>
-  // Make sure Lucide loads
-  if (typeof lucide !== 'undefined') {
-    lucide.createIcons();
-  } else {
-    console.error('Lucide not loaded!');
-  }
-</script>
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    } else {
+      console.error('Lucide not loaded!');
+    }
+  </script>
 </body>
 </html>
