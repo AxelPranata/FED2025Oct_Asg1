@@ -28,37 +28,32 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 
 ## Technologies Used
 
-### JavaScript
-- [MDN Docs](https://developer.mozilla.org/en-US/)
+### [JavaScript](https://developer.mozilla.org/en-US/)
 - Link Firebase to pages
 - Retrieve user‑made data
 - Create, remove, update, and delete data in database
 - Responsive header and clickable items
 
-### HTML
-- [HTML Standard](https://html.spec.whatwg.org/)
+### [HTML](https://html.spec.whatwg.org/)
 - Skeleton structure of pages
 - Allow user input and creation of data
 
-### CSS
-- [CSS Standard](https://www.w3.org/Style/CSS/)
+### [CSS](https://www.w3.org/Style/CSS/)
 - Design and style of pages
 - Responsive pages
 
-### Firebase
-- [Firebase](https://firebase.google.com/)
+### [Firebase](https://firebase.google.com/)
 - Implement database
 - Track user accounts and data
 
-### Figma
-- [Figma](https://www.figma.com/)
+### [Figma](https://www.figma.com/)
 - Plan general layout and design of pages
 - Referenced when building actual web application
 
 <br>
 
 ## Deployment
-GitHub Pages link: Add GitHub Pages link
+[GitHub Pages link](https://axelpranata.github.io/FED2025Oct_Asg1/)
 
 <br>
 
