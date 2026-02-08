@@ -22,7 +22,7 @@ function getRedirect(role){
   if (role === "user_login") return "../home.html";   
   if (role === "vendor_login") return "../vendor_menu.html";
   if (role === "admin_login") return "../admin.html"; 
-  return "index.html";
+  return "../index.html";
 }
 
 function getInputs(){

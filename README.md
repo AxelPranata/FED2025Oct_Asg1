@@ -28,7 +28,14 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - Delivery/ Takeaway option
 - Payment Methods: Cash /Paynow /Visa /Mastercard
 - Only being able to order from one hawker centre
-
+- Manage stall products (add, edit, and update items)
+- Add, edit, and remove documents
+- Create and manage new stores with complete details
+- System overview dashboard
+- Complaint analytics
+- Performance analytics insights
+- All user analytics
+- Real-time app updates and performance reflection using Firebase
 <br>
 
 ## Technologies Used
