@@ -32,9 +32,6 @@
       <li><a href="complaint-management.html">Complaint Management</a></li>
       <li><a href="analytics.html">Analytics & Reports</a></li>
       <li><a href="user-management.html">User Management</a></li>
-      <li><div class="right-buttons"></div></li>
-      <li><a href="">LogOut</a></li>
-      <li><a href="user.html">User</a></li>
     </ul>
   </nav>
 
@@ -42,16 +39,14 @@
     <a href="../index.html" id="logout-btn">
       LogOut <img src="assets/icons/template/arrow.svg" alt="Logout Icon">
     </a>
-    <div id="user">
+    <a href="user-dashboard.html" id="user">
       <img src="assets/icons/template/user.svg" alt="User Icon">
-    </div>
+    </a>
   </div>
 </header>
 
-<!-- EVERYTHING BELOW NAV MUST BE INSIDE .page -->
 <div class="page">
 
-  <!-- Page Header (your original one, unchanged) -->
   <section class="header">
     <div class="header-left">
       <h1>Admin Dashboard</h1>
@@ -60,7 +55,7 @@
 
     <div class="header-right page-date">
       <p>Today's Date</p>
-      <p class="date">Sunday, 11 Jan, 2026</p>
+      <p class="date"></p>
     </div>
   </section>
 
@@ -103,7 +98,7 @@
   <!-- Main Content -->
   <section class="content">
     <article class="card" id="highest-rated-card">
-      <h3>Highest Rated Hawker Centres (Top 5)</h3>
+      <h3>Highest Rated Hawker Centres</h3>
       <canvas id="highestRatedChart"></canvas>
     </article>
 
@@ -132,14 +127,14 @@
         <a class="button full-btn" href="analytics.html">
           View Reports
         </a>
-        <img src="assets/icons/Dashboard/report.png" alt="Complaint">
+        <img src="assets/icons/Dashboard/trend.png" alt="Reports">
       </div>
 
       <div class="action">
         <a class="button full-btn" href="user-management.html">
           Manage Users
         </a>
-        <img src="assets/icons/Dashboard/report.png" alt="Complaint">
+        <img src="assets/icons/Dashboard/user.png" alt="User">
       </div>
     </div>
   </section>

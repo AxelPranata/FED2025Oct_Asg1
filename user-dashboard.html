@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Fonts to match your user-management page -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@1,600&display=swap" rel="stylesheet">
+
+  <!-- ONLY 1 CSS -->
+  <link rel="stylesheet" href="assets/styles/user-dashboard.css" />
+
+  <title>User Profile</title>
+</head>
+
+<body class="text">
+
+<!-- ===== NAVBAR (EXACTLY LIKE USER-MANAGEMENT) ===== -->
+<header>
+  <div class="header-brand">
+    <button id="hamburger" aria-label="Toggle navigation">
+      <img src="assets/icons/template/hamburger_menu.svg" alt="Hamburger Menu">
+    </button>
+
+    <div class="logo">
+      <img src="assets/icons/template/hawkers.svg" alt="Hawkers Logo">
+      <h1>Hawkers</h1>
+    </div>
+  </div>
+
+  <nav class="header-nav">
+    <ul id="nav-links">
+      <li><a href="admin.html">Admin Dashboard</a></li>
+      <li><a href="complaint-management.html">Complaint Management</a></li>
+      <li><a href="analytics.html">Analytics & Reports</a></li>
+      <li><a href="user-management.html">User Management</a></li>
+      <li><div class="right-buttons"></div></li>
+    </ul>
+  </nav>
+
+  <div class="header-right">
+    <a href="hawkers-app-ignatius/index.html" id="logout-btn">
+      LogOut <img src="assets/icons/template/arrow.svg" alt="Logout Icon">
+    </a>
+    <a href="user.html" id="user">
+      <img src="assets/icons/template/user.svg" alt="User Icon">
+    </a>
+  </div>
+</header>
+
+<!-- EVERYTHING BELOW NAV -->
+<div class="page">
+
+  <main>
+    <section class="profile-section">
+      <h2>My Profile</h2>
+
+      <div class="profile-card">
+
+        <div class="profile-row">
+          <span class="label">Username</span>
+          <span class="value" id="profileUsername"></span>
+          <button class="btn-pill" data-edit="username">Edit</button>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Description</span>
+          <span class="value" id="profileDescription"></span>
+          <button class="btn-pill" data-edit="description">Edit</button>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Email</span>
+          <span class="value" id="profileEmail"></span>
+          <button class="btn-pill" data-edit="email">Edit</button>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Address</span>
+          <span class="value" id="profileAddress"></span>
+          <button class="btn-pill" data-edit="address">Edit</button>
+        </div>
+
+        <div class="profile-row">
+          <span class="label">Payment</span>
+          <span class="value" id="profilePayment"></span>
+          <button id="editPaymentBtn" class="btn-pill">Edit</button>
+        </div>
+
+        <div id="editor" style="display:none;">
+          <input id="editInput" class="input">
+
+          <input id="emailPassword"
+                 class="input"
+                 type="password"
+                 placeholder="Confirm password"
+                 style="display:none;">
+
+          <div id="addressFields" style="display:none;">
+            <input id="addrLine" class="input" placeholder="Address line">
+            <input id="addrCity" class="input" placeholder="City">
+            <input id="addrPostal" class="input" placeholder="Postal code">
+          </div>
+
+          <button id="saveEditBtn" class="btn">Save</button>
+        </div>
+
+        <div id="paymentEdit" style="display:none;">
+          <select id="paymentMethod" class="input">
+            <option value="">Select</option>
+            <option value="Card">Card</option>
+            <option value="PayNow">PayNow</option>
+            <option value="Cash">Cash</option>
+          </select>
+
+          <input id="cardLast4" class="input" maxlength="4" placeholder="Last 4 digits">
+          <button id="savePaymentBtn" class="btn">Save Payment</button>
+        </div>
+
+        <button id="logoutBtn" class="primary-btn">Logout</button>
+
+      </div>
+    </section>
+  </main>
+
+</div>
+
+<!-- small nav toggle (since user.js doesn't handle hamburger) -->
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navLinks = document.getElementById("nav-links");
+  if (hamburger && navLinks) {
+    hamburger.addEventListener("click", () => navLinks.classList.toggle("active"));
+  }
+</script>
+
+<!-- Your existing JS reused -->
+<script type="module" src="assets/scripts/js-ignatius/user.js"></script>
+</body>
+</html>
