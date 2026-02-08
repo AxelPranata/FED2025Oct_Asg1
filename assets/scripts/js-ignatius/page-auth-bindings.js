@@ -17,12 +17,12 @@ function getRole(){
 
 function getRedirect(role){
   // Link login pages to onboarding pages as requested
-  if (role === "user") return "../hawkers-app-ignatius/step1-user.html";
-  if (role === "vendor") return "../hawkers-app-ignatius/step1-vendor.html";
+  if (role === "user") return "step1-user.html";
+  if (role === "vendor") return "step1-vendor.html";
   if (role === "user_login") return "../home.html";   
   if (role === "vendor_login") return "../vendor_menu.html";
   if (role === "admin_login") return "../admin.html"; 
-  return "index.html";
+  return "../index.html";
 }
 
 function getInputs(){
