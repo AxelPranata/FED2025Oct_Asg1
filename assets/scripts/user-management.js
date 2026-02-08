@@ -51,7 +51,7 @@ const statTotal = document.getElementById("stat-total");
    GLOBAL STORE
 ========================= */
 let ALL_USERS = [];
-const MAX_ROWS = 20; // 👈 limit table length
+const MAX_ROWS = 20; // max rows to show in table
 
 /* =========================
    LOAD USERS
@@ -105,7 +105,7 @@ function updateStats(users) {
 function renderTable(users) {
   usersBody.innerHTML = "";
 
-  // 👇 limit to 20 rows
+  //  limit to 20 rows
   users.slice(0, MAX_ROWS).forEach(user => {
     const role = (user.role || "user").toLowerCase();
     const roleLabel = capitalize(role);
@@ -125,7 +125,7 @@ function renderTable(users) {
       <td><span class="badge ${badgeClass}">${roleLabel}</span></td>
       <td>${stall}</td>
       <td>
-        <img src="assets/icons/Dashboard/delete.png"
+        <img src="assets/icons/Dashboard/Delete.png"
              alt="Delete"
              class="delete-btn"
              data-id="${user.id}">
@@ -160,7 +160,7 @@ function attachDeleteEvents() {
 }
 
 /* =========================
-   SEARCH + FILTER (FIXED)
+   SEARCH + FILTER 
 ========================= */
 searchInput.addEventListener("input", applyFilters);
 roleDropdown.addEventListener("change", applyFilters);

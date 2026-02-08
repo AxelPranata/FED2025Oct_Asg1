@@ -1,4 +1,3 @@
-/* ===== TEMPLATE CORE (SAME AS OTHER PAGES) ===== */
 *, *::before, *::after {
   box-sizing: border-box;
 }
@@ -29,7 +28,7 @@ p {
   margin: 0;
 }
 
-/* ===== FIXED HEADER ===== */
+/* ===== HEADER ===== */
 header {
   width: 100%;
   height: 80px;
@@ -150,12 +149,10 @@ header {
   border-radius: 25px;
 }
 
-/* ===== KEY FIX: PUSH CONTENT BELOW NAV ===== */
+/* ===== PUSH CONTENT BELOW NAV ===== */
 .page {
   padding: 96px 24px 16px;
 }
-
-/* ===== YOUR ORIGINAL STYLES (KEPT) ===== */
 
 /* Header section */
 .header {
