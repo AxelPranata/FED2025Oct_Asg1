@@ -1,4 +1,3 @@
-# FED2025Oct_Asg1
 # Hawkers
 
 A web application designed to bring Singapore’s hawker centers online. It connects three key groups — **customers**, **vendors**, and **administrators** — into one seamless ecosystem:
@@ -7,7 +6,7 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - **Vendors**: Manage stall information, menus, and documentation with ease. Vendors can handle day‑to‑day operations digitally.
 - **Administrators**: Gain insights into hawker center performance with dashboards that highlight sales metrics, stall activity, and overall operational health.
 
----
+<br>
 
 ## Table of Contents
 - [Features](#features)
@@ -15,9 +14,8 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - [Deployment](#deployment)
 - [Project Setup](#project-setup)
 - [Credits](#credits)
-- [Acknowledgement](#acknowledgement)
 
----
+<br>
 
 ## Features
 - Responsive UI
@@ -26,7 +24,7 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - Likes for individual food items
 - Apply promotion discounts to orders from promotions page
 
----
+<br>
 
 ## Technologies Used
 
@@ -57,12 +55,12 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - Plan general layout and design of pages
 - Referenced when building actual web application
 
----
+<br>
 
 ## Deployment
 GitHub Pages link: Add GitHub Pages link
 
----
+<br>
 
 ## Project Setup
 
@@ -109,8 +107,7 @@ Add or change Firebase configuration to your own for all JavaScript files in you
 ### Note: 
 Security Rules: Crucial for protecting your data. Start with test mode, but define rules for customers, vendors, and admins before production
 
----
+<br>
 
 ## Credits
-
-## Acknowledgement
+All credits are in credit.md

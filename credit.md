@@ -1,3 +1,97 @@
+# Credits
+
+## Pages design referenced from Figma templates:
+- https://www.figma.com/community/file/1294173080512093987
+- https://www.figma.com/community/file/996012879169900959
+- https://www.figma.com/community/file/1311333346304045465
+
+<br>
+
+## Icons
+- https://www.figma.com/community/file/1137473013490066998
+- https://www.figma.com/community/file/880472656109554171
+- https://www.figma.com/community/file/800815864899415771
+- https://www.figma.com/community/file/1190762834806849748
+
+<br>
+
+## Google Fonts (https://fonts.google.com/)
+- Project uses Playfair Display, Poppins, and DM Sans font
+- Embedded in head of HTML files
+
+<br>
+
+## Images
+
+### Hawker Centers
+Old Airport Road
+Sgtop. (2025, March 15). Top 10 Best Hawker Centre in Singapore 2026 | Singapore Top 10. Singapore Top 10. https://sgtop10.com/top-10-best-hawker-centre-in-singapore/
+
+Chinatown complex food centre
+Team, G. (2025, June 21). 10 Must-visit Chinatown Spots during CNY in Singapore. Traveloka. https://www.traveloka.com/en-sg/explore/tips/must-visit-chinatown-spots-in-singapore-acc/492843
+
+Hawker Center large
+Namzy. (2025, January 15). Bustling Singapore Hawker Center dining Scene · Free stock photo. Pexels. https://www.pexels.com/photo/bustling-singapore-hawker-center-dining-scene-30210592/
+
+Tiong Bahru
+Chua, C. (2025, February 21). Tiong Bahru Market to close for 3 month renovation. SETHLUI.com. https://sethlui.com/market-renovation-tiong-bahru-singapore-feb-2025/
+
+<br>
+
+### Food Stalls
+
+#### Chinatown Complex Market
+Chang Ji Gourmet
+Writer, G. (2024, February 6). Chang Ji Gourmet — $1.30 menu of old-school porridge, econ bee hoon & fried mee. SETHLUI.com. https://sethlui.com/chang-ji-gourmet-chinatown-complex-feb-2024/
+
+Lian He Ben Ji Claypot
+2018年新加坡米其林餐厅指南 - 红蚂蚁. (n.d.). https://www.redants.sg/good-reads/story20180719-1719
+
+Woo Ji Cooked Food
+Koh, R. Y., & Ying, K. R. (2024, March 13). Woo Ji Cooked Food Review: $2 Laksa and prawn noodles in Chinatown. Eatbook.sg - Local Singapore Food Guide and Review Site. https://eatbook.sg/woo-ji/ 
+
+<br>
+
+#### Maxwell Food Center
+Maxwell Hiananese Chicken Rice
+GetYourGuide. (2008). Singapore: Chinatown Food and Culture Tour with Guide | GetYourGuide. https://www.getyourguide.com/singapore-l170/singapore-chinatown-food-and-culture-tour-with-guide-t983990/?visitor-id=5LTDQ0MMYVT24T2W237QAVZOVDI2WYS0&locale_autoredirect_optout=true
+
+Maxwell Fuzhou Oyster Cake
+Finest Services. (2024, January 2). Maxwell Food Centre Food Guide - 10 Best food stalls [2024]. https://finestservices.com.sg/blog/maxwell-food-centre/
+
+Zhen Zhen Porridge
+Singapore Maxwell Food Centre. (n.d.). LavieTaste.AI. https://lavietaste.ai/en/singapore-maxwell-food-centre
+
+<br>
+
+#### Old Aiport Road
+Nam Sing Hokkien Mee
+P, M. (2025, November 13). 12 Best Hokkien mee in Singapore Ranked—Nam Sing, Xiao Di, Geylang Lorong 29 and more. Eatbook.sg - Local Singapore Food Guide and Review Site. https://eatbook.sg/best-hokkien-mee-singapore/
+
+Wang Wang Crispy Curry
+餐廳裏面 - Picture of Wang Wang Crispy Curry Puff, Singapore - Tripadvisor. (n.d.). https://www.tripadvisor.com/LocationPhotoDirectLink-g294265-d17778354-i485488300-Wang_Wang_Crispy_Curry_Puff-Singapore.html
+
+Xin Mei Xiang Lor Mee
+Yi, O. Q. (2019, August 8). Lor Mee Showdown: Xin Mei Xiang VS Xiang Ji Lor Mee in Old Airport Road Food Centre. SETHLUI.com. https://sethlui.com/xin-mei-xiang-vs-xiang-ji-lor-mee-old-singapore/
+
+<br>
+
+#### Tiong Bahru Market
+Jian Bo Shui Kuen
+Beatrice. (2023, July 13). Jian Bo Shui Kueh: famous Michelin-Approved Chwee Kueh stall open since 1958. Eatbook.sg - Local Singapore Food Guide and Review Site. https://eatbook.sg/jian-bo-shui-kueh/
+
+Lor Mee 178
+Writer, G. (2024, September 15). Lor Mee 178 (卤面178): Michelin Plate $5.50 lor mee with crispy shark nuggets. SETHLUI.com. https://sethlui.com/lor-mee-178-singapore/
+
+Tiong Bahru Fried Kway Teow
+Singaporefoodlover. (n.d.). Tiong Bahru Fried Kway Teow. https://singaporefoodlover.blogspot.com/2010/06/tiong-bahru-fried-kway-teow.html
+
+Western Stall
+Nah, C. (2023, July 6). $5 Western review: Old-School chicken chop and fish & chips with big portions in kallang. Eatbook.sg - Local Singapore Food Guide and Review Site. https://eatbook.sg/5-western/
+
+<br>
+
+### Food Products
 Maureen. (2017, February 22). Maxwell Fuzhou oyster cake – Keeping the tradition alive. MissTamChiak.
 https://www.misstamchiak.com/maxwell-fuzhou-oyster-cake/
 
@@ -134,7 +228,8 @@ https://www.instagram.com/p/CQnAsnFp5gM/
 Tenya Singapore. (n.d.). Aburi mentai salmon don.
 https://tenya.com.sg/product/aburi-mentai-salmon-don/
 
+<br>
+
+## Others
 RandomQR. (n.d.). Random QR code generator.
 https://randomqr.com/
-
-
