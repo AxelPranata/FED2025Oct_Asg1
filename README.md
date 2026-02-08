@@ -36,6 +36,14 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - Performance analytics insights
 - All user analytics
 - Real-time app updates and performance reflection using Firebase
+- User account creation
+- User login
+- Admin login
+- Vendor login
+- Profile page
+- Editing of user details through Profile Page with updates in Firestore
+- Real-time User detail updates through Firestore Database
+- Google API support from Firebase Authentication
 <br>
 
 ## Technologies Used
