@@ -16,7 +16,6 @@ function getRole(){
 }
 
 function getRedirect(role){
-  // Link login pages to onboarding pages as requested
   if (role === "user") return "./hawkers-app-ignatius/step1-user.html";
   if (role === "vendor") return "./hawkers-app-ignatius/step1-vendor.html";
   if (role === "user_login") return "../home.html";   
@@ -37,7 +36,7 @@ function getInputs(){
 async function postAuthProfile(user, role, name){
   const profile = {
     displayName: name || user.displayName || "",
-    email: user.email || "",           
+    email: user.email || ""
   };
 
   const resolvedRole =
@@ -48,7 +47,6 @@ async function postAuthProfile(user, role, name){
   await saveProfile(user.uid, resolvedRole, profile);
 }
 
-
 async function handleEmail(){
   const role = getRole();
   const { name, email, password, terms } = getInputs();
@@ -57,17 +55,16 @@ async function handleEmail(){
   if (!email || !password) return alert("Please fill in email + password.");
   if (!terms) return alert("Please agree to the terms & policy.");
 
-  try{
-    if (role === "user" || role === "vendor"){
+  try {
+    if (role === "user" || role === "vendor") {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await postAuthProfile(cred.user, role, name);
-      window.location.href = redirect;
     } else {
       const cred = await signInWithEmailAndPassword(auth, email, password);
       await postAuthProfile(cred.user, role, name);
-      window.location.href = redirect;
     }
-  } catch(err){
+    window.location.href = redirect;
+  } catch (err) {
     alert(err.message);
   }
 }
@@ -75,11 +72,12 @@ async function handleEmail(){
 async function handleGoogle(){
   const role = getRole();
   const redirect = getRedirect(role);
-  try{
+
+  try {
     const cred = await signInWithPopup(auth, provider);
     await postAuthProfile(cred.user, role, "");
     window.location.href = redirect;
-  } catch(err){
+  } catch (err) {
     alert(err.message);
   }
 }
