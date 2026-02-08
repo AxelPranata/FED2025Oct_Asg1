@@ -23,6 +23,11 @@ A web application designed to bring Singapore’s hawker centers online. It conn
 - Create food stall reviews and issue complaints
 - Likes for individual food items
 - Apply promotion discounts to orders from promotions page
+- Empty card validation/ Address payment validation/ Card payment validation
+- History order tab 
+- Delivery/ Takeaway option
+- Payment Methods: Cash /Paynow /Visa /Mastercard
+- Only being able to order from one hawker centre
 
 <br>
 
